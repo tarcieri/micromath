@@ -19,8 +19,8 @@ keywords    = ["math", "vector"]
 generic-array = { version = "0.12", default-features = false }
 
 [features]
-default = ["vectors"]
-vectors = []
+default = ["vector"]
+vector = []
 
 [badges]
 travis-ci = { repository = "NeoBirth/micromath" }
