@@ -19,7 +19,7 @@ analysis.
     - [ ] `asin`
     - [ ] `acos`
     - [ ] `atan`
-    - [ ] `atan2`
+    - [x] `atan2`
     - [ ] `cos`
     - [ ] `hypot`
     - [ ] `invsqrt`
@@ -29,10 +29,10 @@ analysis.
     - [ ] `log10`
     - [ ] `powf`
     - [ ] `sin`
-    - [ ] `sqrt`
+    - [x] `sqrt`
     - [ ] `tan`
   - `std` polyfills:
-    - [ ] `abs`
+    - [x] `abs`
     - [ ] `ceil`
     - [ ] `floor`
     - [ ] `round`
@@ -55,9 +55,9 @@ analysis.
     - [ ] `U32x3`
     - [ ] `F32x3`
 - Statistical analysis:
-  - `mean`
-  - `variance`
-  - `stddev`
+  - [ ] `mean`
+  - [ ] `variance`
+  - [ ] `stddev`
 - Quaternions
   - [ ] TBD
 
