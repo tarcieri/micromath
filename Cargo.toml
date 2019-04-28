@@ -1,0 +1,26 @@
+[package]
+name        = "micromath"
+description = """
+              Embedded math library featuring fast, safe floating point
+              approximations for common arithmetic operations, 2D and 3D
+              vector types, and statistical analysis.
+              """
+version     = "0.0.0"
+authors     = ["Tony Arcieri <bascule@gmail.com>"]
+license     = "Apache-2.0 OR MIT"
+homepage    = "https://neobirth.org"
+repository  = "https://github.com/NeoBirth/micromath"
+readme      = "README.md"
+edition     = "2018"
+categories  = ["embedded", "no-std"]
+keywords    = ["math", "vector"]
+
+[dependencies]
+generic-array = { version = "0.12", default-features = false }
+
+[features]
+default = ["vectors"]
+vectors = []
+
+[badges]
+travis-ci = { repository = "NeoBirth/micromath" }
