@@ -15,6 +15,8 @@
 #![doc(html_root_url = "https://docs.rs/micromath/0.0.0")]
 
 mod f32ext;
+#[cfg(feature = "statistics")]
+pub mod statistics;
 #[cfg(feature = "vector")]
 pub mod vector;
 

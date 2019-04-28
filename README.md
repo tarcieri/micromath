@@ -55,9 +55,9 @@ analysis.
     - [ ] `U32x3`
     - [x] `F32x3`
 - Statistical analysis:
-  - [ ] `mean`
-  - [ ] `variance`
-  - [ ] `stddev`
+  - [x] `mean`
+  - [x] `variance`
+  - [x] `stddev`
 - Quaternions
   - [ ] TBD
 
