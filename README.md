@@ -39,21 +39,21 @@ analysis.
     - [ ] `trunc`
 - Algebraic vector types:
   - 2D:
-    - [ ] `I8x2`
-    - [ ] `I16x2`
+    - [x] `I8x2`
+    - [x] `I16x2`
     - [ ] `I32x2`
-    - [ ] `U8x2`
-    - [ ] `U16x2`
+    - [x] `U8x2`
+    - [x] `U16x2`
     - [ ] `U32x2`
-    - [ ] `F32x2`
+    - [x] `F32x2`
   - 3D:
-    - [ ] `I8x3`
-    - [ ] `I16x3`
+    - [x] `I8x3`
+    - [x] `I16x3`
     - [ ] `I32x3`
-    - [ ] `U8x3`
-    - [ ] `U16x3`
+    - [x] `U8x3`
+    - [x] `U16x3`
     - [ ] `U32x3`
-    - [ ] `F32x3`
+    - [x] `F32x3`
 - Statistical analysis:
   - [ ] `mean`
   - [ ] `variance`

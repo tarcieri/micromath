@@ -15,5 +15,7 @@
 #![doc(html_root_url = "https://docs.rs/micromath/0.0.0")]
 
 mod f32ext;
+#[cfg(feature = "vector")]
+pub mod vector;
 
 pub use f32ext::F32Ext;

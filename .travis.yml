@@ -3,10 +3,6 @@ rust: stable
 os: linux
 cache: cargo
 
-branches:
-  only:
-    - master
-
 install:
   - rustup component add rustfmt
   - rustup component add clippy
