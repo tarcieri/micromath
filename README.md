@@ -19,7 +19,7 @@ analysis.
     - [ ] `asin`
     - [ ] `acos`
     - [ ] `atan`
-    - [x] `atan2`
+    - [x] [atan2]
     - [ ] `cos`
     - [ ] `hypot`
     - [ ] `invsqrt`
@@ -29,35 +29,35 @@ analysis.
     - [ ] `log10`
     - [ ] `powf`
     - [ ] `sin`
-    - [x] `sqrt`
+    - [x] [sqrt]
     - [ ] `tan`
   - `std` polyfills:
-    - [x] `abs`
+    - [x] [abs]
     - [ ] `ceil`
     - [ ] `floor`
     - [ ] `round`
     - [ ] `trunc`
 - Algebraic vector types:
   - 2D:
-    - [x] `I8x2`
-    - [x] `I16x2`
+    - [x] [I8x2]
+    - [x] [I16x2]
     - [ ] `I32x2`
-    - [x] `U8x2`
-    - [x] `U16x2`
+    - [x] [U8x2]
+    - [x] [U16x2]
     - [ ] `U32x2`
-    - [x] `F32x2`
+    - [x] [F32x2]
   - 3D:
-    - [x] `I8x3`
-    - [x] `I16x3`
+    - [x] [I8x3]
+    - [x] [I16x3]
     - [ ] `I32x3`
-    - [x] `U8x3`
-    - [x] `U16x3`
+    - [x] [U8x3]
+    - [x] [U16x3]
     - [ ] `U32x3`
-    - [x] `F32x3`
+    - [x] [F32x3]
 - Statistical analysis:
-  - [x] `mean`
-  - [x] `variance`
-  - [x] `stddev`
+  - [x] [mean]
+  - [x] [variance]
+  - [x] [stddev]
 - Quaternions
   - [ ] TBD
 
@@ -109,12 +109,28 @@ Dual licensed under your choice of either of:
 [crate-link]: https://crates.io/crates/micromath
 [docs-img]: https://docs.rs/micromath/badge.svg
 [docs-link]: https://docs.rs/micromath/
-[build-image]: https://secure.travis-ci.org/NeoBirth/micromath.svg?branch=master
-[build-link]: https://travis-ci.org/NeoBirth/micromath
+[build-image]: https://travis-ci.com/NeoBirth/micromath.svg?branch=develop
+[build-link]: https://travis-ci.com/NeoBirth/micromath
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
 [license-link]: https://github.com/NeoBirth/micromath/blob/master/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
 [gitter-link]: https://gitter.im/NeoBirth/community
+[atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
+[sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
+[abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
+[I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
+[I16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x2.html
+[U8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.U8x2.html
+[U16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.U16x2.html
+[F32x2]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x2.html
+[I8x3]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x3.html
+[I16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x3.html
+[U8x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U8x3.html
+[U16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U16x3.html
+[F32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x3.html
+[mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
+[variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
+[stddev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
 [libm crate]: https://github.com/rust-lang-nursery/libm
 [vek crate]: https://github.com/yoanlcq/vek
 [approx crate]: https://crates.io/crates/approx
