@@ -1,14 +1,19 @@
-use super::{abs::abs, radians::radians_norm};
+//! Four quadrant arctangent approximation for a single-precision float
+//! using method described at:
+//!
+//! <https://ieeexplore.ieee.org/document/6375931>
 
-/// Computes an `atan2` approximation in radians (see below)
+use super::abs::abs;
+use core::f32::consts::PI;
+
+/// Computes an `atan2` approximation in radians.
 pub(super) fn atan2_approx(y: f32, x: f32) -> f32 {
-    radians_norm(atan2_norm_approx(y, x))
+    let n = atan2_norm_approx(y, x);
+    PI / 2.0 * if n > 2.0 { n - 4.0 } else { n }
 }
 
-/// Approximates the four quadrant arctangent for a single-precision float.
-/// Normalized to the `[0, 4)` range with a maximum error of `0.1620` degrees.
-///
-/// Method described at: <https://ieeexplore.ieee.org/document/6375931>
+/// Approximates `atan2(y,x)` normalized to the `[0, 4)` range with a maximum
+/// error of `0.1620` degrees.
 pub(super) fn atan2_norm_approx(y: f32, x: f32) -> f32 {
     const SIGN_MASK: u32 = 0x8000_0000;
     const B: f32 = 0.596_227;
@@ -36,7 +41,7 @@ mod tests {
     use core::f32::consts::PI;
 
     #[test]
-    fn atan2_approx_test() {
+    fn sanity_check() {
         let atan2_test_vectors = [
             (0.0, 1.0, 0.0),
             (0.0, -1.0, PI),

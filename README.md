@@ -105,6 +105,10 @@ Dual licensed under your choice of either of:
 - Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
 - MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
+Incorporates some tests from the [libm crate], which is
+Copyright © 2018 Jorge Aparicio and also dual licensed under the
+Apache 2.0 and MIT licenses. 
+
 [crate-img]: https://img.shields.io/crates/v/micromath.svg
 [crate-link]: https://crates.io/crates/micromath
 [docs-img]: https://docs.rs/micromath/badge.svg
