@@ -22,6 +22,3 @@ generic-array = { version = "0.12", default-features = false }
 default = ["statistics", "vector"]
 statistics = []
 vector = []
-
-[badges]
-travis-ci = { repository = "NeoBirth/micromath" }
