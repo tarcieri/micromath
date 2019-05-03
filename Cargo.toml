@@ -16,7 +16,7 @@ categories  = ["embedded", "no-std"]
 keywords    = ["math", "vector"]
 
 [dependencies]
-generic-array = { version = "0.12", default-features = false }
+generic-array = { version = "0.13", default-features = false }
 
 [features]
 default = ["statistics", "vector"]

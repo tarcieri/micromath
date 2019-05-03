@@ -2,7 +2,7 @@
 
 use super::Vector;
 use core::ops::{Index, MulAssign};
-use generic_array::{arr, arr_impl, typenum::U2, GenericArray};
+use generic_array::{arr, typenum::U2, GenericArray};
 
 macro_rules! impl_2d_vector {
     ($vector:ident, $component:tt, $doc:expr) => {
