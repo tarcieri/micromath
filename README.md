@@ -134,7 +134,7 @@ Apache 2.0 and MIT licenses.
 [U16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U16x3.html
 [F32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x3.html
 [mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
-[variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
+[variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 [stddev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
 [libm crate]: https://github.com/rust-lang-nursery/libm
 [vek crate]: https://github.com/yoanlcq/vek
