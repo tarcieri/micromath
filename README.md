@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath.png" width="640" height="320">
+# <img src="https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath.png" width="640">
 
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
@@ -33,8 +33,8 @@ analysis.
     - [ ] `tan`
   - `std` polyfills:
     - [x] [abs]
-    - [ ] `ceil`
-    - [ ] `floor`
+    - [x] [ceil]
+    - [x] [floor]
     - [ ] `round`
     - [ ] `trunc`
 - Algebraic vector types:
@@ -123,6 +123,8 @@ Apache 2.0 and MIT licenses.
 [atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan2
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
 [abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
+[ceil]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ceil
+[floor]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.floor
 [I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
 [I16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x2.html
 [U8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.U8x2.html
