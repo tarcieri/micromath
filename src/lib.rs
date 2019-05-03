@@ -53,3 +53,4 @@ pub mod statistics;
 pub mod vector;
 
 pub use f32ext::F32Ext;
+pub use generic_array;
