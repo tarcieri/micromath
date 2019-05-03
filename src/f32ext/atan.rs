@@ -4,11 +4,11 @@
 //! <https://ieeexplore.ieee.org/document/6375931>
 
 use super::abs::abs;
-use core::f32::consts::PI;
+use core::f32;
 
-/// Computes an `atan` approximation in radians.
+/// Computes an `atan(x)` approximation in radians.
 pub(super) fn atan_approx(x: f32) -> f32 {
-    PI / 2.0 * atan_norm_approx(x)
+    f32::consts::FRAC_PI_2 * atan_norm_approx(x)
 }
 
 /// Approximates `atan(x)` normalized to the `[−1,1]` range with a maximum
@@ -39,16 +39,17 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        for (x, expected) in [
+        // Arctangent test vectors - `(input, output)`
+        let test_vectors: &[(f32, f32)] = &[
             (3.0_f32.sqrt() / 3.0, f32::consts::FRAC_PI_6),
             (1.0, f32::consts::FRAC_PI_4),
             (3.0_f32.sqrt(), f32::consts::FRAC_PI_3),
             (-3.0_f32.sqrt() / 3.0, -f32::consts::FRAC_PI_6),
             (-1.0, -f32::consts::FRAC_PI_4),
             (-3.0_f32.sqrt(), -f32::consts::FRAC_PI_3),
-        ]
-        .iter()
-        {
+        ];
+
+        for (x, expected) in test_vectors {
             let actual = atan_approx(*x);
             let delta = actual - expected;
 

@@ -11,10 +11,7 @@ pub(super) fn sin_approx(x: f32) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::sin_approx;
-    use crate::f32ext::abs::abs;
-
-    /// Maximum error in radians
-    const MAX_ERROR: f32 = 0.06;
+    use crate::f32ext::{abs::abs, cos::tests::MAX_ERROR};
 
     /// Sine test vectors - `(input, output)`
     const TEST_VECTORS: &[(f32, f32)] = &[
