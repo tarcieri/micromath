@@ -1,4 +1,4 @@
-# ![micromath.rs](https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath.png)
+# <img src="https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath.png" width="640" height="320">
 
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
