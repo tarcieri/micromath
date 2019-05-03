@@ -7,6 +7,7 @@ mod atan2;
 mod ceil;
 mod cos;
 mod floor;
+mod invsqrt;
 mod sin;
 mod sqrt;
 
@@ -38,6 +39,9 @@ pub trait F32Ext: Sized {
 
     /// Approximates floating point floor.
     fn floor(self) -> f32;
+
+    /// Approximates inverse square root.
+    fn invsqrt(self) -> f32;
 
     /// Approximates sine in radians.
     fn sin(self) -> f32;
@@ -77,6 +81,10 @@ impl F32Ext for f32 {
 
     fn floor(self) -> f32 {
         self::floor::floor(self)
+    }
+
+    fn invsqrt(self) -> f32 {
+        self::invsqrt::invsqrt_approx(self)
     }
 
     fn sin(self) -> f32 {
