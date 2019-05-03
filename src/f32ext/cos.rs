@@ -3,25 +3,25 @@
 
 use super::abs::abs;
 use super::floor::floor;
-use core::f32::consts::PI;
-
-const TP: f32 = 1.0 / (2.0 * PI);
+use core::f32;
 
 /// Approximates `cos(x)` in radians with a maximum error of `0.06`
 pub(super) fn cos_approx(mut x: f32) -> f32 {
-    x *= TP;
+    x *= f32::consts::FRAC_1_PI / 2.0;
     x -= 0.25 + floor(x + 0.25);
-    x * 16.0 * (abs(x) - 0.5)
+    x *= 16.0 * (abs(x) - 0.5);
+    x += 0.225 * x * (abs(x) - 1.0);
+    x
 }
 
 #[cfg(test)]
-mod tests {
+pub(super) mod tests {
     use super::{abs, cos_approx};
 
     /// Maximum error in radians
-    const MAX_ERROR: f32 = 0.06;
+    pub(crate) const MAX_ERROR: f32 = 0.002;
 
-    /// Cosine test vectors `(input, output)`
+    /// Cosine test vectors - `(input, output)`
     const TEST_VECTORS: &[(f32, f32)] = &[
         (0.000, 1.000),
         (0.140, 0.990),

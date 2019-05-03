@@ -6,7 +6,7 @@
 use super::abs::abs;
 use core::f32::consts::PI;
 
-/// Computes an `atan2` approximation in radians.
+/// Computes an `atan2(y,x)` approximation in radians.
 pub(super) fn atan2_approx(y: f32, x: f32) -> f32 {
     let n = atan2_norm_approx(y, x);
     PI / 2.0 * if n > 2.0 { n - 4.0 } else { n }
@@ -45,7 +45,7 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        let atan2_test_vectors = [
+        let test_vectors: &[(f32, f32, f32)] = &[
             (0.0, 1.0, 0.0),
             (0.0, -1.0, PI),
             (3.0, 2.0, (3.0f32 / 2.0).atan()),
@@ -53,7 +53,7 @@ mod tests {
             (-2.0, -1.0, (-2.0f32 / -1.0).atan() - PI),
         ];
 
-        for (y, x, expected) in &atan2_test_vectors {
+        for (y, x, expected) in test_vectors {
             let actual = atan2_approx(*y, *x);
             let delta = actual - expected;
 

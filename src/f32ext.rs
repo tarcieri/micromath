@@ -10,6 +10,7 @@ mod floor;
 mod invsqrt;
 mod sin;
 mod sqrt;
+mod tan;
 
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
@@ -48,6 +49,9 @@ pub trait F32Ext: Sized {
 
     /// Approximates square root.
     fn sqrt(self) -> f32;
+
+    /// Approximates `tan(x)` in radians.
+    fn tan(self) -> f32;
 }
 
 impl F32Ext for f32 {
@@ -93,5 +97,9 @@ impl F32Ext for f32 {
 
     fn sqrt(self) -> f32 {
         self::sqrt::sqrt_approx(self)
+    }
+
+    fn tan(self) -> f32 {
+        self::tan::tan_approx(self)
     }
 }

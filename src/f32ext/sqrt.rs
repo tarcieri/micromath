@@ -11,7 +11,7 @@ pub(super) mod tests {
     /// Maximum error as a percentage of the input value (5%)
     pub(crate) const MAX_ERROR: f32 = 0.05;
 
-    /// Square root test vectors
+    /// Square root test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1.0, 1.0),
         (2.0, 1.414),
