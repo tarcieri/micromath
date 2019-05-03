@@ -11,7 +11,7 @@ pub(super) fn floor(x: f32) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::floor;
 
     #[test]
     fn sanity_check() {

@@ -8,11 +8,12 @@ pub(super) fn abs(n: f32) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::abs;
 
     #[test]
-    fn abs_test() {
+    fn sanity_check() {
         assert_eq!(abs(1.0), 1.0);
+        assert_eq!(abs(0.0), 0.0);
         assert_eq!(abs(-1.0), 1.0);
     }
 }

@@ -20,7 +20,7 @@ analysis.
     - [ ] `acos`
     - [x] [atan]
     - [x] [atan2]
-    - [ ] `cos`
+    - [x] [cos]
     - [ ] `hypot`
     - [ ] `invsqrt`
     - [ ] `ln`
@@ -28,7 +28,7 @@ analysis.
     - [ ] `log2`
     - [ ] `log10`
     - [ ] `powf`
-    - [ ] `sin`
+    - [x] [sin]
     - [x] [sqrt]
     - [ ] `tan`
   - `std` polyfills:
@@ -121,6 +121,8 @@ Apache 2.0 and MIT licenses.
 [gitter-link]: https://gitter.im/NeoBirth/community
 [atan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan
 [atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan2
+[cos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.cos
+[sin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sin
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
 [abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
 [ceil]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ceil
