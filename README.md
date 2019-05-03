@@ -18,7 +18,7 @@ analysis.
   - Fast approximations:
     - [ ] `asin`
     - [ ] `acos`
-    - [ ] `atan`
+    - [x] [atan]
     - [x] [atan2]
     - [ ] `cos`
     - [ ] `hypot`
@@ -119,7 +119,8 @@ Apache 2.0 and MIT licenses.
 [license-link]: https://github.com/NeoBirth/micromath/blob/master/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
 [gitter-link]: https://gitter.im/NeoBirth/community
-[atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
+[atan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan
+[atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan2
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
 [abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
 [I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
