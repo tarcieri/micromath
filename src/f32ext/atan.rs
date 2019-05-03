@@ -34,6 +34,9 @@ mod tests {
     use super::atan_approx;
     use core::f32;
 
+    /// 0.1620 degrees in radians
+    const MAX_ERROR: f32 = 0.003;
+
     #[test]
     fn sanity_check() {
         for (x, expected) in [
@@ -50,8 +53,7 @@ mod tests {
             let delta = actual - expected;
 
             assert!(
-                // 0.1620 degrees in radians
-                delta <= 0.003,
+                delta <= MAX_ERROR,
                 "delta {} too large: {} vs {}",
                 delta,
                 actual,

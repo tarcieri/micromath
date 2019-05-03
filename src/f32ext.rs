@@ -5,7 +5,9 @@ mod abs;
 mod atan;
 mod atan2;
 mod ceil;
+mod cos;
 mod floor;
+mod sin;
 mod sqrt;
 
 /// `f32` extension providing various arithmetic approximations and polyfills
@@ -14,14 +16,14 @@ pub trait F32Ext: Sized {
     /// Compute absolute value.
     fn abs(self) -> f32;
 
-    /// Computes an `atan` approximation in radians.
+    /// Approximates `atan(x)` in radians.
     fn atan(self) -> f32;
 
     /// Approximates `atan(x)` normalized to the `[−1,1]` range with a maximum
     /// error of `0.1620` degrees.
     fn atan_norm(self) -> f32;
 
-    /// Compute four quadrant arctangent
+    /// Approximates the four quadrant arctangent `atan2(x)`.
     fn atan2(self, other: f32) -> f32;
 
     /// Approximates the four quadrant arctangent.
@@ -31,10 +33,16 @@ pub trait F32Ext: Sized {
     /// Approximates floating point ceiling.
     fn ceil(self) -> f32;
 
+    /// Approximates cosine in radians.
+    fn cos(self) -> f32;
+
     /// Approximates floating point floor.
     fn floor(self) -> f32;
 
-    /// Compute square root
+    /// Approximates sine in radians.
+    fn sin(self) -> f32;
+
+    /// Approximates square root.
     fn sqrt(self) -> f32;
 }
 
@@ -63,8 +71,16 @@ impl F32Ext for f32 {
         self::ceil::ceil(self)
     }
 
+    fn cos(self) -> f32 {
+        self::cos::cos_approx(self)
+    }
+
     fn floor(self) -> f32 {
         self::floor::floor(self)
+    }
+
+    fn sin(self) -> f32 {
+        self::sin::sin_approx(self)
     }
 
     fn sqrt(self) -> f32 {

@@ -9,10 +9,13 @@ pub(super) fn sqrt_approx(n: f32) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::sqrt_approx;
+
+    /// Maximum error as a percentage of the input value (5%)
+    const MAX_ERROR: f32 = 0.05;
 
     #[test]
-    fn sqrt_approx_test() {
+    fn sanity_check() {
         let sqrt_test_vectors = [
             (1.0, 1.0),
             (2.0, 1.414),
@@ -37,7 +40,7 @@ mod tests {
 
         for (x, expected) in &sqrt_test_vectors {
             let sqrt_x = sqrt_approx(*x);
-            let allowed_delta = x * 0.05;
+            let allowed_delta = x * MAX_ERROR;
             let actual_delta = sqrt_x - expected;
 
             assert!(

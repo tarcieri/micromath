@@ -7,7 +7,7 @@ pub(super) fn ceil(x: f32) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::ceil;
 
     #[test]
     fn sanity_check() {
