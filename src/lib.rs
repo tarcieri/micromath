@@ -69,7 +69,7 @@
 //! See the [`quaternion` module] for more information.
 //!
 //! [micromath::F32Ext]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
-//! [`vector` module]: https://docs.rs/micromath/vector/micromath/vector/index.html
+//! [`vector` module]: https://docs.rs/micromath/latest/micromath/vector/index.html
 //! [`statistics` module]: https://docs.rs/micromath/latest/micromath/statistics/index.html
 //! [`quaternion` module]: https://docs.rs/micromath/latest/micromath/quaternion/index.html
 //! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
