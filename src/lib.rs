@@ -61,6 +61,7 @@
 //!
 //! - [Mean] - compute arithmetic mean with the `mean()` method
 //! - [StdDev] - compute standard deviation with the `stddev()` method
+//! - [Trim] - cull outliers from a sample slice with the `trim()` method.
 //! - [Variance] - compute variance with the `variance() method
 //!
 //! ## Quaternions
@@ -73,6 +74,7 @@
 //! [`quaternion` module]: https://docs.rs/micromath/latest/micromath/quaternion/index.html
 //! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 //! [StdDev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
+//! [Trim]: https://docs.rs/micromath/latest/micromath/statistics/trait.Trim.html
 //! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 
 #![no_std]
