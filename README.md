@@ -116,7 +116,7 @@ Apache 2.0 and MIT licenses.
 [build-image]: https://travis-ci.com/NeoBirth/micromath.svg?branch=develop
 [build-link]: https://travis-ci.com/NeoBirth/micromath
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
-[license-link]: https://github.com/NeoBirth/micromath/blob/master/LICENSE-APACHE
+[license-link]: https://github.com/NeoBirth/micromath/blob/develop/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
 [gitter-link]: https://gitter.im/NeoBirth/community
 [atan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan
@@ -146,4 +146,4 @@ Apache 2.0 and MIT licenses.
 [vek crate]: https://github.com/yoanlcq/vek
 [approx crate]: https://crates.io/crates/approx
 [cc]: https://contributor-covenant.org
-[CODE_OF_CONDUCT.md]: https://github.com/NeoBirth/micromath/blob/master/CODE_OF_CONDUCT.md
+[CODE_OF_CONDUCT.md]: https://github.com/NeoBirth/micromath/blob/develop/CODE_OF_CONDUCT.md
