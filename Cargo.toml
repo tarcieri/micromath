@@ -3,7 +3,7 @@ name        = "micromath"
 description = """
               Embedded math library featuring fast, safe floating point
               approximations for common arithmetic operations, 2D and 3D
-              vector types, and statistical analysis.
+              vector types, statistical analysis, and quaternions.
               """
 version     = "0.2.2" # Also update html_root_url in lib.rs when bumping this
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
@@ -19,6 +19,7 @@ keywords    = ["math", "vector"]
 generic-array = { version = "0.13", default-features = false }
 
 [features]
-default = ["statistics", "vector"]
+default = ["quaternion", "statistics", "vector"]
+quaternion = []
 statistics = []
 vector = []

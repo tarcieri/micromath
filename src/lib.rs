@@ -63,9 +63,14 @@
 //! - [StdDev] - compute standard deviation with the `stddev()` method
 //! - [Variance] - compute variance with the `variance() method
 //!
+//! ## Quaternions
+//!
+//! See the [`quaternion` module] for more information.
+//!
 //! [micromath::F32Ext]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
 //! [`vector` module]: https://docs.rs/micromath/vector/micromath/vector/index.html
 //! [`statistics` module]: https://docs.rs/micromath/latest/micromath/statistics/index.html
+//! [`quaternion` module]: https://docs.rs/micromath/latest/micromath/quaternion/index.html
 //! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 //! [StdDev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
 //! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
@@ -86,6 +91,8 @@
 )]
 
 mod f32ext;
+#[cfg(feature = "quaternion")]
+pub mod quaternion;
 #[cfg(feature = "statistics")]
 pub mod statistics;
 #[cfg(feature = "vector")]
@@ -93,5 +100,7 @@ pub mod vector;
 
 pub use f32ext::F32Ext;
 pub use generic_array;
+#[cfg(feature = "quaternion")]
+pub use quaternion::Quaternion;
 #[cfg(feature = "vector")]
 pub use vector::{Vector, VectorExt};
