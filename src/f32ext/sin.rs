@@ -3,7 +3,7 @@
 use super::cos::cos_approx;
 use core::f32::consts::PI;
 
-/// Approximates `sin(x)` in radians with a maximum error of `0.06`
+/// Approximates `sin(x)` in radians with a maximum error of `0.002`
 pub(super) fn sin_approx(x: f32) -> f32 {
     cos_approx(x - PI / 2.0)
 }

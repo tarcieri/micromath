@@ -13,6 +13,7 @@ mod tests {
     use crate::f32ext::abs::abs;
 
     /// Maximum error in radians
+    // TODO(tarcieri): this is kinda bad, find a better approximation?
     const MAX_ERROR: f32 = 0.6;
 
     /// Tangent test vectors - `(input, output)`

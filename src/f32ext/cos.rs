@@ -5,7 +5,7 @@ use super::abs::abs;
 use super::floor::floor;
 use core::f32;
 
-/// Approximates `cos(x)` in radians with a maximum error of `0.06`
+/// Approximates `cos(x)` in radians with a maximum error of `0.002`
 pub(super) fn cos_approx(mut x: f32) -> f32 {
     x *= f32::consts::FRAC_1_PI / 2.0;
     x -= 0.25 + floor(x + 0.25);
