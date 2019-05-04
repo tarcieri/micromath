@@ -44,7 +44,10 @@
     unused_qualifications
 )]
 #![forbid(unsafe_code)]
-#![doc(html_root_url = "https://docs.rs/micromath/0.2.0")]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath-sq.png",
+    html_root_url = "https://docs.rs/micromath/0.2.0"
+)]
 
 mod f32ext;
 #[cfg(feature = "statistics")]
