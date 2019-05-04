@@ -8,7 +8,7 @@ pub(super) fn sqrt_approx(x: f32) -> f32 {
 pub(super) mod tests {
     use super::sqrt_approx;
 
-    /// Maximum error as a percentage of the input value (5%)
+    /// Deviation from the actual value (5%)
     pub(crate) const MAX_ERROR: f32 = 0.05;
 
     /// Square root test vectors - `(input, output)`
