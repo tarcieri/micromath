@@ -41,18 +41,18 @@ analysis.
   - 2D:
     - [x] [I8x2]
     - [x] [I16x2]
-    - [ ] `I32x2`
+    - [x] [I32x2]
     - [x] [U8x2]
     - [x] [U16x2]
-    - [ ] `U32x2`
+    - [x] [U32x2]
     - [x] [F32x2]
   - 3D:
     - [x] [I8x3]
     - [x] [I16x3]
-    - [ ] `I32x3`
+    - [x] [I32x3]
     - [x] [U8x3]
     - [x] [U16x3]
-    - [ ] `U32x3`
+    - [x] [U32x3]
     - [x] [F32x3]
 - Statistical analysis:
   - [x] [mean]
@@ -105,7 +105,7 @@ Dual licensed under your choice of either of:
 - Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
 - MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
-Incorporates some tests from the [libm crate], which is
+Incorporates portions of some tests from the [libm crate].
 Copyright © 2018 Jorge Aparicio and also dual licensed under the
 Apache 2.0 and MIT licenses. 
 
@@ -131,13 +131,17 @@ Apache 2.0 and MIT licenses.
 [floor]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.floor
 [I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
 [I16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x2.html
+[I32x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I32x2.html
 [U8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.U8x2.html
 [U16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.U16x2.html
+[U32x2]: https://docs.rs/micromath/latest/micromath/vector/struct.U32x2.html
 [F32x2]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x2.html
 [I8x3]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x3.html
-[I16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x3.html
+[I16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x3.html
+[I32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.I32x3.html
 [U8x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U8x3.html
 [U16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U16x3.html
+[U32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U32x3.html
 [F32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x3.html
 [mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 [variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html

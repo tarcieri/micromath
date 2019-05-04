@@ -16,14 +16,12 @@ mod xyz;
 pub use self::{component::*, iter::*, xy::*, xyz::*};
 
 /// Vectors with numeric components
-pub trait Vector:
-    Copy + Debug + Default + Index<usize> + MulAssign<f32> + PartialEq + Sized + Send + Sync
-{
-    /// Type representing measured acceleration for a particular axis
-    type Component: Component;
-
+pub trait Vector: Copy + Debug + Default + Index<usize> + PartialEq + Sized + Send + Sync {
     /// Number of axes
     type Axes: ArrayLength<Self::Component>;
+
+    /// Type representing measured acceleration for a particular axis
+    type Component: Component;
 
     /// Smallest value representable by a vector component
     const MIN: Self::Component;
@@ -53,6 +51,26 @@ pub trait Vector:
         Iter::new(self)
     }
 
+    /// Obtain an array of the acceleration components for each of the axes
+    fn to_array(self) -> GenericArray<Self::Component, Self::Axes>;
+}
+
+/// Vector geometry extensions usable on vectors whose components can be
+/// converted into `f32`.
+pub trait VectorExt: Vector + MulAssign<f32> {
+    /// Compute the distance between two vectors
+    fn distance(self, other: Self) -> f32;
+
+    /// Compute the magnitude of a vector
+    fn magnitude(self) -> f32;
+}
+
+impl<V, A, C> VectorExt for V
+where
+    V: Vector<Axes = A, Component = C> + MulAssign<f32>,
+    A: ArrayLength<C>,
+    C: Component + Into<f32>,
+{
     /// Compute the distance between two vectors
     fn distance(self, other: Self) -> f32 {
         let differences = self
@@ -73,7 +91,4 @@ pub trait Vector:
             .sum::<f32>()
             .sqrt()
     }
-
-    /// Obtain an array of the acceleration components for each of the axes
-    fn to_array(self) -> GenericArray<Self::Component, Self::Axes>;
 }
