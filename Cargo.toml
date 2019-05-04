@@ -5,14 +5,14 @@ description = """
               approximations for common arithmetic operations, 2D and 3D
               vector types, statistical analysis, and quaternions.
               """
-version     = "0.2.2" # Also update html_root_url in lib.rs when bumping this
+version     = "0.3.0" # Also update html_root_url in lib.rs when bumping this
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
 license     = "Apache-2.0 OR MIT"
 homepage    = "https://neobirth.org"
 repository  = "https://github.com/NeoBirth/micromath"
 readme      = "README.md"
 edition     = "2018"
-categories  = ["embedded", "no-std"]
+categories  = ["embedded", "science", "no-std"]
 keywords    = ["math", "vector"]
 
 [dependencies]

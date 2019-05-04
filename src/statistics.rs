@@ -10,7 +10,7 @@
 //!
 //! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 //! [StdDev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
-//! [Trim]: https://docs.rs/micromath/latest/micromath/statistics/trait.Trim.html
+//! [Trim]: https://docs.rs/micromath/latest/micromath/statistics/trim/trait.Trim.html
 //! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 
 mod mean;
