@@ -1,3 +1,7 @@
+## [0.2.2] (2019-05-04)
+
+- Add `i32` and `u32` vectors ([#23])
+
 ## [0.2.1] (2019-05-03)
 
 - Add html_logo_url and square icon ([#20])
@@ -15,6 +19,8 @@
 
 - Initial release
 
+[0.2.2]: https://github.com/NeoBirth/micromath/pull/24
+[#23]: https://github.com/NeoBirth/micromath/pull/23
 [0.2.1]: https://github.com/NeoBirth/micromath/pull/21
 [#20]: https://github.com/NeoBirth/micromath/pull/20
 [#19]: https://github.com/NeoBirth/micromath/pull/19
