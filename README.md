@@ -22,6 +22,7 @@ analysis.
     - [x] [atan2]
     - [x] [cos]
     - [ ] `hypot`
+    - [x] [inv]
     - [x] [invsqrt]
     - [ ] `ln`
     - [ ] `log`
@@ -123,6 +124,7 @@ Apache 2.0 and MIT licenses.
 [atan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan
 [atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan2
 [cos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.cos
+[inv]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.inv
 [invsqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.invsqrt
 [sin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sin
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
