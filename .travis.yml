@@ -8,6 +8,10 @@ install:
   - rustup component add clippy
   - rustup target add thumbv7em-none-eabihf
 
+branches:
+  only:
+    - develop
+
 matrix:
   include:
     - name: rustfmt
