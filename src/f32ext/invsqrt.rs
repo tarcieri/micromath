@@ -1,7 +1,7 @@
 /// Inverse square root approximation function for a single-precision float.
 /// Method described at: <https://bits.stephan-brumme.com/invSquareRoot.html>
 pub(super) fn invsqrt_approx(x: f32) -> f32 {
-    f32::from_bits(0x5F37_5A86 - (x.to_bits() >> 1))
+    f32::from_bits(0x5f37_5a86 - (x.to_bits() >> 1))
 }
 
 #[cfg(test)]
