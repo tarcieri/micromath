@@ -57,8 +57,9 @@ and quaternions.
     - [x] [F32x3]
 - [Statistical analysis]:
   - [x] [mean]
-  - [x] [variance]
   - [x] [stddev]
+  - [x] [trim]
+  - [x] [variance]
 - [Quaternions]
 
 ## Comparisons with other Rust crates
@@ -148,8 +149,9 @@ Apache 2.0 and MIT licenses.
 [F32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x3.html
 [Statistical analysis]: https://docs.rs/micromath/latest/micromath/statistics/index.html
 [mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
-[variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 [stddev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
+[trim]: https://docs.rs/micromath/latest/micromath/statistics/trim/trait.Trim.html
+[variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 [Quaternions]: https://docs.rs/micromath/latest/micromath/quaternion/struct.Quaternion.html
 [libm crate]: https://github.com/rust-lang-nursery/libm
 [vek crate]: https://github.com/yoanlcq/vek

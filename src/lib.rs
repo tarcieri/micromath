@@ -74,7 +74,7 @@
 //! [`quaternion` module]: https://docs.rs/micromath/latest/micromath/quaternion/index.html
 //! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 //! [StdDev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
-//! [Trim]: https://docs.rs/micromath/latest/micromath/statistics/trait.Trim.html
+//! [Trim]: https://docs.rs/micromath/latest/micromath/statistics/trim/trait.Trim.html
 //! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 
 #![no_std]
@@ -89,7 +89,7 @@
 #![forbid(unsafe_code)]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath-sq.png",
-    html_root_url = "https://docs.rs/micromath/0.2.2"
+    html_root_url = "https://docs.rs/micromath/0.3.0"
 )]
 
 mod f32ext;
