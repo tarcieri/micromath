@@ -30,7 +30,7 @@ analysis.
     - [ ] `powf`
     - [x] [sin]
     - [x] [sqrt]
-    - [ ] [tan]
+    - [x] [tan]
   - `std` polyfills:
     - [x] [abs]
     - [x] [ceil]
