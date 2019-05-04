@@ -14,7 +14,7 @@ analysis.
 
 ## Features
 
-- `f32` extension:
+- [`f32` extension]:
   - Fast approximations:
     - [ ] `asin`
     - [ ] `acos`
@@ -37,7 +37,7 @@ analysis.
     - [x] [floor]
     - [ ] `round`
     - [ ] `trunc`
-- Algebraic vector types:
+- [Algebraic vector types]:
   - 2D:
     - [x] [I8x2]
     - [x] [I16x2]
@@ -54,7 +54,7 @@ analysis.
     - [x] [U16x3]
     - [x] [U32x3]
     - [x] [F32x3]
-- Statistical analysis:
+- [Statistical analysis]:
   - [x] [mean]
   - [x] [variance]
   - [x] [stddev]
@@ -119,6 +119,7 @@ Apache 2.0 and MIT licenses.
 [license-link]: https://github.com/NeoBirth/micromath/blob/develop/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
 [gitter-link]: https://gitter.im/NeoBirth/community
+[`f32` extension]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
 [atan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan
 [atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan2
 [cos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.cos
@@ -129,6 +130,7 @@ Apache 2.0 and MIT licenses.
 [abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
 [ceil]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ceil
 [floor]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.floor
+[Algebraic vector types]: https://docs.rs/micromath/latest/micromath/vector/index.html
 [I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
 [I16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x2.html
 [I32x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I32x2.html
@@ -143,6 +145,7 @@ Apache 2.0 and MIT licenses.
 [U16x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U16x3.html
 [U32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.U32x3.html
 [F32x3]: https://docs.rs/micromath/latest/micromath/vector/struct.F32x3.html
+[Statistical analysis]: https://docs.rs/micromath/latest/micromath/statistics/index.html
 [mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 [variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 [stddev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html

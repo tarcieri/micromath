@@ -43,7 +43,7 @@ pub trait F32Ext: Sized {
     /// Approximates floating point floor.
     fn floor(self) -> f32;
 
-    /// Approximates inverse square root.
+    /// Approximates inverse square root with an average deviation of ~5%.
     fn invsqrt(self) -> f32;
 
     /// Approximates sine in radians with a maximum error of `0.002`.

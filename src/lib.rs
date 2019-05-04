@@ -10,8 +10,8 @@
 //! processing, these approximations are often sufficient and the performance
 //! gains worth the lost precision.
 //!
-//! These approximations are provided by an `F32Ext` trait which is impl'd for
-//! `f32`, providing a drop-in `std`-compatible (sans lost precision) API.
+//! These approximations are provided by the [micromath::F32Ext] trait which is
+//! impl'd for `f32`, providing a drop-in `std`-compatible (sans lost precision) API.
 //!
 //! ```
 //! use micromath::F32Ext;
@@ -33,6 +33,42 @@
 //! #[allow(unused_imports)]
 //! use micromath::F32Ext;
 //! ```
+//!
+//! ## Vector types
+//!
+//! See the [`vector` module] for more information on vector types.
+//!
+//! The following vector types are available, all of which have `pub x` and
+//! `pub y` (and on 3D vectors, `pub z`) members:
+//!
+//! | Rust  | 2D      | 3D      |
+//! |-------|---------|---------|
+//! | `i8`  | `I8x2`  | `I8x3`  |
+//! | `i16` | `I16x2` | `I16x3` |
+//! | `i32` | `I32x2` | `I32x3` |
+//! | `u8`  | `U8x2`  | `U8x3`  |
+//! | `u16` | `U16x2` | `U16x3` |
+//! | `u32` | `U32x2` | `U32x3` |
+//! | `f32` | `F32x2` | `F32x3` |
+//!
+//! ## Statistical analysis
+//!
+//! See the [`statistics` module] for more information on statistical analysis
+//! traits and functionality.
+//!
+//! The following traits are available and impl'd for slices and iterators of
+//! `f32` (and can be impl'd for other types):
+//!
+//! - [Mean] - compute arithmetic mean with the `mean()` method
+//! - [StdDev] - compute standard deviation with the `stddev()` method
+//! - [Variance] - compute variance with the `variance() method
+//!
+//! [micromath::F32Ext]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
+//! [`vector` module]: https://docs.rs/micromath/vector/micromath/vector/index.html
+//! [`statistics` module]: https://docs.rs/micromath/latest/micromath/statistics/index.html
+//! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
+//! [StdDev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
+//! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 
 #![no_std]
 #![deny(

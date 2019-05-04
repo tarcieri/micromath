@@ -2,17 +2,25 @@
 
 use core::ops::{Add, Div, Mul, Sub};
 
-/// Vector components
+/// Vector components. All components must be `Copy` + `Sized` types which
+/// support basic arithmetic (`Add`, `Sub`, `Mul`, `Div`), as well as `Default`,
+/// `PartialEq` and `PartialOrd`.
+///
+/// This trait is impl'd for the following primitive types:
+///
+/// - `i8`, `i16`, `i32`
+/// - `u8`, `u16`, `u32`
+/// - `f32`
 pub trait Component:
     Copy
     + Default
+    + PartialEq
+    + PartialOrd
     + Sized
     + Add<Output = Self>
     + Sub<Output = Self>
     + Mul<Output = Self>
     + Div<Output = Self>
-    + PartialOrd
-    + PartialEq
 {
 }
 

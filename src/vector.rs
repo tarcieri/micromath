@@ -1,4 +1,22 @@
-//! Algebraic vector types generic over a number of axes and a component type
+//! Algebraic vector types generic over a number of axes and a component type.
+//!
+//! All vectors types impl the [Vector] trait, and all vector components
+//! impl the [Component] trait. The [Vector] trait provides a number of
+//! features, including accessing components by `Index<usize>`, iterator
+//! support via an [iter()] method which returns an [Iter] type,
+//! and a [to_array()] method for returning the vector components as a
+//! `GenericArray`.
+//!
+//! For vectors whose components impl `Into<f32>`, a set of vector geometry
+//! extensions are provided by the [VectorExt] trait, including computing
+//! the distance between vectors and the magnitude of a vector.
+//!
+//! [Vector]: https://docs.rs/micromath/latest/micromath/vector/trait.Vector.html
+//! [Component]: https://docs.rs/micromath/latest/micromath/vector/trait.Component.html
+//! [iter()]: https://docs.rs/micromath/latest/micromath/vector/trait.Vector.html#method.iter
+//! [Iter]: https://docs.rs/micromath/latest/micromath/vector/struct.Iter.html
+//! [to_array()]: https://docs.rs/micromath/latest/micromath/vector/trait.Vector.html#tymethod.to_array
+//! [VectorExt]: https://docs.rs/micromath/latest/micromath/vector/trait.VectorExt.html
 
 #[allow(unused_imports)]
 use crate::f32ext::F32Ext;

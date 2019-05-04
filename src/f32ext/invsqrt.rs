@@ -9,7 +9,7 @@ mod tests {
     use super::invsqrt_approx;
     use crate::f32ext::sqrt::tests::TEST_VECTORS;
 
-    /// Maximum error as a percentage of the input value (5%)
+    /// Deviation from the actual value (5%)
     const MAX_ERROR: f32 = 0.05;
 
     #[test]
