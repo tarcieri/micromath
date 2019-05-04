@@ -7,8 +7,8 @@
 [![Gitter Chat][gitter-image]][gitter-link]
 
 Embedded Rust math library featuring fast, safe floating point approximations
-for common arithmetic operations, 2D and 3D vector types, and statistical
-analysis.
+for common arithmetic operations, 2D and 3D vector types, statistical analysis,
+and quaternions.
 
 [Documentation][docs-link]
 
@@ -59,8 +59,7 @@ analysis.
   - [x] [mean]
   - [x] [variance]
   - [x] [stddev]
-- Quaternions
-  - [ ] TBD
+- [Quaternions]
 
 ## Comparisons with other Rust crates
 
@@ -151,6 +150,7 @@ Apache 2.0 and MIT licenses.
 [mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
 [variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 [stddev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
+[Quaternions]: https://docs.rs/micromath/latest/micromath/quaternion/struct.Quaternion.html
 [libm crate]: https://github.com/rust-lang-nursery/libm
 [vek crate]: https://github.com/yoanlcq/vek
 [approx crate]: https://crates.io/crates/approx
