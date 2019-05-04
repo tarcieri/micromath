@@ -57,3 +57,5 @@ pub mod vector;
 
 pub use f32ext::F32Ext;
 pub use generic_array;
+#[cfg(feature = "vector")]
+pub use vector::{Vector, VectorExt};

@@ -78,6 +78,12 @@ macro_rules! impl_3d_vector {
                 }
             }
         }
+    }
+}
+
+macro_rules! impl_3d_vector_ext {
+    ($vector:ident, $component:tt, $doc:expr) => {
+        impl_3d_vector!($vector, $component, $doc);
 
         impl MulAssign<f32> for $vector {
             #[allow(trivial_numeric_casts)]
@@ -87,16 +93,16 @@ macro_rules! impl_3d_vector {
                 self.z = (f32::from(self.z) * n) as $component;
             }
         }
-    }
+    };
 }
 
-impl_3d_vector!(I8x3, i8, "3-dimensional XYZ vector of `i8` values");
-impl_3d_vector!(I16x3, i16, "3-dimensional XYZ vector of `i16` values");
-// TODO: impl_3d_vector!(I32x3, i32, "3-dimensional XYZ vector of `i32` values");
-impl_3d_vector!(U8x3, u8, "3-dimensional XYZ vector of `u8` values");
-impl_3d_vector!(U16x3, u16, "3-dimensional XYZ vector of `u16` values");
-// TODO: impl_3d_vector!(U32x3, u32, "3-dimensional XYZ vector of `u16` values");
-impl_3d_vector!(F32x3, f32, "3-dimensional XYZ vector of `f32` values");
+impl_3d_vector_ext!(I8x3, i8, "3-dimensional XYZ vector of `i8` values");
+impl_3d_vector_ext!(I16x3, i16, "3-dimensional XYZ vector of `i16` values");
+impl_3d_vector!(I32x3, i32, "3-dimensional XYZ vector of `i32` values");
+impl_3d_vector_ext!(U8x3, u8, "3-dimensional XYZ vector of `u8` values");
+impl_3d_vector_ext!(U16x3, u16, "3-dimensional XYZ vector of `u16` values");
+impl_3d_vector!(U32x3, u32, "3-dimensional XYZ vector of `u16` values");
+impl_3d_vector_ext!(F32x3, f32, "3-dimensional XYZ vector of `f32` values");
 
 impl From<I8x3> for F32x3 {
     fn from(vector: I8x3) -> F32x3 {

@@ -73,6 +73,12 @@ macro_rules! impl_2d_vector {
                 }
             }
         }
+    }
+}
+
+macro_rules! impl_2d_vector_ext {
+    ($vector:ident, $component:tt, $doc:expr) => {
+        impl_2d_vector!($vector, $component, $doc);
 
         impl MulAssign<f32> for $vector {
             #[allow(trivial_numeric_casts)]
@@ -81,16 +87,16 @@ macro_rules! impl_2d_vector {
                 self.y = (f32::from(self.y) * n) as $component;
             }
         }
-    }
+    };
 }
 
-impl_2d_vector!(I8x2, i8, "2-dimensional XY vector of `i8` values");
-impl_2d_vector!(I16x2, i16, "2-dimensional XY vector of `i16` values");
-// TODO: impl_2d_vector!(I32x2, i32, "2-dimensional XY vector of `i32` values");
-impl_2d_vector!(U8x2, u8, "2-dimensional XY vector of `u8` values");
-impl_2d_vector!(U16x2, u16, "2-dimensional XY vector of `u16` values");
-// TODO: impl_2d_vector!(U32x2, u32, "2-dimensional XY vector of `u32` values");
-impl_2d_vector!(F32x2, f32, "2-dimensional XY vector of `f32` values");
+impl_2d_vector_ext!(I8x2, i8, "2-dimensional XY vector of `i8` values");
+impl_2d_vector_ext!(I16x2, i16, "2-dimensional XY vector of `i16` values");
+impl_2d_vector!(I32x2, i32, "2-dimensional XY vector of `i32` values");
+impl_2d_vector_ext!(U8x2, u8, "2-dimensional XY vector of `u8` values");
+impl_2d_vector_ext!(U16x2, u16, "2-dimensional XY vector of `u16` values");
+impl_2d_vector!(U32x2, u32, "2-dimensional XY vector of `u32` values");
+impl_2d_vector_ext!(F32x2, f32, "2-dimensional XY vector of `f32` values");
 
 impl MulAssign<i8> for I8x2 {
     fn mul_assign(&mut self, n: i8) {
