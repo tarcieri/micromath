@@ -44,7 +44,7 @@
     unused_qualifications
 )]
 #![forbid(unsafe_code)]
-#![doc(html_root_url = "https://docs.rs/micromath/0.1.0")]
+#![doc(html_root_url = "https://docs.rs/micromath/0.2.0")]
 
 mod f32ext;
 #[cfg(feature = "statistics")]

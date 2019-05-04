@@ -5,7 +5,7 @@ description = """
               approximations for common arithmetic operations, 2D and 3D
               vector types, and statistical analysis.
               """
-version     = "0.1.0" # Also update html_root_url in lib.rs when bumping this
+version     = "0.2.0" # Also update html_root_url in lib.rs when bumping this
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
 license     = "Apache-2.0 OR MIT"
 homepage    = "https://neobirth.org"
