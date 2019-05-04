@@ -1,3 +1,8 @@
+## [0.2.1] (2019-05-03)
+
+- Add html_logo_url and square icon ([#20])
+- `README.md`: Update links to use 'develop' branch ([#19])
+
 ## [0.2.0] (2019-05-03)
 
 - `tan(x)` ([#17])
@@ -10,6 +15,9 @@
 
 - Initial release
 
+[0.2.1]: https://github.com/NeoBirth/micromath/pull/21
+[#20]: https://github.com/NeoBirth/micromath/pull/20
+[#19]: https://github.com/NeoBirth/micromath/pull/19
 [0.2.0]: https://github.com/NeoBirth/micromath/pull/18
 [#17]: https://github.com/NeoBirth/micromath/pull/17
 [#16]: https://github.com/NeoBirth/micromath/pull/16
