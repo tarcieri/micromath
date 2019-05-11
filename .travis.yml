@@ -29,3 +29,7 @@ matrix:
     - name: test
       script:
         - cargo test --release
+    - name: test (1.31.0)
+      rust: 1.31.0
+      script:
+        - cargo test --release
