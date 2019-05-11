@@ -1,3 +1,7 @@
+## [0.3.1] (2019-05-11)
+
+- Rust 1.31.0 support ([#33])
+
 ## [0.3.0] (2019-05-04)
 
 - statistics: Add Trim trait for statistical outlier culling iterators ([#29])
@@ -11,7 +15,7 @@
 
 ## [0.2.1] (2019-05-03)
 
-- Add html_logo_url and square icon ([#20])
+- Add `html_logo_url` and square icon ([#20])
 - `README.md`: Update links to use 'develop' branch ([#19])
 
 ## [0.2.0] (2019-05-03)
@@ -26,6 +30,8 @@
 
 - Initial release
 
+[0.3.1]: https://github.com/NeoBirth/micromath/pull/34
+[#33]: https://github.com/NeoBirth/micromath/pull/33
 [0.3.0]: https://github.com/NeoBirth/micromath/pull/30
 [#29]: https://github.com/NeoBirth/micromath/pull/29
 [#28]: https://github.com/NeoBirth/micromath/pull/28
