@@ -12,6 +12,10 @@ and quaternions.
 
 [Documentation][docs-link]
 
+## Requirements
+
+- Rust 1.31+
+
 ## Features
 
 - [`f32` extension]:

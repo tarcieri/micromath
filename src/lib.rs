@@ -100,9 +100,9 @@ pub mod statistics;
 #[cfg(feature = "vector")]
 pub mod vector;
 
-pub use f32ext::F32Ext;
-pub use generic_array;
+pub use crate::f32ext::F32Ext;
 #[cfg(feature = "quaternion")]
-pub use quaternion::Quaternion;
+pub use crate::quaternion::Quaternion;
 #[cfg(feature = "vector")]
-pub use vector::{Vector, VectorExt};
+pub use crate::vector::{Vector, VectorExt};
+pub use generic_array;
