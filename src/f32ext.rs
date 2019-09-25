@@ -12,6 +12,10 @@ mod invsqrt;
 mod sin;
 mod sqrt;
 mod tan;
+mod trunc;
+mod utils;
+mod fract;
+mod copysign;
 
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
@@ -58,6 +62,15 @@ pub trait F32Ext: Sized {
 
     /// Approximates `tan(x)` in radians with a maximum error of `0.6`.
     fn tan(self) -> f32;
+
+    /// retrieves whole number part of floating point with sign
+    fn trunc(self)-> f32;
+
+    /// retrieves the fractional part of floating point with sign
+    fn fract(self)-> f32;
+
+    /// copies the sign from one number to another and returns it.
+    fn copysign(self, sign:f32)->f32;
 }
 
 impl F32Ext for f32 {
@@ -111,5 +124,15 @@ impl F32Ext for f32 {
 
     fn tan(self) -> f32 {
         self::tan::tan_approx(self)
+    }
+
+    fn trunc(self)-> f32{ self::trunc::trunc_sign(self) }
+
+    fn fract(self)-> f32{
+        self::fract::fract_sign(self)
+    }
+
+    fn copysign(self, sign:f32)-> f32{
+        self::copysign::copysign(self, sign)
     }
 }
