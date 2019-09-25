@@ -31,7 +31,7 @@ pub(super) fn fract_sign(x: f32) -> f32 {
     return copysign::copysign(f32::from_bits(fractional_normalized | new_exponent_bits), x);
 }
 
-// don't want to delete maybe this is the better way? 
+// don't want to delete maybe this is the better way?
 #[allow(dead_code)]
 pub(super) fn fract_sign2(x: f32) -> f32 {
     let x_bits: u32 = x.to_bits();

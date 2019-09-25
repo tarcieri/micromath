@@ -16,7 +16,7 @@ mod trunc;
 mod utils;
 mod fract;
 mod copysign;
-
+mod ln;
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
 pub trait F32Ext: Sized {
@@ -71,6 +71,8 @@ pub trait F32Ext: Sized {
 
     /// copies the sign from one number to another and returns it.
     fn copysign(self, sign:f32)->f32;
+    /// approximates ln(x)
+    fn ln(self)->f32;
 }
 
 impl F32Ext for f32 {
@@ -134,5 +136,9 @@ impl F32Ext for f32 {
 
     fn copysign(self, sign:f32)-> f32{
         self::copysign::copysign(self, sign)
+    }
+
+    fn ln(self)->f32{
+        self::ln::ln_1to2_series_approximation(self)
     }
 }

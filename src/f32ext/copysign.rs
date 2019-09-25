@@ -1,4 +1,4 @@
-/// Floating point whole number for a single-precision float.
+/// copy the sign over from another number
 
 
 use core::f32;

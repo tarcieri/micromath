@@ -1,4 +1,4 @@
-/// Floating point whole number for a single-precision float.
+/// Floating point fractional number for a single-precision float.
 
 
 use core::f32;
