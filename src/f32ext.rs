@@ -17,6 +17,7 @@ mod utils;
 mod fract;
 mod copysign;
 mod ln;
+mod exp;
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
 pub trait F32Ext: Sized {
@@ -73,6 +74,9 @@ pub trait F32Ext: Sized {
     fn copysign(self, sign:f32)->f32;
     /// approximates ln(x)
     fn ln(self)->f32;
+
+    ///approximates e^x
+    fn exp(self)->f32;
 }
 
 impl F32Ext for f32 {
@@ -140,5 +144,9 @@ impl F32Ext for f32 {
 
     fn ln(self)->f32{
         self::ln::ln_1to2_series_approximation(self)
+    }
+
+    fn exp(self)->f32{
+        self::exp::exp_ln2_approximation(self, 4)
     }
 }

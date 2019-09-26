@@ -46,7 +46,7 @@ mod tests {
     use super::ln_1to2_series_approximation;
     use super::super::abs;
     pub(crate) const MAX_ERROR: f32 = 0.001;
-    /// Square root test vectors - `(input, output)`
+    /// test vectors for ln(x)
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1e-20, -46.0517),
         (1e-19, -43.749115),
