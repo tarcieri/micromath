@@ -18,6 +18,11 @@ mod fract;
 mod copysign;
 mod ln;
 mod exp;
+mod log;
+mod log2;
+mod log10;
+mod powf;
+
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
 pub trait F32Ext: Sized {
@@ -65,18 +70,26 @@ pub trait F32Ext: Sized {
     fn tan(self) -> f32;
 
     /// retrieves whole number part of floating point with sign
-    fn trunc(self)-> f32;
+    fn trunc(self) -> f32;
 
     /// retrieves the fractional part of floating point with sign
-    fn fract(self)-> f32;
+    fn fract(self) -> f32;
 
     /// copies the sign from one number to another and returns it.
-    fn copysign(self, sign:f32)->f32;
+    fn copysign(self, sign: f32) -> f32;
     /// approximates ln(x)
-    fn ln(self)->f32;
+    fn ln(self) -> f32;
 
     ///approximates e^x
-    fn exp(self)->f32;
+    fn exp(self) -> f32;
+    ///approximates log to an arbitrary base
+    fn log(self, base: f32) -> f32;
+    ///approximates log2
+    fn log2(self) -> f32;
+    ///approximates log10
+    fn log10(self) -> f32;
+    ///approximates self^n
+    fn powf(self, n: f32) -> f32;
 }
 
 impl F32Ext for f32 {
@@ -132,21 +145,37 @@ impl F32Ext for f32 {
         self::tan::tan_approx(self)
     }
 
-    fn trunc(self)-> f32{ self::trunc::trunc_sign(self) }
+    fn trunc(self) -> f32 { self::trunc::trunc_sign(self) }
 
-    fn fract(self)-> f32{
+    fn fract(self) -> f32 {
         self::fract::fract_sign(self)
     }
 
-    fn copysign(self, sign:f32)-> f32{
+    fn copysign(self, sign: f32) -> f32 {
         self::copysign::copysign(self, sign)
     }
 
-    fn ln(self)->f32{
+    fn ln(self) -> f32 {
         self::ln::ln_1to2_series_approximation(self)
     }
 
-    fn exp(self)->f32{
+    fn exp(self) -> f32 {
         self::exp::exp_ln2_approximation(self, 4)
+    }
+
+    fn log(self, base:f32)->f32{
+        self::log::log_ln_approx(self, base)
+    }
+
+    fn log2(self) -> f32{
+        self::log2::log2_ln_approx(self)
+    }
+
+    fn log10(self) -> f32{
+        self::log10::log10_ln_approx(self)
+    }
+
+    fn powf(self, n:f32) -> f32{
+        self::powf::powf_exp_ln_approx(self, n)
     }
 }

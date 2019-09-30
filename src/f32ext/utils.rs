@@ -10,6 +10,7 @@ pub(super) trait FloatComponents<IntType=i32,UIntType=u32>{
     fn extract_mantissa_bits(self)->UIntType;
     fn extract_exponent_value(self)->IntType;
     fn without_sign(self)->Self;
+    fn set_exponent(self, exponent:IntType) -> Self;
 }
 impl FloatComponents for f32 {
     fn extract_sign_bit(self) ->u32{
@@ -26,5 +27,11 @@ impl FloatComponents for f32 {
     }
     fn without_sign(self)->f32{
         return f32::from_bits(self.to_bits() & !SIGN_MASK);
+    }
+    fn set_exponent(self, exponent:i32) -> f32{
+        debug_assert!(exponent <= 127 && exponent >= -128);
+        let without_exponent :u32 = self.to_bits() & !EXPONENT_MASK;
+        let only_exponent :u32 = ((exponent + EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0;
+        return f32::from_bits(without_exponent | only_exponent);
     }
 }

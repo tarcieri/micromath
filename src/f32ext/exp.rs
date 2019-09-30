@@ -1,8 +1,11 @@
 use core::f32;
 use core::u32;
+use core::i32;
 use super::utils;
 use super::fract;
 use super::trunc;
+use crate::f32ext::utils::FloatComponents;
+
 pub(crate) fn exp_smallx(x:f32, iter:u32) -> f32{
     let mut total :f32 = 1.0_f32;
     for i in (1..=iter).rev(){
@@ -33,18 +36,23 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
     //guaranteed to be 0 < x < 1.0
     let x_fract = x_fract*f32::consts::LN_2;
 
-    if x_trunc < -(utils::EXPONENT_BIAS as f32){
-        return 0.0_f32;
-    }
-    if x_trunc > ((utils::EXPONENT_BIAS+1_u32) as f32){
-        return f32::INFINITY;
-    }
+
     //need the 2^n portion, we can just extract that from the whole number exp portion
 
-    let whole_2nexp :f32 = f32::from_bits(((x_trunc as i32 + utils::EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0);
+    //used to use this
+    //let whole_2nexp :f32 = f32::from_bits(((x_trunc as i32 + utils::EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0);
     let fract_exp = exp_smallx(x_fract, partial_iter);
+    
+    let fract_exponent: i32 = fract_exp.extract_exponent_value().saturating_add(x_trunc as i32);
 
-    return whole_2nexp * fract_exp;
+    if fract_exponent < -(utils::EXPONENT_BIAS as i32){
+        return 0.0_f32;
+    }
+    if fract_exponent > ((utils::EXPONENT_BIAS+1_u32) as i32){
+        return f32::INFINITY;
+    }
+    let exp_approx : f32 = fract_exp.set_exponent(fract_exponent);
+    return exp_approx;
 }
 
 
