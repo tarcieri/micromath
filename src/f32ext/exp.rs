@@ -1,33 +1,33 @@
-use core::f32;
-use core::u32;
-use core::i32;
-use super::utils;
+use super::abs;
 use super::fract;
 use super::trunc;
+use super::utils;
 use crate::f32ext::utils::FloatComponents;
-use super::abs;
+use core::f32;
+use core::i32;
+use core::u32;
 
-pub(crate) fn exp_smallx(x:f32, iter:u32) -> f32{
-    let mut total :f32 = 1.0_f32;
-    for i in (1..=iter).rev(){
-            total = 1.0_f32 + ((x/(i as f32)) * total);
+pub(crate) fn exp_smallx(x: f32, iter: u32) -> f32 {
+    let mut total: f32 = 1.0_f32;
+    for i in (1..=iter).rev() {
+        total = 1.0_f32 + ((x / (i as f32)) * total);
     }
     total
 }
 
-pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
+pub(super) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
     // idea from# https://stackoverflow.com/a/6985769/2036035
     // log base 2(E) == 1/ln(2)
 
     //let x_negative: bool = x.is_sign_negative();
-    if x == 0.0_f32{
+    if x == 0.0_f32 {
         return 1.0;
     }
-    if  abs::abs(x - 1.0_f32) < f32::EPSILON {
+    if abs::abs(x - 1.0_f32) < f32::EPSILON {
         return f32::consts::E;
     }
-    if  abs::abs(x - (-1.0_f32)) < f32::EPSILON {
-        return 1.0/f32::consts::E;
+    if abs::abs(x - (-1.0_f32)) < f32::EPSILON {
+        return 1.0 / f32::consts::E;
     }
     let ln2_recip: f32 = f32::consts::LOG2_E;
     //x_fract + x_whole = x/ln2_recip
@@ -35,8 +35,7 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
     let x_fract = fract::fract_sign(x * ln2_recip);
     let x_trunc = trunc::trunc_sign(x * ln2_recip);
     //guaranteed to be 0 < x < 1.0
-    let x_fract = x_fract*f32::consts::LN_2;
-
+    let x_fract = x_fract * f32::consts::LN_2;
 
     //need the 2^n portion, we can just extract that from the whole number exp portion
 
@@ -44,23 +43,24 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
     //let whole_2nexp :f32 = f32::from_bits(((x_trunc as i32 + utils::EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0);
     let fract_exp = exp_smallx(x_fract, partial_iter);
 
-    let fract_exponent: i32 = fract_exp.extract_exponent_value().saturating_add(x_trunc as i32);
+    let fract_exponent: i32 = fract_exp
+        .extract_exponent_value()
+        .saturating_add(x_trunc as i32);
 
-    if fract_exponent < -(utils::EXPONENT_BIAS as i32){
+    if fract_exponent < -(utils::EXPONENT_BIAS as i32) {
         return 0.0_f32;
     }
-    if fract_exponent > ((utils::EXPONENT_BIAS+1_u32) as i32){
+    if fract_exponent > ((utils::EXPONENT_BIAS + 1_u32) as i32) {
         return f32::INFINITY;
     }
-    let exp_approx : f32 = fract_exp.set_exponent(fract_exponent);
+    let exp_approx: f32 = fract_exp.set_exponent(fract_exponent);
     exp_approx
 }
 
-
 #[cfg(test)]
 mod tests {
-    use super::exp_ln2_approximation;
     use super::super::abs;
+    use super::exp_ln2_approximation;
     pub(crate) const MAX_ERROR: f32 = 0.001;
     /// Square root test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
@@ -84,8 +84,6 @@ mod tests {
         (-1.0, 0.36787945),
         (-10.0, 4.539993e-05),
     ];
-
-
 
     #[test]
     fn sanity_check() {

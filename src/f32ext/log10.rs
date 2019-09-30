@@ -1,6 +1,6 @@
 use super::ln;
 use core::f32;
-pub(super) fn log10_ln_approx(x:f32) -> f32{
+pub(super) fn log10_ln_approx(x: f32) -> f32 {
     let ln10_recip = f32::consts::LOG10_E;
     let fract_base_ln = ln10_recip;
     let value_ln = ln::ln_1to2_series_approximation(x);
@@ -9,8 +9,8 @@ pub(super) fn log10_ln_approx(x:f32) -> f32{
 
 #[cfg(test)]
 mod tests {
-    use super::log10_ln_approx;
     use super::super::abs;
+    use super::log10_ln_approx;
     pub(crate) const MAX_ERROR: f32 = 0.001;
     /// test vectors for ln(x)
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
@@ -55,8 +55,6 @@ mod tests {
         (1e+19, 19.0),
     ];
 
-
-
     #[test]
     fn sanity_check() {
         assert_eq!(log10_ln_approx(1_f32), 0_f32);
@@ -74,4 +72,3 @@ mod tests {
         }
     }
 }
-

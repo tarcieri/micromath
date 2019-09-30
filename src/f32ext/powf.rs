@@ -1,6 +1,5 @@
-use super::ln;
 use super::exp;
-
+use super::ln;
 
 pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
     exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x), 4)
@@ -8,8 +7,8 @@ pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use super::powf_exp_ln_approx;
     use super::super::abs;
+    use super::powf_exp_ln_approx;
     use core::f32;
 
     //error builds up from both exp and ln approximation, so we double the error allowed.
@@ -63,7 +62,6 @@ mod tests {
         (1.0, 3.0),
         (10.0, 59049.0),
     ];
-
 
     pub(crate) const TEST_VECTORS_POW150: &[(f32, f32)] = &[
         (-1e-20, 1.0),
@@ -130,13 +128,12 @@ mod tests {
         (10.0, 5.76650390625e+21),
     ];
 
-
     #[test]
     fn sanity_check() {
         assert_eq!(powf_exp_ln_approx(-1000000.0, 4.0), 0_f32);
         for (x, expected) in TEST_VECTORS_POW3 {
             let exp_x = powf_exp_ln_approx(3.0, *x);
-            let relative_error :f32 = if *expected != 0.0_f32 {
+            let relative_error: f32 = if *expected != 0.0_f32 {
                 abs::abs(exp_x - *expected) / *expected
             } else {
                 abs::abs(exp_x - *expected) / (*expected + 1.0e-20_f32)
@@ -154,7 +151,7 @@ mod tests {
 
         for (x, expected) in TEST_VECTORS_POW150 {
             let exp_x = powf_exp_ln_approx(150.0, *x);
-            let relative_error :f32 = if *expected != 0.0_f32 {
+            let relative_error: f32 = if *expected != 0.0_f32 {
                 abs::abs(exp_x - *expected) / *expected
             } else {
                 abs::abs(exp_x - *expected) / (*expected + 1.0e-20_f32)
@@ -171,4 +168,3 @@ mod tests {
         }
     }
 }
-

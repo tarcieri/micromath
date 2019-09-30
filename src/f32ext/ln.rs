@@ -1,11 +1,9 @@
+use super::abs;
+use super::utils;
+use super::utils::FloatComponents;
 /// Floating natural log
-
-
 use core::f32;
 use core::u32;
-use super::utils::FloatComponents;
-use super::utils;
-use super::abs;
 
 //excessive precision doesn't matter that much.
 #[allow(clippy::excessive_precision)]
@@ -34,23 +32,24 @@ pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
     //https://en.wikipedia.org/wiki/Remez_algorithm
 
     let ln_1to2_polynomial: f32 = -1.741_793_9_f32
-        + (2.821_202_6_f32 + (-1.469_956_8_f32
-        + (0.447_179_55_f32 - 0.056_570_851_f32 * x_working)
-        * x_working) * x_working) * x_working;
+        + (2.821_202_6_f32
+            + (-1.469_956_8_f32 + (0.447_179_55_f32 - 0.056_570_851_f32 * x_working) * x_working)
+                * x_working)
+            * x_working;
     // ln(2) * n + ln(y)
     //maybe a faster way to convert exponent?
-    let result:f32 = (base2_exponent as f32) * f32::consts::LN_2 +  ln_1to2_polynomial;
-    if x_less_than_1{
+    let result: f32 = (base2_exponent as f32) * f32::consts::LN_2 + ln_1to2_polynomial;
+    if x_less_than_1 {
         -result
-    }else{
+    } else {
         result
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::ln_1to2_series_approximation;
     use super::super::abs;
+    use super::ln_1to2_series_approximation;
     pub(crate) const MAX_ERROR: f32 = 0.001;
     /// test vectors for ln(x)
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
@@ -92,10 +91,8 @@ mod tests {
         (1e+16, 36.841362),
         (1e+17, 39.143948),
         (1e+18, 41.446533),
-        (1e+19, 43.749115)
+        (1e+19, 43.749115),
     ];
-
-
 
     #[test]
     fn sanity_check() {

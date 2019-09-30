@@ -5,23 +5,23 @@ mod abs;
 mod atan;
 mod atan2;
 mod ceil;
+mod copysign;
 mod cos;
+mod exp;
 mod floor;
+mod fract;
 mod inv;
 mod invsqrt;
+mod ln;
+mod log;
+mod log10;
+mod log2;
+mod powf;
 mod sin;
 mod sqrt;
 mod tan;
 mod trunc;
 mod utils;
-mod fract;
-mod copysign;
-mod ln;
-mod exp;
-mod log;
-mod log2;
-mod log10;
-mod powf;
 
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
@@ -145,7 +145,9 @@ impl F32Ext for f32 {
         self::tan::tan_approx(self)
     }
 
-    fn trunc(self) -> f32 { self::trunc::trunc_sign(self) }
+    fn trunc(self) -> f32 {
+        self::trunc::trunc_sign(self)
+    }
 
     fn fract(self) -> f32 {
         self::fract::fract_sign(self)
@@ -163,19 +165,19 @@ impl F32Ext for f32 {
         self::exp::exp_ln2_approximation(self, 4)
     }
 
-    fn log(self, base:f32)->f32{
+    fn log(self, base: f32) -> f32 {
         self::log::log_ln_approx(self, base)
     }
 
-    fn log2(self) -> f32{
+    fn log2(self) -> f32 {
         self::log2::log2_ln_approx(self)
     }
 
-    fn log10(self) -> f32{
+    fn log10(self) -> f32 {
         self::log10::log10_ln_approx(self)
     }
 
-    fn powf(self, n:f32) -> f32{
+    fn powf(self, n: f32) -> f32 {
         self::powf::powf_exp_ln_approx(self, n)
     }
 }
