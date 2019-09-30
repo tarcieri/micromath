@@ -22,8 +22,7 @@ pub(super) fn trunc_sign(x: f32) -> f32 {
         return x;
     }
     let fractional_mask : u32 = fractional_part.overflowing_shr(exponent_clamped).0;
-    return f32::from_bits(x_bits & !fractional_mask);
-
+    f32::from_bits(x_bits & !fractional_mask)
 }
 
 #[cfg(test)]

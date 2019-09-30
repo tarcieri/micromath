@@ -3,7 +3,7 @@ use super::exp;
 
 
 pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
-    return exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x), 4);
+    exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x), 4)
 }
 
 #[cfg(test)]

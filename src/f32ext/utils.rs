@@ -14,24 +14,24 @@ pub(super) trait FloatComponents<IntType=i32,UIntType=u32>{
 }
 impl FloatComponents for f32 {
     fn extract_sign_bit(self) ->u32{
-        return (self.to_bits()& SIGN_MASK).overflowing_shr(32 - 1).0;
+        (self.to_bits()& SIGN_MASK).overflowing_shr(32 - 1).0
     }
     fn extract_exponent_bits(self)->u32{
-        return (self.to_bits()& EXPONENT_MASK).overflowing_shr(23).0;
+        (self.to_bits()& EXPONENT_MASK).overflowing_shr(23).0
     }
     fn extract_mantissa_bits(self)->u32{
-        return self.to_bits()& MANTISSA_MASK;
+        self.to_bits()& MANTISSA_MASK
     }
     fn extract_exponent_value(self)->i32{
-        return (self.extract_exponent_bits() as i32) - EXPONENT_BIAS as i32;
+        (self.extract_exponent_bits() as i32) - EXPONENT_BIAS as i32
     }
     fn without_sign(self)->f32{
-        return f32::from_bits(self.to_bits() & !SIGN_MASK);
+        f32::from_bits(self.to_bits() & !SIGN_MASK)
     }
     fn set_exponent(self, exponent:i32) -> f32{
         debug_assert!(exponent <= 127 && exponent >= -128);
         let without_exponent :u32 = self.to_bits() & !EXPONENT_MASK;
         let only_exponent :u32 = ((exponent + EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0;
-        return f32::from_bits(without_exponent | only_exponent);
+        f32::from_bits(without_exponent | only_exponent)
     }
 }

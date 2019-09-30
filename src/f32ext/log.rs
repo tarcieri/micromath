@@ -4,7 +4,7 @@ use super::ln;
 pub(super) fn log_ln_approx(x:f32, base:f32) -> f32{
     let fract_base_ln = 1.0/ln::ln_1to2_series_approximation(base);
     let value_ln = ln::ln_1to2_series_approximation(x);
-    return value_ln * fract_base_ln;
+    value_ln * fract_base_ln
 }
 
 

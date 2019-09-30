@@ -5,13 +5,14 @@ use super::utils;
 use super::fract;
 use super::trunc;
 use crate::f32ext::utils::FloatComponents;
+use super::abs;
 
 pub(crate) fn exp_smallx(x:f32, iter:u32) -> f32{
     let mut total :f32 = 1.0_f32;
     for i in (1..=iter).rev(){
             total = 1.0_f32 + ((x/(i as f32)) * total);
     }
-    return total;
+    total
 }
 
 pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
@@ -22,10 +23,10 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
     if x == 0.0_f32{
         return 1.0;
     }
-    if x == 1.0_f32{
+    if  abs::abs(x - 1.0_f32) < f32::EPSILON {
         return f32::consts::E;
     }
-    if x == -1.0_f32{
+    if  abs::abs(x - (-1.0_f32)) < f32::EPSILON {
         return 1.0/f32::consts::E;
     }
     let ln2_recip: f32 = f32::consts::LOG2_E;
@@ -42,7 +43,7 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
     //used to use this
     //let whole_2nexp :f32 = f32::from_bits(((x_trunc as i32 + utils::EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0);
     let fract_exp = exp_smallx(x_fract, partial_iter);
-    
+
     let fract_exponent: i32 = fract_exp.extract_exponent_value().saturating_add(x_trunc as i32);
 
     if fract_exponent < -(utils::EXPONENT_BIAS as i32){
@@ -52,7 +53,7 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter:u32) -> f32 {
         return f32::INFINITY;
     }
     let exp_approx : f32 = fract_exp.set_exponent(fract_exponent);
-    return exp_approx;
+    exp_approx
 }
 
 

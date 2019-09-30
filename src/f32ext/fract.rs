@@ -28,7 +28,7 @@ pub(super) fn fract_sign(x: f32) -> f32 {
     let fractional_normalized: u32 = fractional_part.overflowing_shl(exponent_shift).0 & utils::MANTISSA_MASK;
 
     let new_exponent_bits = (utils::EXPONENT_BIAS - (exponent_shift)).overflowing_shl(23_u32).0;
-    return copysign::copysign(f32::from_bits(fractional_normalized | new_exponent_bits), x);
+    copysign::copysign(f32::from_bits(fractional_normalized | new_exponent_bits), x)
 }
 
 // don't want to delete maybe this is the better way?
@@ -50,7 +50,7 @@ pub(super) fn fract_sign2(x: f32) -> f32 {
         return copysign::copysign(0.0_f32, x);
     }
     //alternatively use -1.0? subtraction would surely be more costly though right?
-    return copysign::copysign(f32::from_bits(fractional_part | (127_u32.overflowing_shl(23_u32).0)) - 1.0_f32, x);
+    copysign::copysign(f32::from_bits(fractional_part | (127_u32.overflowing_shl(23_u32).0)) - 1.0_f32, x)
 }
 
 #[cfg(test)]

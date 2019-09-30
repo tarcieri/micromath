@@ -5,7 +5,10 @@ use core::f32;
 use core::u32;
 use super::utils::FloatComponents;
 use super::utils;
+use super::abs;
 
+//excessive precision doesn't matter that much.
+#[allow(clippy::excessive_precision)]
 pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
     // idea from https://stackoverflow.com/a/44232045/
     // modified to not be restricted to int range and only values of x above 1.0.
@@ -13,7 +16,9 @@ pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
     // should work for all positive values of x.
     // log base 2(E) == 1/ln(2)
     //let recip_ln2: f32 = f32::consts::LOG2_E;
-    if x == 1.0_f32{
+
+    //clippy forces me to do this.
+    if abs::abs(x - 1.0_f32) < f32::EPSILON {
         return 0.0_f32;
     }
     let x_less_than_1: bool = x < 1.0;
@@ -27,17 +32,18 @@ pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
     let x_working: f32 = x_working / divisor;
     //approximate polynomial generated from maple in the post using Remez Algorithm:
     //https://en.wikipedia.org/wiki/Remez_algorithm
-    let ln_1to2_polynomial: f32 = -1.7417939_f32
-        + (2.8212026_f32 + (-1.4699568_f32
-        + (0.44717955_f32 - 0.056570851_f32 * x_working)
+
+    let ln_1to2_polynomial: f32 = -1.741_793_9_f32
+        + (2.821_202_6_f32 + (-1.469_956_8_f32
+        + (0.447_179_55_f32 - 0.056_570_851_f32 * x_working)
         * x_working) * x_working) * x_working;
     // ln(2) * n + ln(y)
     //maybe a faster way to convert exponent?
     let result:f32 = (base2_exponent as f32) * f32::consts::LN_2 +  ln_1to2_polynomial;
     if x_less_than_1{
-        return -result;
+        -result
     }else{
-        return result;
+        result
     }
 }
 

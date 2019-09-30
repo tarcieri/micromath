@@ -4,7 +4,7 @@ pub(super) fn log2_ln_approx(x:f32) -> f32{
     let ln2_recip: f32 = f32::consts::LOG2_E;
     let fract_base_ln = ln2_recip;
     let value_ln = ln::ln_1to2_series_approximation(x);
-    return value_ln * fract_base_ln;
+    value_ln * fract_base_ln
 }
 
 #[cfg(test)]
