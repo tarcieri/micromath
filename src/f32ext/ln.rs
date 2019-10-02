@@ -1,28 +1,29 @@
+/// natural log (ln) approximation for f32
 use super::abs;
 use super::utils;
 use super::utils::FloatComponents;
-/// Floating natural log
 use core::f32;
 use core::u32;
 
-//excessive precision doesn't matter that much.
+//excessive precision ignored because it hides the origin of the numbers used for the ln(1.0->2.0)
+// polynomial
 #[allow(clippy::excessive_precision)]
 pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
     // idea from https://stackoverflow.com/a/44232045/
     // modified to not be restricted to int range and only values of x above 1.0.
     // and got rid of most of the slow conversions,
     // should work for all positive values of x.
-    // log base 2(E) == 1/ln(2)
-    //let recip_ln2: f32 = f32::consts::LOG2_E;
 
-    //clippy forces me to do this.
+    //x may essentially be 1.0 but, as clippy notes, these kinds of
+    //floating point comparisons can fail when the bit pattern is not the sames
     if abs::abs(x - 1.0_f32) < f32::EPSILON {
         return 0.0_f32;
     }
     let x_less_than_1: bool = x < 1.0;
-    //use fast inv here?
+    // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
+    // the precision of such an approximation is assumed not good enough.
     let x_working: f32 = if x_less_than_1 { 1.0 / x } else { x };
-    //according to post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
+    //according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
     //get exponent value
     let base2_exponent: u32 = x_working.extract_exponent_value() as u32;
     let divisor: f32 = f32::from_bits(x_working.to_bits() & utils::EXPONENT_MASK);
@@ -30,14 +31,12 @@ pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
     let x_working: f32 = x_working / divisor;
     //approximate polynomial generated from maple in the post using Remez Algorithm:
     //https://en.wikipedia.org/wiki/Remez_algorithm
-
     let ln_1to2_polynomial: f32 = -1.741_793_9_f32
         + (2.821_202_6_f32
             + (-1.469_956_8_f32 + (0.447_179_55_f32 - 0.056_570_851_f32 * x_working) * x_working)
                 * x_working)
             * x_working;
     // ln(2) * n + ln(y)
-    //maybe a faster way to convert exponent?
     let result: f32 = (base2_exponent as f32) * f32::consts::LN_2 + ln_1to2_polynomial;
     if x_less_than_1 {
         -result
@@ -51,7 +50,7 @@ mod tests {
     use super::super::abs;
     use super::ln_1to2_series_approximation;
     pub(crate) const MAX_ERROR: f32 = 0.001;
-    /// test vectors for ln(x)
+    /// ln(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1e-20, -46.0517),
         (1e-19, -43.749115),

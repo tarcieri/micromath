@@ -1,13 +1,14 @@
+/// Floating point whole number for f32
 use super::copysign;
 use super::utils;
 use super::utils::FloatComponents;
-/// Floating point fractional number for a single-precision float.
 use core::f32;
 use core::u32;
 
 pub(super) fn trunc_sign(x: f32) -> f32 {
     let x_bits: u32 = x.to_bits();
     let exponent: i32 = x.extract_exponent_value();
+    //exponent is negative, there is no whole number, just return zero
     if exponent < 0_i32 {
         return copysign::copysign(0.0_f32, x);
     }

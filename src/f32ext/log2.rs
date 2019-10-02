@@ -1,6 +1,8 @@
+/// log base 2 approximation for f32
 use super::ln;
 use core::f32;
 pub(super) fn log2_ln_approx(x: f32) -> f32 {
+    //using change of base log2(x) = ln(x)/ln(2)
     let ln2_recip: f32 = f32::consts::LOG2_E;
     let fract_base_ln = ln2_recip;
     let value_ln = ln::ln_1to2_series_approximation(x);
@@ -12,7 +14,7 @@ mod tests {
     use super::super::abs;
     use super::log2_ln_approx;
     pub(crate) const MAX_ERROR: f32 = 0.001;
-    /// test vectors for ln(x)
+    /// log2(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1e-20, -66.43856),
         (1e-19, -63.116634),

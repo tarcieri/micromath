@@ -1,3 +1,5 @@
+/// Exp approximation for f32
+
 use super::abs;
 use super::fract;
 use super::trunc;
@@ -8,6 +10,8 @@ use core::i32;
 use core::u32;
 
 pub(crate) fn exp_smallx(x: f32, iter: u32) -> f32 {
+// if x is between 0.0 and 1.0, we can approximate it with the a series
+// series from here: https://stackoverflow.com/a/6984495, e^x ~= 1 + x(1 + x/2(1 + (x?
     let mut total: f32 = 1.0_f32;
     for i in (1..=iter).rev() {
         total = 1.0_f32 + ((x / (i as f32)) * total);
@@ -17,9 +21,6 @@ pub(crate) fn exp_smallx(x: f32, iter: u32) -> f32 {
 
 pub(super) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
     // idea from# https://stackoverflow.com/a/6985769/2036035
-    // log base 2(E) == 1/ln(2)
-
-    //let x_negative: bool = x.is_sign_negative();
     if x == 0.0_f32 {
         return 1.0;
     }
@@ -29,6 +30,7 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
     if abs::abs(x - (-1.0_f32)) < f32::EPSILON {
         return 1.0 / f32::consts::E;
     }
+    // log base 2(E) == 1/ln(2)
     let ln2_recip: f32 = f32::consts::LOG2_E;
     //x_fract + x_whole = x/ln2_recip
     //ln2*(x_fract + x_whole) = x
@@ -37,12 +39,10 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
     //guaranteed to be 0 < x < 1.0
     let x_fract = x_fract * f32::consts::LN_2;
 
-    //need the 2^n portion, we can just extract that from the whole number exp portion
 
-    //used to use this
-    //let whole_2nexp :f32 = f32::from_bits(((x_trunc as i32 + utils::EXPONENT_BIAS as i32) as u32).overflowing_shl(23).0);
     let fract_exp = exp_smallx(x_fract, partial_iter);
 
+    //need the 2^n portion, we can just extract that from the whole number exp portion
     let fract_exponent: i32 = fract_exp
         .extract_exponent_value()
         .saturating_add(x_trunc as i32);
@@ -62,7 +62,7 @@ mod tests {
     use super::super::abs;
     use super::exp_ln2_approximation;
     pub(crate) const MAX_ERROR: f32 = 0.001;
-    /// Square root test vectors - `(input, output)`
+    /// exp test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1e-07, 1.0000001),
         (1e-06, 1.000001),

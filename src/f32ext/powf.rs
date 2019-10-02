@@ -1,7 +1,9 @@
+/// x^n with fractional n approximation for f32
 use super::exp;
 use super::ln;
 
 pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
+    // using x^n = exp(ln(x^n)) = exp(n*ln(x))
     exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x), 4)
 }
 
@@ -13,7 +15,7 @@ mod tests {
 
     //error builds up from both exp and ln approximation, so we double the error allowed.
     pub(crate) const MAX_ERROR: f32 = 0.002;
-    /// Square root test vectors - `(input, output)`
+    ///  powf(3,x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS_POW3: &[(f32, f32)] = &[
         (-1e-20, 1.0),
         (-1e-19, 1.0),
@@ -62,7 +64,7 @@ mod tests {
         (1.0, 3.0),
         (10.0, 59049.0),
     ];
-
+    ///  powf(150,x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS_POW150: &[(f32, f32)] = &[
         (-1e-20, 1.0),
         (-1e-19, 1.0),

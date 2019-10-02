@@ -1,6 +1,8 @@
+/// log_b(a) approximation for f32
 use super::ln;
 
 pub(super) fn log_ln_approx(x: f32, base: f32) -> f32 {
+    //using change of base log_base(x) = ln(x)/ln(base)
     let fract_base_ln = 1.0 / ln::ln_1to2_series_approximation(base);
     let value_ln = ln::ln_1to2_series_approximation(x);
     value_ln * fract_base_ln
@@ -11,7 +13,7 @@ mod tests {
     use super::super::abs;
     use super::log_ln_approx;
     pub(crate) const MAX_ERROR: f32 = 0.001;
-    /// test vectors for ln(x)
+    /// log3(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS_BASE3: &[(f32, f32)] = &[
         (1e-20, -41.91806433175008),
         (1e-19, -39.82216059431951),
@@ -54,6 +56,7 @@ mod tests {
         (1e+19, 39.82216059431951),
     ];
 
+    /// log5.5(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS_BASE5_5: &[(f32, f32)] = &[
         (1e-20, -27.013786260685983),
         (1e-19, -25.663096611998228),
@@ -95,7 +98,7 @@ mod tests {
         (1e+18, 24.312409201000182),
         (1e+19, 25.663096611998228),
     ];
-
+    /// log12.7(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS_BASE12_7: &[(f32, f32)] = &[
         (1e-20, -18.119162917899015),
         (1e-19, -17.213204546868663),
