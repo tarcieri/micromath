@@ -28,11 +28,12 @@ and quaternions.
     - [ ] `hypot`
     - [x] [inv]
     - [x] [invsqrt]
-    - [ ] `ln`
-    - [ ] `log`
-    - [ ] `log2`
-    - [ ] `log10`
-    - [ ] `powf`
+    - [x] [ln]
+    - [x] [log]
+    - [x] [log2]
+    - [x] [log10]
+    - [x] [powf]
+    - [x] [exp]
     - [x] [sin]
     - [x] [sqrt]
     - [x] [tan]
@@ -41,7 +42,10 @@ and quaternions.
     - [x] [ceil]
     - [x] [floor]
     - [ ] `round`
-    - [ ] `trunc`
+    - [x] [trunc]
+    - [x] [fract]
+    - [x] [copysign]
+
 - [Algebraic vector types]:
   - 2D:
     - [x] [I8x2]
@@ -130,12 +134,21 @@ Apache 2.0 and MIT licenses.
 [cos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.cos
 [inv]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.inv
 [invsqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.invsqrt
+[ln]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ln
+[log]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.log
+[log2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.log2
+[log10]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.log10
+[powf]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.powf
+[exp]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.exp
 [sin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sin
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
 [tan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.tan
 [abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
 [ceil]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ceil
 [floor]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.floor
+[trunc]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.trunc
+[fract]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.fract
+[copysign]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.copysign
 [Algebraic vector types]: https://docs.rs/micromath/latest/micromath/vector/index.html
 [I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
 [I16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x2.html
