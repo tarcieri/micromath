@@ -1,5 +1,4 @@
 /// Floating point fractional number for f32
-
 use super::copysign;
 use super::utils;
 use super::utils::FloatComponents;

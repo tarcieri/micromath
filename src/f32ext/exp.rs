@@ -1,5 +1,4 @@
 /// Exp approximation for f32
-
 use super::abs;
 use super::fract;
 use super::trunc;
@@ -10,8 +9,8 @@ use core::i32;
 use core::u32;
 
 pub(crate) fn exp_smallx(x: f32, iter: u32) -> f32 {
-// if x is between 0.0 and 1.0, we can approximate it with the a series
-// series from here: https://stackoverflow.com/a/6984495, e^x ~= 1 + x(1 + x/2(1 + (x?
+    // if x is between 0.0 and 1.0, we can approximate it with the a series
+    // series from here: https://stackoverflow.com/a/6984495, e^x ~= 1 + x(1 + x/2(1 + (x?
     let mut total: f32 = 1.0_f32;
     for i in (1..=iter).rev() {
         total = 1.0_f32 + ((x / (i as f32)) * total);
@@ -38,7 +37,6 @@ pub(super) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
     let x_trunc = trunc::trunc_sign(x * ln2_recip);
     //guaranteed to be 0 < x < 1.0
     let x_fract = x_fract * f32::consts::LN_2;
-
 
     let fract_exp = exp_smallx(x_fract, partial_iter);
 
