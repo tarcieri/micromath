@@ -1,3 +1,7 @@
+## [0.4.0] (2019-10-02)
+
+- Add `powf`, `exp`, `log10`, `log2`, `log`, `ln`, `trunc`, `fract`, `copysign` ([#35])
+
 ## [0.3.1] (2019-05-11)
 
 - Rust 1.31.0 support ([#33])
@@ -30,6 +34,8 @@
 
 - Initial release
 
+[0.4.0]: https://github.com/NeoBirth/micromath/pull/36
+[#35]: https://github.com/NeoBirth/micromath/pull/35
 [0.3.1]: https://github.com/NeoBirth/micromath/pull/34
 [#33]: https://github.com/NeoBirth/micromath/pull/33
 [0.3.0]: https://github.com/NeoBirth/micromath/pull/30
