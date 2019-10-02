@@ -37,7 +37,6 @@ pub(super) fn fract_sign(x: f32) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::fract_sign;
-    use super::fract_sign2;
 
     #[test]
     fn sanity_check() {
