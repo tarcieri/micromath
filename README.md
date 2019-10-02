@@ -3,12 +3,14 @@
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
 [![Build Status][build-image]][build-link]
-[![LGPL 3.0 licensed][license-image]][license-link]
+[![Apache 2.0/MIT Licensed][license-image]][license-link]
 [![Gitter Chat][gitter-image]][gitter-link]
 
-Embedded Rust math library featuring fast, safe floating point approximations
-for common arithmetic operations, 2D and 3D vector types, statistical analysis,
-and quaternions.
+Embedded Rust (i.e. `#![no_std]`-friendly) math library featuring fast, safe
+floating point approximations for common arithmetic operations, 2D and 3D
+vector types, statistical analysis, and quaternions.
+
+Optimizes for performance and small code size at the cost of precision.
 
 [Documentation][docs-link]
 
