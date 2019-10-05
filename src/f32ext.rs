@@ -17,6 +17,7 @@ mod log;
 mod log10;
 mod log2;
 mod powf;
+mod round;
 mod sin;
 mod sqrt;
 mod tan;
@@ -72,6 +73,9 @@ pub trait F32Ext: Sized {
     /// retrieves whole number part of floating point with sign
     fn trunc(self) -> f32;
 
+    /// rounds the number part of floating point with sign
+    fn round(self) -> f32;
+
     /// retrieves the fractional part of floating point with sign
     fn fract(self) -> f32;
 
@@ -111,6 +115,10 @@ impl F32Ext for f32 {
 
     fn atan2_norm(self, other: f32) -> f32 {
         self::atan2::atan2_norm_approx(self, other)
+    }
+
+    fn round(self) -> f32 {
+        self::round::round(self)
     }
 
     fn ceil(self) -> f32 {
