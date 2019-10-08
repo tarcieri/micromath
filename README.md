@@ -43,7 +43,7 @@ Optimizes for performance and small code size at the cost of precision.
     - [x] [abs]
     - [x] [ceil]
     - [x] [floor]
-    - [ ] `round`
+    - [x] [round]
     - [x] [trunc]
     - [x] [fract]
     - [x] [copysign]
@@ -148,6 +148,7 @@ Apache 2.0 and MIT licenses.
 [abs]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.abs
 [ceil]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ceil
 [floor]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.floor
+[round]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.round
 [trunc]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.trunc
 [fract]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.fract
 [copysign]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.copysign

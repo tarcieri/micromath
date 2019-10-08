@@ -1,3 +1,7 @@
+## [0.4.1] (2019-10-08)
+
+- Implement `F32Ext::round` ([#37])
+
 ## [0.4.0] (2019-10-02)
 
 - Add `powf`, `exp`, `log10`, `log2`, `log`, `ln`, `trunc`, `fract`, `copysign` ([#35])
@@ -34,6 +38,8 @@
 
 - Initial release
 
+[0.4.1]: https://github.com/NeoBirth/micromath/pull/38
+[#37]: https://github.com/NeoBirth/micromath/pull/37
 [0.4.0]: https://github.com/NeoBirth/micromath/pull/36
 [#35]: https://github.com/NeoBirth/micromath/pull/35
 [0.3.1]: https://github.com/NeoBirth/micromath/pull/34

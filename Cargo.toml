@@ -1,14 +1,13 @@
 [package]
 name        = "micromath"
 description = """
-              Embedded math library featuring fast, safe floating point
-              approximations for common arithmetic operations, 2D and 3D
-              vector types, statistical analysis, and quaternions.
-              """
-version     = "0.4.0" # Also update html_root_url in lib.rs when bumping this
+Embedded math library featuring fast, safe floating point
+approximations for common arithmetic operations, 2D and 3D
+vector types, statistical analysis, and quaternions.
+"""
+version     = "0.4.1" # Also update html_root_url in lib.rs when bumping this
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
 license     = "Apache-2.0 OR MIT"
-homepage    = "https://neobirth.org"
 repository  = "https://github.com/NeoBirth/micromath"
 readme      = "README.md"
 edition     = "2018"
