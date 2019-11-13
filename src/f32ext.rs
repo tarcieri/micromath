@@ -2,6 +2,8 @@
 //! for `std` functionality.
 
 mod abs;
+mod acos;
+mod asin;
 mod atan;
 mod atan2;
 mod ceil;
@@ -10,6 +12,7 @@ mod cos;
 mod exp;
 mod floor;
 mod fract;
+mod hypot;
 mod inv;
 mod invsqrt;
 mod ln;
@@ -31,74 +34,97 @@ pub trait F32Ext: Sized {
     /// implementation.
     fn abs(self) -> f32;
 
-    /// Approximates `atan(x)` in radians with a maximum error of `0.002`.
+    /// Approximate `asin(x)` in radians in the range `[-pi/2, pi/2]`.
+    fn asin(self) -> f32;
+
+    /// Approximate `acos(x)` in radians in the range `[0, pi]`
+    fn acos(self) -> f32;
+
+    /// Approximate `atan(x)` in radians with a maximum error of `0.002`.
     fn atan(self) -> f32;
 
-    /// Approximates `atan(x)` normalized to the `[−1,1]` range with a maximum
+    /// Approximate `atan(x)` normalized to the `[−1,1]` range with a maximum
     /// error of `0.1620` degrees.
     fn atan_norm(self) -> f32;
 
-    /// Approximates the four quadrant arctangent `atan2(x)` in radians, with
+    /// Approximate the four quadrant arctangent `atan2(x)` in radians, with
     /// a maximum error of `0.002`.
     fn atan2(self, other: f32) -> f32;
 
-    /// Approximates the four quadrant arctangent.
+    /// Approximate the four quadrant arctangent.
     /// Normalized to the `[0,4)` range with a maximum error of `0.1620` degrees.
     fn atan2_norm(self, other: f32) -> f32;
 
-    /// Approximates floating point ceiling.
+    /// Approximate floating point ceiling.
     fn ceil(self) -> f32;
 
-    /// Approximates cosine in radians with a maximum error of `0.002`.
+    /// Approximate cosine in radians with a maximum error of `0.002`.
     fn cos(self) -> f32;
 
-    /// Approximates floating point floor.
+    /// Approximate floating point floor.
     fn floor(self) -> f32;
 
-    /// Approximates `1/x` with an average deviation of ~8%.
+    /// Approximate the length of the hypotenuse of a right-angle triangle given
+    /// legs of length `x` and `y`.
+    fn hypot(self, other: f32) -> f32;
+
+    /// Approximate `1/x` with an average deviation of ~8%.
     fn inv(self) -> f32;
 
-    /// Approximates inverse square root with an average deviation of ~5%.
+    /// Approximate inverse square root with an average deviation of ~5%.
     fn invsqrt(self) -> f32;
 
-    /// Approximates sine in radians with a maximum error of `0.002`.
+    /// Approximate sine in radians with a maximum error of `0.002`.
     fn sin(self) -> f32;
 
-    /// Approximates square root with an average deviation of ~5%.
+    /// Approximate square root with an average deviation of ~5%.
     fn sqrt(self) -> f32;
 
-    /// Approximates `tan(x)` in radians with a maximum error of `0.6`.
+    /// Approximate `tan(x)` in radians with a maximum error of `0.6`.
     fn tan(self) -> f32;
 
-    /// retrieves whole number part of floating point with sign
+    /// Retrieve whole number part of floating point with sign.
     fn trunc(self) -> f32;
 
-    /// rounds the number part of floating point with sign
+    /// Round the number part of floating point with sign.
     fn round(self) -> f32;
 
-    /// retrieves the fractional part of floating point with sign
+    /// Retrieve the fractional part of floating point with sign.
     fn fract(self) -> f32;
 
-    /// copies the sign from one number to another and returns it.
+    /// Copies the sign from one number to another and returns it.
     fn copysign(self, sign: f32) -> f32;
-    /// approximates ln(x)
+
+    /// Approximate `ln(x)`.
     fn ln(self) -> f32;
 
-    ///approximates e^x
+    /// Approximate `e^x`.
     fn exp(self) -> f32;
-    ///approximates log to an arbitrary base
+
+    /// Approximate `log` with an arbitrary base.
     fn log(self, base: f32) -> f32;
-    ///approximates log2
+
+    /// Approximate `log2`.
     fn log2(self) -> f32;
-    ///approximates log10
+
+    /// Approximate `log10`.
     fn log10(self) -> f32;
-    ///approximates self^n
+
+    /// Approximate `self^n`.
     fn powf(self, n: f32) -> f32;
 }
 
 impl F32Ext for f32 {
     fn abs(self) -> f32 {
         self::abs::abs(self)
+    }
+
+    fn asin(self) -> f32 {
+        self::asin::asin_approx(self)
+    }
+
+    fn acos(self) -> f32 {
+        self::acos::acos_approx(self)
     }
 
     fn atan(self) -> f32 {
@@ -117,10 +143,6 @@ impl F32Ext for f32 {
         self::atan2::atan2_norm_approx(self, other)
     }
 
-    fn round(self) -> f32 {
-        self::round::round(self)
-    }
-
     fn ceil(self) -> f32 {
         self::ceil::ceil(self)
     }
@@ -131,6 +153,10 @@ impl F32Ext for f32 {
 
     fn floor(self) -> f32 {
         self::floor::floor(self)
+    }
+
+    fn hypot(self, other: f32) -> f32 {
+        self::hypot::hypot_approx(self, other)
     }
 
     fn inv(self) -> f32 {
@@ -155,6 +181,10 @@ impl F32Ext for f32 {
 
     fn trunc(self) -> f32 {
         self::trunc::trunc_sign(self)
+    }
+
+    fn round(self) -> f32 {
+        self::round::round(self)
     }
 
     fn fract(self) -> f32 {

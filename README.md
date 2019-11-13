@@ -22,54 +22,54 @@ Optimizes for performance and small code size at the cost of precision.
 
 - [`f32` extension]:
   - Fast approximations:
-    - [ ] `asin`
-    - [ ] `acos`
-    - [x] [atan]
-    - [x] [atan2]
-    - [x] [cos]
-    - [ ] `hypot`
-    - [x] [inv]
-    - [x] [invsqrt]
-    - [x] [ln]
-    - [x] [log]
-    - [x] [log2]
-    - [x] [log10]
-    - [x] [powf]
-    - [x] [exp]
-    - [x] [sin]
-    - [x] [sqrt]
-    - [x] [tan]
+    - [asin]
+    - [acos]
+    - [atan]
+    - [atan2]
+    - [cos]
+    - [hypot]
+    - [inv]
+    - [invsqrt]
+    - [ln]
+    - [log]
+    - [log2]
+    - [log10]
+    - [powf]
+    - [exp]
+    - [sin]
+    - [sqrt]
+    - [tan]
   - `std` polyfills:
-    - [x] [abs]
-    - [x] [ceil]
-    - [x] [floor]
-    - [x] [round]
-    - [x] [trunc]
-    - [x] [fract]
-    - [x] [copysign]
+    - [abs]
+    - [ceil]
+    - [floor]
+    - [round]
+    - [trunc]
+    - [fract]
+    - [copysign]
 
 - [Algebraic vector types]:
   - 2D:
-    - [x] [I8x2]
-    - [x] [I16x2]
-    - [x] [I32x2]
-    - [x] [U8x2]
-    - [x] [U16x2]
-    - [x] [U32x2]
-    - [x] [F32x2]
+    - [I8x2]
+    - [I16x2]
+    - [I32x2]
+    - [U8x2]
+    - [U16x2]
+    - [U32x2]
+    - [F32x2]
   - 3D:
-    - [x] [I8x3]
-    - [x] [I16x3]
-    - [x] [I32x3]
-    - [x] [U8x3]
-    - [x] [U16x3]
-    - [x] [U32x3]
-    - [x] [F32x3]
+    - [I8x3]
+    - [I16x3]
+    - [I32x3]
+    - [U8x3]
+    - [U16x3]
+    - [U32x3]
+    - [F32x3]
 - [Statistical analysis]:
-  - [x] [mean]
-  - [x] [stddev]
-  - [x] [trim]
-  - [x] [variance]
+  - [mean]
+  - [stddev]
+  - [trim]
+  - [variance]
 - [Quaternions]
 
 ## Comparisons with other Rust crates
@@ -131,9 +131,12 @@ Apache 2.0 and MIT licenses.
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
 [gitter-link]: https://gitter.im/NeoBirth/community
 [`f32` extension]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
+[asin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.asin
+[acos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.acos
 [atan]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan
 [atan2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.atan2
 [cos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.cos
+[hypot]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.hypot
 [inv]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.inv
 [invsqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.invsqrt
 [ln]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.ln
