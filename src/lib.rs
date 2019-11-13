@@ -78,19 +78,12 @@
 //! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 
 #![no_std]
-#![deny(
-    warnings,
-    missing_docs,
-    trivial_casts,
-    trivial_numeric_casts,
-    unused_import_braces,
-    unused_qualifications
-)]
-#![forbid(unsafe_code)]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath-sq.png",
     html_root_url = "https://docs.rs/micromath/0.4.1"
 )]
+#![forbid(unsafe_code)]
+#![warn(missing_docs, trivial_numeric_casts, unused_qualifications)]
 
 mod f32ext;
 #[cfg(feature = "quaternion")]
