@@ -1,10 +1,11 @@
 [package]
 name        = "micromath"
-version     = "0.4.1" # Also update html_root_url in lib.rs when bumping this
+version     = "0.5.0" # Also update html_root_url in lib.rs when bumping this
 description = """
 Embedded-friendly math library featuring fast floating point approximations
 (with small code size) for common arithmetic operations, trigonometry,
 2D/3D vector types, statistical analysis, and quaternions.
+Optimizes for performance and small code size at the cost of precision.
 """
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
 license     = "Apache-2.0 OR MIT"
