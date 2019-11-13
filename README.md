@@ -3,6 +3,8 @@
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
 [![Build Status][build-image]][build-link]
+[![Safety Dance][safety-image]][safety-link]
+![MSRV][msrv-image]
 [![Apache 2.0/MIT Licensed][license-image]][license-link]
 [![Gitter Chat][gitter-image]][gitter-link]
 
@@ -120,16 +122,24 @@ Incorporates portions of some tests from the [libm crate].
 Copyright © 2018 Jorge Aparicio and also dual licensed under the
 Apache 2.0 and MIT licenses. 
 
+[//]: # (badges)
+
 [crate-img]: https://img.shields.io/crates/v/micromath.svg
 [crate-link]: https://crates.io/crates/micromath
 [docs-img]: https://docs.rs/micromath/badge.svg
 [docs-link]: https://docs.rs/micromath/
-[build-image]: https://travis-ci.com/NeoBirth/micromath.svg?branch=develop
-[build-link]: https://travis-ci.com/NeoBirth/micromath
+[build-image]: https://github.com/neobirth/micromath/workflows/Rust/badge.svg
+[build-link]: https://github.com/neobirth/micromath/actions
+[safety-image]: https://img.shields.io/badge/unsafe-forbidden-success.svg
+[safety-link]: https://github.com/rust-secure-code/safety-dance/
+[msrv-image]: https://img.shields.io/badge/rustc-1.31+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
 [license-link]: https://github.com/NeoBirth/micromath/blob/develop/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
 [gitter-link]: https://gitter.im/NeoBirth/community
+
+[//]: # (general links)
+
 [`f32` extension]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
 [asin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.asin
 [acos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.acos
