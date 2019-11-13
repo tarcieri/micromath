@@ -67,7 +67,7 @@ pub trait Vector: Copy + Debug + Default + Index<usize> + PartialEq + Sized + Se
     fn get(self, index: usize) -> Option<Self::Component>;
 
     /// Iterate over the components of a vector
-    fn iter(&self) -> Iter<Self> {
+    fn iter(&self) -> Iter<'_, Self> {
         Iter::new(self)
     }
 

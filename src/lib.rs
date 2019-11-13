@@ -83,7 +83,13 @@
     html_root_url = "https://docs.rs/micromath/0.4.1"
 )]
 #![forbid(unsafe_code)]
-#![warn(missing_docs, trivial_numeric_casts, unused_qualifications)]
+#![warn(
+    missing_docs,
+    rust_2018_idioms,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_qualifications
+)]
 
 mod f32ext;
 #[cfg(feature = "quaternion")]

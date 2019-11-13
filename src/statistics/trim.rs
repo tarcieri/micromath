@@ -16,12 +16,12 @@ pub trait Trim {
 
     /// Trim this collection (cull outliers) at the default threshold of 2 standard
     /// deviations.
-    fn trim(&self) -> Iter<Self::Result> {
+    fn trim(&self) -> Iter<'_, Self::Result> {
         self.trim_at(DEFAULT_THRESHOLD)
     }
 
     /// Trim this collection (cull outliers) at the specified number of standard deviations.
-    fn trim_at(&self, threshold: f32) -> Iter<Self::Result>;
+    fn trim_at(&self, threshold: f32) -> Iter<'_, Self::Result>;
 }
 
 impl<N> Trim for &[N]
@@ -31,7 +31,7 @@ where
 {
     type Result = N;
 
-    fn trim_at(&self, threshold: f32) -> Iter<Self::Result> {
+    fn trim_at(&self, threshold: f32) -> Iter<'_, Self::Result> {
         Iter::new(self, threshold)
     }
 }
