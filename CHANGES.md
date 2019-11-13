@@ -1,3 +1,8 @@
+## [0.5.0] (2019-11-13)
+
+- Remove default cargo features ([#42])
+- Add `asin`, `acos`, and `hypot` ([#39])
+
 ## [0.4.1] (2019-10-08)
 
 - Implement `F32Ext::round` ([#37])
@@ -38,6 +43,9 @@
 
 - Initial release
 
+[0.5.0]: https://github.com/NeoBirth/micromath/pull/43
+[#42]: https://github.com/NeoBirth/micromath/pull/42
+[#39]: https://github.com/NeoBirth/micromath/pull/39
 [0.4.1]: https://github.com/NeoBirth/micromath/pull/38
 [#37]: https://github.com/NeoBirth/micromath/pull/37
 [0.4.0]: https://github.com/NeoBirth/micromath/pull/36
