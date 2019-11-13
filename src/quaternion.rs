@@ -22,7 +22,9 @@
 //! Quaternions are a number system that extends the complex numbers which can
 //! be used for efficiently computing spatial rotations.
 //!
-//! They are computed as the quotient of two directed lines in a
+//! The `quaternion` Cargo feature must be enabled to use this functionality.
+//!
+//! Quaternions are computed as the quotient of two directed lines in a
 //! three-dimensional space, or equivalently as the quotient of two vectors.
 //!
 //! For given real numbers `a`, `b`, `c`, and `d`, they take the form:

@@ -1,5 +1,7 @@
 //! Statistical analysis support.
 //!
+//! The `statistics` Cargo feature must be enabled to use this functionality.
+//!
 //! The following traits are available and impl'd for slices and iterators of
 //! `f32` (and can be impl'd for other types):
 //!

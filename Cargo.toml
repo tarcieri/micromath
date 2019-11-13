@@ -3,7 +3,7 @@ name        = "micromath"
 version     = "0.4.1" # Also update html_root_url in lib.rs when bumping this
 description = """
 Embedded-friendly math library featuring fast floating point approximations
-(with small code size) for common arithmetic operations, triganometry,
+(with small code size) for common arithmetic operations, trigonometry,
 2D/3D vector types, statistical analysis, and quaternions.
 """
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
@@ -12,14 +12,20 @@ repository  = "https://github.com/NeoBirth/micromath"
 readme      = "README.md"
 edition     = "2018"
 categories  = ["embedded", "science", "no-std"]
-keywords    = ["math", "quaternions", "statistics", "triganometry", "vector"]
+keywords    = ["math", "quaternions", "statistics", "trigonometry", "vector"]
+
+[badges]
+maintenance = { status = "passively-maintained" }
 
 [dependencies.generic-array]
 version = "0.13"
+optional = true
 default-features = false
 
 [features]
-default = ["quaternion", "statistics", "vector"]
 quaternion = []
 statistics = []
-vector = []
+vector = ["generic-array"]
+
+[package.metadata.docs.rs]
+all-features = true
