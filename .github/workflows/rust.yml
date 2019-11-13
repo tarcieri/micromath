@@ -51,7 +51,13 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --target thumbv7em-none-eabihf --release
+          args: --release --target thumbv7em-none-eabihf
+
+      - name: Run cargo build --all-features
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --all-features --release --target thumbv7em-none-eabihf
 
   test:
     name: Test Suite
@@ -76,6 +82,12 @@ jobs:
         with:
           command: test
           args: --release
+
+      - name: Run cargo test --all-features
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --release --all-features
 
   fmt:
     name: Rustfmt

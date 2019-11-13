@@ -98,4 +98,5 @@ pub use crate::f32ext::F32Ext;
 pub use crate::quaternion::Quaternion;
 #[cfg(feature = "vector")]
 pub use crate::vector::{Vector, VectorExt};
+#[cfg(feature = "vector")]
 pub use generic_array;

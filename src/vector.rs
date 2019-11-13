@@ -1,5 +1,7 @@
 //! Algebraic vector types generic over a number of axes and a component type.
 //!
+//! The `vector` Cargo feature must be enabled to use this functionality.
+//!
 //! All vectors types impl the [Vector] trait, and all vector components
 //! impl the [Component] trait. The [Vector] trait provides a number of
 //! features, including accessing components by `Index<usize>`, iterator

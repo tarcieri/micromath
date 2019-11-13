@@ -8,9 +8,9 @@
 [![Apache 2.0/MIT Licensed][license-image]][license-link]
 [![Gitter Chat][gitter-image]][gitter-link]
 
-Embedded Rust (i.e. `#![no_std]`-friendly) math library featuring fast, safe
-floating point approximations for common arithmetic operations, 2D and 3D
-vector types, statistical analysis, and quaternions.
+Embedded-friendly (i.e. `no_std`) Rust math library featuring fast, safe
+floating point approximations for common arithmetic operations, trigonometry,
+2D/3D vector types, statistical analysis, and quaternions.
 
 Optimizes for performance and small code size at the cost of precision.
 
