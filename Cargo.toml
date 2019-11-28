@@ -12,7 +12,7 @@ license     = "Apache-2.0 OR MIT"
 repository  = "https://github.com/NeoBirth/micromath"
 readme      = "README.md"
 edition     = "2018"
-categories  = ["embedded", "science", "no-std"]
+categories  = ["embedded", "mathematics", "science", "no-std"]
 keywords    = ["math", "quaternions", "statistics", "trigonometry", "vector"]
 
 [badges]
