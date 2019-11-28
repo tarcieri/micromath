@@ -1,3 +1,7 @@
+## [0.5.1] (2019-11-27)
+
+- Cargo.toml: Add mathematics category ([#45])
+
 ## [0.5.0] (2019-11-13)
 
 - Remove default cargo features ([#42])
@@ -43,6 +47,8 @@
 
 - Initial release
 
+[0.5.1]: https://github.com/NeoBirth/micromath/pull/46
+[#45]: https://github.com/NeoBirth/micromath/pull/45
 [0.5.0]: https://github.com/NeoBirth/micromath/pull/43
 [#42]: https://github.com/NeoBirth/micromath/pull/42
 [#39]: https://github.com/NeoBirth/micromath/pull/39
