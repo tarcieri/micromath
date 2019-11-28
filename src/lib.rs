@@ -80,7 +80,7 @@
 #![no_std]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath-sq.png",
-    html_root_url = "https://docs.rs/micromath/0.5.0"
+    html_root_url = "https://docs.rs/micromath/0.5.1"
 )]
 #![forbid(unsafe_code)]
 #![warn(
