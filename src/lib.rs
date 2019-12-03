@@ -1,6 +1,6 @@
-//! Embedded math library featuring fast, safe floating point approximations
-//! for common arithmetic operations, 2D and 3D vector types, and statistical
-//! analysis.
+//! Embedded-friendly (i.e. `#![no_std]`) math library featuring fast, safe
+//! floating point approximations for common arithmetic operations, as well as
+//! 2D and 3D vector types, statistical analysis functions, and quaternions.
 //!
 //! ## Floating point approximations
 //!
@@ -80,7 +80,7 @@
 #![no_std]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath-sq.png",
-    html_root_url = "https://docs.rs/micromath/0.5.1"
+    html_root_url = "https://docs.rs/micromath/1.0.0"
 )]
 #![forbid(unsafe_code)]
 #![warn(

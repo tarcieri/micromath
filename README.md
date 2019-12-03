@@ -18,7 +18,18 @@ Optimizes for performance and small code size at the cost of precision.
 
 ## Requirements
 
-- Rust 1.31+
+Requires Rust **1.31** or newer.
+
+In the future, we reserve the right to change the following:
+
+- Minimum Supported Rust Version
+- `generic-array` version (presently `^0.13`)
+
+i.e. these are explicitly out of scope for the SemVer guarantees this
+crate provides.
+
+However, when we change either of these things, we will accompany them
+with a minor version bump.
 
 ## Features
 
