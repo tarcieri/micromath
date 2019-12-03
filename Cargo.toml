@@ -1,6 +1,6 @@
 [package]
 name        = "micromath"
-version     = "0.5.1" # Also update html_root_url in lib.rs when bumping this
+version     = "1.0.0" # Also update html_root_url in lib.rs when bumping this
 description = """
 Embedded-friendly math library featuring fast floating point approximations
 (with small code size) for common arithmetic operations, trigonometry,
