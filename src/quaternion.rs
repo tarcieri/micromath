@@ -118,25 +118,74 @@ impl Mul<Quaternion> for f32 {
     }
 }
 
-#[cfg(tests)]
+#[cfg(test)]
 mod tests {
-    // TODO: write test!
-    #[test]
-    fn add_assign() {}
+    use super::Quaternion;
+    use crate::f32ext::F32Ext;
 
-    // TODO: write test!
-    #[test]
-    fn mul_assign() {}
+    const MAX_ERROR: f32 = 0.05;
 
-    // TODO: write test!
     #[test]
-    fn sub_assign() {}
+    fn conj_test() {
+        let q = Quaternion(1.0, 2.0, 3.0, 4.0);
+        assert_eq!(q.conj(), Quaternion(1.0, -2.0, -3.0, -4.0));
+    }
 
-    // TODO: write test!
     #[test]
-    fn mul_quaternion() {}
+    fn norm_test() {
+        let q = Quaternion(1.0, 2.0, 3.0, 4.0);
+        assert_eq!(q.norm(), 30.0);
 
-    // TODO: write test!
+        let n = q.norm().invsqrt();
+        let r = q * n;
+
+        // The magnitude of the norm should be 1.0
+        let allowed_delta = 1.0 * MAX_ERROR;
+        let actual_delta = (r.norm() - 1.0).abs();
+        assert!(
+            actual_delta <= allowed_delta,
+            "delta {} too large: {} vs {}",
+            actual_delta,
+            r.norm(),
+            1.0
+        );
+    }
+
     #[test]
-    fn mul_f32() {}
+    fn add_assign() {
+        let mut q = Quaternion(1.0, 2.0, 3.0, 4.0);
+        q += Quaternion(1.0, 2.0, 3.0, 4.0);
+        assert_eq!(q, Quaternion(2.0, 4.0, 6.0, 8.0));
+    }
+
+    #[test]
+    fn mul_assign() {
+        let mut q = Quaternion(1.0, 2.0, 3.0, 4.0);
+        q *= 2.0;
+        assert_eq!(q, Quaternion(2.0, 4.0, 6.0, 8.0));
+    }
+
+    #[test]
+    fn sub_assign() {
+        let mut q = Quaternion(2.0, 4.0, 6.0, 8.0);
+        q -= Quaternion(1.0, 2.0, 3.0, 4.0);
+        assert_eq!(q, Quaternion(1.0, 2.0, 3.0, 4.0));
+    }
+
+    #[test]
+    fn mul_quaternion() {
+        let q = Quaternion(1.0, 2.0, 3.0, 4.0);
+        let r = Quaternion(4.0, 3.0, 2.0, 1.0);
+        assert_eq!(q * r, Quaternion(-12.0, 6.0, 24.0, 12.0));
+    }
+
+    #[test]
+    fn mul_f32() {
+        let q = Quaternion(1.0, 2.0, 3.0, 4.0);
+        let r = 2.0 * q;
+        assert_eq!(r, Quaternion(2.0, 4.0, 6.0, 8.0));
+
+        let s = r * 0.5;
+        assert_eq!(s, Quaternion(1.0, 2.0, 3.0, 4.0));
+    }
 }
