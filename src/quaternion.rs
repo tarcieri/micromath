@@ -176,7 +176,7 @@ mod tests {
     fn mul_quaternion() {
         let q = Quaternion(1.0, 2.0, 3.0, 4.0);
         let r = Quaternion(4.0, 3.0, 2.0, 1.0);
-        assert_eq!(q*r, Quaternion(-12.0, 6.0, 24.0, 12.0));
+        assert_eq!(q * r, Quaternion(-12.0, 6.0, 24.0, 12.0));
     }
 
     #[test]
