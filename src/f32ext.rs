@@ -9,6 +9,7 @@ mod atan2;
 mod ceil;
 mod copysign;
 mod cos;
+mod div_euclid;
 mod exp;
 mod floor;
 mod fract;
@@ -20,6 +21,7 @@ mod log;
 mod log10;
 mod log2;
 mod powf;
+mod rem_euclid;
 mod round;
 mod sin;
 mod sqrt;
@@ -61,6 +63,9 @@ pub trait F32Ext: Sized {
     /// Approximate cosine in radians with a maximum error of `0.002`.
     fn cos(self) -> f32;
 
+    /// Calculates Euclidean division, the matching method for `rem_euclid`.
+    fn div_euclid(self, other: f32) -> f32;
+
     /// Approximate floating point floor.
     fn floor(self) -> f32;
 
@@ -73,6 +78,9 @@ pub trait F32Ext: Sized {
 
     /// Approximate inverse square root with an average deviation of ~5%.
     fn invsqrt(self) -> f32;
+
+    /// Calculates the least nonnegative remainder of `self (mod other)`.
+    fn rem_euclid(self, other: f32) -> f32;
 
     /// Approximate sine in radians with a maximum error of `0.002`.
     fn sin(self) -> f32;
@@ -151,6 +159,10 @@ impl F32Ext for f32 {
         self::cos::cos_approx(self)
     }
 
+    fn div_euclid(self, other: f32) -> f32 {
+        self::div_euclid::div_euclid(self, other)
+    }
+
     fn floor(self) -> f32 {
         self::floor::floor(self)
     }
@@ -165,6 +177,10 @@ impl F32Ext for f32 {
 
     fn invsqrt(self) -> f32 {
         self::invsqrt::invsqrt_approx(self)
+    }
+
+    fn rem_euclid(self, other: f32) -> f32 {
+        self::rem_euclid::rem_euclid(self, other)
     }
 
     fn sin(self) -> f32 {
