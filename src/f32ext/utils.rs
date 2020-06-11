@@ -1,4 +1,5 @@
 use core::f32;
+use core::i32;
 pub const SIGN_MASK: u32 = 0b10000000_00000000_00000000_00000000;
 pub const EXPONENT_MASK: u32 = 0b01111111_10000000_00000000_00000000;
 pub const MANTISSA_MASK: u32 = 0b00000000_01111111_11111111_11111111;
@@ -14,6 +15,7 @@ pub(super) trait FloatComponents<IntType = i32, UIntType = u32> {
     fn without_sign(self) -> Self;
     fn set_exponent(self, exponent: IntType) -> Self;
     fn is_integer(&self) -> bool;
+    fn is_even(&self) -> bool;
 }
 impl FloatComponents for f32 {
     fn extract_sign_bit(self) -> u32 {
@@ -48,6 +50,13 @@ impl FloatComponents for f32 {
         // if fractional part contains anything, we know it *isn't* an integer.
         // if zero there will be nothing in the fractional part
         // if it is whole, there will be nothing in the fractional part
-        return fractional_part != 0u32;
+        fractional_part != 0u32
+    }
+    fn is_even(&self)->bool{
+        if self > i32::MAX {
+            true
+        }else{
+            (self as i32) % 2 == 0
+        }
     }
 }
