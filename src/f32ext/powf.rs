@@ -152,10 +152,11 @@ mod tests {
         (10.0, 5.76650390625e+21),
     ];
 
-    ///  powf(150,x) test vectors - `(base_input, power_input, output)`
+    ///  misc powf(x,n) test vectors - `(base_input, power_input, output)`
     pub(crate) const TEST_VECTORS_MISC: &[(f32, f32, f32)] = &[
         (-0.5881598, 2.0, 0.3459319498370519),
         (-0.5881598, 3.2, f32::NAN),
+        (-0.5881598, 3.0, -0.20346326672325524),
         (-1000000.0, 4.0, 1e+24),
     ];
 
