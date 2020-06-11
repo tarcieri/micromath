@@ -3,6 +3,8 @@ pub const SIGN_MASK: u32 = 0b10000000_00000000_00000000_00000000;
 pub const EXPONENT_MASK: u32 = 0b01111111_10000000_00000000_00000000;
 pub const MANTISSA_MASK: u32 = 0b00000000_01111111_11111111_11111111;
 pub const EXPONENT_BIAS: u32 = 127;
+//core::f32 has mantissa digits, but the actual occupied bits are 24 - 1.
+pub const MANTISSA_BITS: u32 = 23;
 
 pub(super) trait FloatComponents<IntType = i32, UIntType = u32> {
     fn extract_sign_bit(self) -> UIntType;
@@ -11,6 +13,7 @@ pub(super) trait FloatComponents<IntType = i32, UIntType = u32> {
     fn extract_exponent_value(self) -> IntType;
     fn without_sign(self) -> Self;
     fn set_exponent(self, exponent: IntType) -> Self;
+    fn is_integer(&self) -> bool;
 }
 impl FloatComponents for f32 {
     fn extract_sign_bit(self) -> u32 {
@@ -35,5 +38,16 @@ impl FloatComponents for f32 {
             .overflowing_shl(23)
             .0;
         f32::from_bits(without_exponent | only_exponent)
+    }
+    fn is_integer(&self) -> bool{
+        let exponent: i32 = x.extract_exponent_value();
+        //if exponent is negative we shouldn't remove anything, this stops an opposite shift.
+        let exponent_clamped = i32::max(exponent, 0_i32) as u32;
+        // find the part of the fraction that would be left over
+        let fractional_part: u32 = self.overflowing_shl(exponent_clamped).0 & MANTISSA_MASK;
+        // if fractional part contains anything, we know it *isn't* an integer.
+        // if zero there will be nothing in the fractional part
+        // if it is whole, there will be nothing in the fractional part
+        return fractional_part != 0u32;
     }
 }
