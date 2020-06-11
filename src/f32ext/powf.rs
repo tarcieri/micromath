@@ -4,7 +4,7 @@ use super::ln;
 
 pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
     // using x^n = exp(ln(x^n)) = exp(n*ln(x))
-    exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x), 4)
+   exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x), 4)
 }
 
 #[cfg(test)]
@@ -130,6 +130,12 @@ mod tests {
         (10.0, 5.76650390625e+21),
     ];
 
+    ///  powf(150,x) test vectors - `(base_input, power_input, output)`
+    pub(crate) const TEST_VECTORS_MISC: &[(f32, f32, f32)] = &[
+        (-0.5881598, 2.0, 0.3459319498370519),
+        (-0.5881598, 3.2, f32::NAN),
+    ];
+
     #[test]
     fn sanity_check() {
         assert_eq!(powf_exp_ln_approx(-1000000.0, 4.0), 0_f32);
@@ -164,6 +170,25 @@ mod tests {
                 "relative_error {} too large for input {} : {} vs {}",
                 relative_error,
                 *x,
+                exp_x,
+                expected
+            );
+        }
+
+        for (base_input, power_input, expected) in TEST_VECTORS_MISC {
+            let exp_x = powf_exp_ln_approx(*base_input, *power_input);
+            let relative_error: f32 = if *expected != 0.0_f32 {
+                abs::abs(exp_x - *expected) / *expected
+            } else {
+                abs::abs(exp_x - *expected) / (*expected + 1.0e-20_f32)
+            };
+
+            assert!(
+                relative_error <= MAX_ERROR,
+                "relative_error {} too large for input {}.powf({}) : {} vs {}",
+                relative_error,
+                *base_input,
+                *power_input,
                 exp_x,
                 expected
             );
