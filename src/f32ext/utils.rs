@@ -4,8 +4,6 @@ pub const SIGN_MASK: u32 = 0b10000000_00000000_00000000_00000000;
 pub const EXPONENT_MASK: u32 = 0b01111111_10000000_00000000_00000000;
 pub const MANTISSA_MASK: u32 = 0b00000000_01111111_11111111_11111111;
 pub const EXPONENT_BIAS: u32 = 127;
-//core::f32 has mantissa digits, but the actual occupied bits are 24 - 1.
-pub const MANTISSA_BITS: u32 = 23;
 
 pub(super) trait FloatComponents<IntType = i32, UIntType = u32> {
     fn extract_sign_bit(self) -> UIntType;
