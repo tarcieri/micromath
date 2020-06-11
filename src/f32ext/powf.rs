@@ -7,15 +7,21 @@ use core::f32;
 pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
     // using x^n = exp(ln(x^n)) = exp(n*ln(x))
     if x < 0.0 {
-        assert!((2.0.is_integer()), "exponent value {}", 2.0.extract_exponent_value());
         if !n.is_integer() {
             return f32::NAN;
         } else {
             //if n is even, then we know that the result will have no sign, so we can remove it.
             if n.is_even() {
-                return exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x.without_sign()), 4);
-            } else { //if n isn't even, we need to multiply by -1.0 at the end.
-                return -exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x.without_sign()), 4);
+                return exp::exp_ln2_approximation(
+                    n * ln::ln_1to2_series_approximation(x.without_sign()),
+                    4,
+                );
+            } else {
+                //if n isn't even, we need to multiply by -1.0 at the end.
+                return -exp::exp_ln2_approximation(
+                    n * ln::ln_1to2_series_approximation(x.without_sign()),
+                    4,
+                );
             }
         }
     } else {
@@ -153,7 +159,7 @@ mod tests {
         (-1000000.0, 4.0, 1e+24),
     ];
 
-    fn calc_relative_error(experimental:f32, expected:f32) -> f32{
+    fn calc_relative_error(experimental: f32, expected: f32) -> f32 {
         let relative_error: f32 = if experimental.is_nan() && expected.is_nan() {
             0.0_f32
         } else if expected != 0.0_f32 {

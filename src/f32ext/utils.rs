@@ -41,7 +41,7 @@ impl FloatComponents for f32 {
             .0;
         f32::from_bits(without_exponent | only_exponent)
     }
-    fn is_integer(&self) -> bool{
+    fn is_integer(&self) -> bool {
         let exponent: i32 = self.extract_exponent_value();
         let self_bits = self.to_bits();
         //if exponent is negative we shouldn't remove anything, this stops an opposite shift.
@@ -53,13 +53,13 @@ impl FloatComponents for f32 {
         // if it is whole, there will be nothing in the fractional part
         fractional_part == 0_u32
     }
-    fn is_even(&self)->bool{
-        let abs_exponent_value:i32 = i32::abs(self.extract_exponent_value());
+    fn is_even(&self) -> bool {
+        let abs_exponent_value: i32 = i32::abs(self.extract_exponent_value());
         // any floating point value that doesn't fit in an i32 range is even,
         // and will loose 1's digit precision at exp values of 23+
-        if abs_exponent_value >= 31{
+        if abs_exponent_value >= 31 {
             true
-        }else{
+        } else {
             (*self as i32) % 2 == 0
         }
     }
