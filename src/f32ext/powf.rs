@@ -7,14 +7,15 @@ use core::f32;
 pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
     // using x^n = exp(ln(x^n)) = exp(n*ln(x))
     if x < 0.0 {
+        assert!((2.0.is_integer()), "exponent value {}", 2.0.extract_exponent_value());
         if !n.is_integer() {
             return f32::NAN;
         } else {
             //if n is even, then we know that the result will have no sign, so we can remove it.
-            if n.is_even(){
-               return exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x.without_sign()), 4);
-            }else{ //if n isn't even, we need to multiply by -1.0 at the end.
-               return -exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x.without_sign()), 4);
+            if n.is_even() {
+                return exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x.without_sign()), 4);
+            } else { //if n isn't even, we need to multiply by -1.0 at the end.
+                return -exp::exp_ln2_approximation(n * ln::ln_1to2_series_approximation(x.without_sign()), 4);
             }
         }
     } else {
@@ -149,18 +150,25 @@ mod tests {
     pub(crate) const TEST_VECTORS_MISC: &[(f32, f32, f32)] = &[
         (-0.5881598, 2.0, 0.3459319498370519),
         (-0.5881598, 3.2, f32::NAN),
+        (-1000000.0, 4.0, 1e+24),
     ];
+
+    fn calc_relative_error(experimental:f32, expected:f32) -> f32{
+        let relative_error: f32 = if experimental.is_nan() && expected.is_nan() {
+            0.0_f32
+        } else if expected != 0.0_f32 {
+            abs::abs(experimental - expected) / expected
+        } else {
+            abs::abs(experimental - expected) / (expected + 1.0e-20_f32)
+        };
+        relative_error
+    }
 
     #[test]
     fn sanity_check() {
-        assert_eq!(powf_exp_ln_approx(-1000000.0, 4.0), 0_f32);
         for (x, expected) in TEST_VECTORS_POW3 {
             let exp_x = powf_exp_ln_approx(3.0, *x);
-            let relative_error: f32 = if *expected != 0.0_f32 {
-                abs::abs(exp_x - *expected) / *expected
-            } else {
-                abs::abs(exp_x - *expected) / (*expected + 1.0e-20_f32)
-            };
+            let relative_error: f32 = calc_relative_error(exp_x, *expected);
 
             assert!(
                 relative_error <= MAX_ERROR,
@@ -174,11 +182,7 @@ mod tests {
 
         for (x, expected) in TEST_VECTORS_POW150 {
             let exp_x = powf_exp_ln_approx(150.0, *x);
-            let relative_error: f32 = if *expected != 0.0_f32 {
-                abs::abs(exp_x - *expected) / *expected
-            } else {
-                abs::abs(exp_x - *expected) / (*expected + 1.0e-20_f32)
-            };
+            let relative_error: f32 = calc_relative_error(exp_x, *expected);
 
             assert!(
                 relative_error <= MAX_ERROR,
@@ -192,11 +196,7 @@ mod tests {
 
         for (base_input, power_input, expected) in TEST_VECTORS_MISC {
             let exp_x = powf_exp_ln_approx(*base_input, *power_input);
-            let relative_error: f32 = if *expected != 0.0_f32 {
-                abs::abs(exp_x - *expected) / *expected
-            } else {
-                abs::abs(exp_x - *expected) / (*expected + 1.0e-20_f32)
-            };
+            let relative_error: f32 = calc_relative_error(exp_x, *expected);
 
             assert!(
                 relative_error <= MAX_ERROR,
