@@ -8,20 +8,20 @@ pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
     // using x^n = exp(ln(x^n)) = exp(n*ln(x))
     if x < 0.0 {
         if !n.is_integer() {
-            return f32::NAN;
+            f32::NAN
         } else {
             //if n is even, then we know that the result will have no sign, so we can remove it.
             if n.is_even() {
-                return exp::exp_ln2_approximation(
+                exp::exp_ln2_approximation(
                     n * ln::ln_1to2_series_approximation(x.without_sign()),
                     4,
-                );
+                )
             } else {
                 //if n isn't even, we need to multiply by -1.0 at the end.
-                return -exp::exp_ln2_approximation(
+                -exp::exp_ln2_approximation(
                     n * ln::ln_1to2_series_approximation(x.without_sign()),
                     4,
-                );
+                )
             }
         }
     } else {
