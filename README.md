@@ -165,6 +165,7 @@ Apache 2.0 and MIT licenses.
 [log2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.log2
 [log10]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.log10
 [powf]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.powf
+[powi]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.powi
 [exp]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.exp
 [sin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sin
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
