@@ -13,10 +13,8 @@ pub(super) fn fract_sign(x: f32) -> f32 {
     if exponent < 0_i32 {
         return x;
     }
-    let exponent_clamped = i32::max(exponent, 0_i32) as u32;
-
     // find the part of the fraction that would be left over
-    let fractional_part: u32 = x_bits.overflowing_shl(exponent_clamped).0 & utils::MANTISSA_MASK;
+    let fractional_part: u32 = x_bits.overflowing_shl(exponent as u32).0 & utils::MANTISSA_MASK;
     // if there isn't a fraction we can just return 0
     if fractional_part == 0_u32 {
         // most people don't actually care about -0.0, so would it be better to just not copysign?
@@ -24,12 +22,13 @@ pub(super) fn fract_sign(x: f32) -> f32 {
     }
     // Note: alternatively this could use -1.0, but it's assumed subtraction would be more costly
     // example: 'let new_exponent_bits = 127_u32.overflowing_shl(23_u32).0)) - 1.0_f32'
-    let exponent_shift: u32 = (fractional_part.leading_zeros() - (32_u32 - 23_u32)) + 1;
+    let exponent_shift: u32 =
+        (fractional_part.leading_zeros() - (32_u32 - utils::MANTISSA_BITS)) + 1;
     let fractional_normalized: u32 =
         fractional_part.overflowing_shl(exponent_shift).0 & utils::MANTISSA_MASK;
 
     let new_exponent_bits = (utils::EXPONENT_BIAS - (exponent_shift))
-        .overflowing_shl(23_u32)
+        .overflowing_shl(utils::MANTISSA_BITS)
         .0;
     copysign::copysign(f32::from_bits(fractional_normalized | new_exponent_bits), x)
 }

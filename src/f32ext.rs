@@ -21,6 +21,7 @@ mod log;
 mod log10;
 mod log2;
 mod powf;
+mod powi;
 mod rem_euclid;
 mod round;
 mod sin;
@@ -120,6 +121,9 @@ pub trait F32Ext: Sized {
 
     /// Approximate `self^n`.
     fn powf(self, n: f32) -> f32;
+
+    /// Approximate `self^n` where n is an `i32`
+    fn powi(self, n: i32) -> f32;
 }
 
 impl F32Ext for f32 {
@@ -233,5 +237,9 @@ impl F32Ext for f32 {
 
     fn powf(self, n: f32) -> f32 {
         self::powf::powf_exp_ln_approx(self, n)
+    }
+
+    fn powi(self, n: i32) -> f32 {
+        self::powi::powi_exp_by_squaring(self, n)
     }
 }
