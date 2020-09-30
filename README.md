@@ -16,14 +16,16 @@ Optimizes for performance and small code size at the cost of precision.
 
 [Documentation][docs-link]
 
-## Requirements
+## Minimum Supported Rust Version
 
-Requires Rust **1.31** or newer.
+Requires Rust **1.36** or newer.
+
+## Semver Policy
 
 In the future, we reserve the right to change the following:
 
 - Minimum Supported Rust Version
-- `generic-array` version (presently `^0.13`)
+- `generic-array` version (presently `^0.14`)
 
 i.e. these are explicitly out of scope for the SemVer guarantees this
 crate provides.
@@ -143,7 +145,7 @@ Apache 2.0 and MIT licenses.
 [build-link]: https://github.com/neobirth/micromath/actions
 [safety-image]: https://img.shields.io/badge/unsafe-forbidden-success.svg
 [safety-link]: https://github.com/rust-secure-code/safety-dance/
-[msrv-image]: https://img.shields.io/badge/rustc-1.31+-blue.svg
+[msrv-image]: https://img.shields.io/badge/rustc-1.36+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
 [license-link]: https://github.com/NeoBirth/micromath/blob/develop/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg

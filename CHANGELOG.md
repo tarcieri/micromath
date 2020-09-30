@@ -1,21 +1,34 @@
-## 1.0.1 (2020-06-12)
+# Changelog
+All notable changes to this project will be documented in this file.
 
-- Add support for `powf` with negative bases ([#51])
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 1.1.0 (2020-09-30)
+### Added
+- `powi` support ([#53])
+
+### Changed
+- Bump `generic-array` dependency to v0.14; MSRV 1.36+ ([#54])
+
+[#54]: https://github.com/NeoBirth/micromath/pull/54
+[#53]: https://github.com/NeoBirth/micromath/pull/53
+
+## 1.0.1 (2020-06-12)
+### Added
+- Support for `powf` with negative bases ([#51])
 
 [#51]: https://github.com/NeoBirth/micromath/pull/51
 
 ## 1.0.0 (2019-12-02)
-
 - Initial 1.0 release! 🎉 (otherwise unchanged)
 
 ## 0.5.1 (2019-11-27)
-
 - Cargo.toml: Add mathematics category ([#45])
 
 [#45]: https://github.com/NeoBirth/micromath/pull/45
 
 ## 0.5.0 (2019-11-13)
-
 - Remove default cargo features ([#42])
 - Add `asin`, `acos`, and `hypot` ([#39])
 
@@ -23,25 +36,21 @@
 [#39]: https://github.com/NeoBirth/micromath/pull/39
 
 ## 0.4.1 (2019-10-08)
-
 - Implement `F32Ext::round` ([#37])
 
 [#37]: https://github.com/NeoBirth/micromath/pull/37
 
 ## 0.4.0 (2019-10-02)
-
 - Add `powf`, `exp`, `log10`, `log2`, `log`, `ln`, `trunc`, `fract`, `copysign` ([#35])
 
 [#35]: https://github.com/NeoBirth/micromath/pull/35
 
 ## 0.3.1 (2019-05-11)
-
 - Rust 1.31.0 support ([#33])
 
 [#33]: https://github.com/NeoBirth/micromath/pull/33
 
 ## 0.3.0 (2019-05-04)
-
 - statistics: Add Trim trait for statistical outlier culling iterators ([#29])
 - Quaternions ([#28])
 - f32ext: fast `inv()` approximation ([#27])
@@ -54,13 +63,11 @@
 [#25]: https://github.com/NeoBirth/micromath/pull/25
 
 ## 0.2.2 (2019-05-04)
-
 - Add `i32` and `u32` vectors ([#23])
 
 [#23]: https://github.com/NeoBirth/micromath/pull/23
 
 ## 0.2.1 (2019-05-03)
-
 - Add `html_logo_url` and square icon ([#20])
 - `README.md`: Update links to use 'develop' branch ([#19])
 
@@ -68,7 +75,6 @@
 [#19]: https://github.com/NeoBirth/micromath/pull/19
 
 ## 0.2.0 (2019-05-03)
-
 - `tan(x)` ([#17])
 - `invsqrt(x)` ([#16])
 - `cos(x)` and `sin(x)` ([#15])
@@ -82,5 +88,4 @@
 [#12]: https://github.com/NeoBirth/micromath/pull/12
 
 ## 0.1.0 (2019-05-03)
-
 - Initial release
