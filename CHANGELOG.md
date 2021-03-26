@@ -11,14 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Bump `generic-array` dependency to v0.14; MSRV 1.36+ ([#54])
 
-[#54]: https://github.com/NeoBirth/micromath/pull/54
-[#53]: https://github.com/NeoBirth/micromath/pull/53
+[#54]: https://github.com/tarcieri/micromath/pull/54
+[#53]: https://github.com/tarcieri/micromath/pull/53
 
 ## 1.0.1 (2020-06-12)
 ### Added
 - Support for `powf` with negative bases ([#51])
 
-[#51]: https://github.com/NeoBirth/micromath/pull/51
+[#51]: https://github.com/tarcieri/micromath/pull/51
 
 ## 1.0.0 (2019-12-02)
 - Initial 1.0 release! 🎉 (otherwise unchanged)
@@ -26,29 +26,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.5.1 (2019-11-27)
 - Cargo.toml: Add mathematics category ([#45])
 
-[#45]: https://github.com/NeoBirth/micromath/pull/45
+[#45]: https://github.com/tarcieri/micromath/pull/45
 
 ## 0.5.0 (2019-11-13)
 - Remove default cargo features ([#42])
 - Add `asin`, `acos`, and `hypot` ([#39])
 
-[#42]: https://github.com/NeoBirth/micromath/pull/42
-[#39]: https://github.com/NeoBirth/micromath/pull/39
+[#42]: https://github.com/tarcieri/micromath/pull/42
+[#39]: https://github.com/tarcieri/micromath/pull/39
 
 ## 0.4.1 (2019-10-08)
 - Implement `F32Ext::round` ([#37])
 
-[#37]: https://github.com/NeoBirth/micromath/pull/37
+[#37]: https://github.com/tarcieri/micromath/pull/37
 
 ## 0.4.0 (2019-10-02)
 - Add `powf`, `exp`, `log10`, `log2`, `log`, `ln`, `trunc`, `fract`, `copysign` ([#35])
 
-[#35]: https://github.com/NeoBirth/micromath/pull/35
+[#35]: https://github.com/tarcieri/micromath/pull/35
 
 ## 0.3.1 (2019-05-11)
 - Rust 1.31.0 support ([#33])
 
-[#33]: https://github.com/NeoBirth/micromath/pull/33
+[#33]: https://github.com/tarcieri/micromath/pull/33
 
 ## 0.3.0 (2019-05-04)
 - statistics: Add Trim trait for statistical outlier culling iterators ([#29])
@@ -56,23 +56,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - f32ext: fast `inv()` approximation ([#27])
 - Improve documentation throughout the library ([#25], [#26])
 
-[#29]: https://github.com/NeoBirth/micromath/pull/29
-[#28]: https://github.com/NeoBirth/micromath/pull/28
-[#27]: https://github.com/NeoBirth/micromath/pull/27
-[#26]: https://github.com/NeoBirth/micromath/pull/26
-[#25]: https://github.com/NeoBirth/micromath/pull/25
+[#29]: https://github.com/tarcieri/micromath/pull/29
+[#28]: https://github.com/tarcieri/micromath/pull/28
+[#27]: https://github.com/tarcieri/micromath/pull/27
+[#26]: https://github.com/tarcieri/micromath/pull/26
+[#25]: https://github.com/tarcieri/micromath/pull/25
 
 ## 0.2.2 (2019-05-04)
 - Add `i32` and `u32` vectors ([#23])
 
-[#23]: https://github.com/NeoBirth/micromath/pull/23
+[#23]: https://github.com/tarcieri/micromath/pull/23
 
 ## 0.2.1 (2019-05-03)
 - Add `html_logo_url` and square icon ([#20])
 - `README.md`: Update links to use 'develop' branch ([#19])
 
-[#20]: https://github.com/NeoBirth/micromath/pull/20
-[#19]: https://github.com/NeoBirth/micromath/pull/19
+[#20]: https://github.com/tarcieri/micromath/pull/20
+[#19]: https://github.com/tarcieri/micromath/pull/19
 
 ## 0.2.0 (2019-05-03)
 - `tan(x)` ([#17])
@@ -81,11 +81,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ceil(x)` and `floor(x)` ([#14])
 - Update to `generic-array` v0.13 ([#12])
 
-[#17]: https://github.com/NeoBirth/micromath/pull/17
-[#16]: https://github.com/NeoBirth/micromath/pull/16
-[#15]: https://github.com/NeoBirth/micromath/pull/15
-[#14]: https://github.com/NeoBirth/micromath/pull/14
-[#12]: https://github.com/NeoBirth/micromath/pull/12
+[#17]: https://github.com/tarcieri/micromath/pull/17
+[#16]: https://github.com/tarcieri/micromath/pull/16
+[#15]: https://github.com/tarcieri/micromath/pull/15
+[#14]: https://github.com/tarcieri/micromath/pull/14
+[#12]: https://github.com/tarcieri/micromath/pull/12
 
 ## 0.1.0 (2019-05-03)
 - Initial release

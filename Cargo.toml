@@ -9,7 +9,7 @@ Optimizes for performance and small code size at the cost of precision.
 """
 authors     = ["Tony Arcieri <bascule@gmail.com>"]
 license     = "Apache-2.0 OR MIT"
-repository  = "https://github.com/NeoBirth/micromath"
+repository  = "https://github.com/tarcieri/micromath"
 readme      = "README.md"
 edition     = "2018"
 categories  = ["embedded", "mathematics", "science", "no-std"]
