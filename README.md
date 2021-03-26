@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/tarcieri/micromath/develop/img/micromath.png" width="640">
+# <img src="https://raw.githubusercontent.com/tarcieri/micromath/main/img/micromath.png" width="640">
 
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
@@ -147,7 +147,7 @@ Apache 2.0 and MIT licenses.
 [safety-link]: https://github.com/rust-secure-code/safety-dance/
 [msrv-image]: https://img.shields.io/badge/rustc-1.36+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
-[license-link]: https://github.com/tarcieri/micromath/blob/develop/LICENSE-APACHE
+[license-link]: https://github.com/tarcieri/micromath/blob/main/LICENSE-APACHE
 [gitter-image]: https://badges.gitter.im/tarcieri/micromath.svg
 [gitter-link]: https://gitter.im/tarcieri/community
 
@@ -204,4 +204,4 @@ Apache 2.0 and MIT licenses.
 [vek crate]: https://github.com/yoanlcq/vek
 [approx crate]: https://crates.io/crates/approx
 [cc]: https://contributor-covenant.org
-[CODE_OF_CONDUCT.md]: https://github.com/tarcieri/micromath/blob/develop/CODE_OF_CONDUCT.md
+[CODE_OF_CONDUCT.md]: https://github.com/tarcieri/micromath/blob/main/CODE_OF_CONDUCT.md
