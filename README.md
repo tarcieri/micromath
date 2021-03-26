@@ -141,7 +141,7 @@ Apache 2.0 and MIT licenses.
 [crate-link]: https://crates.io/crates/micromath
 [docs-img]: https://docs.rs/micromath/badge.svg
 [docs-link]: https://docs.rs/micromath/
-[build-image]: https://github.com/tarcieri/micromath/workflows/Rust/badge.svg
+[build-image]: https://github.com/tarcieri/micromath/workflows/CI/badge.svg
 [build-link]: https://github.com/tarcieri/micromath/actions
 [safety-image]: https://img.shields.io/badge/unsafe-forbidden-success.svg
 [safety-link]: https://github.com/rust-secure-code/safety-dance/
