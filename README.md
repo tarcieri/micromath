@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/NeoBirth/micromath/develop/img/micromath.png" width="640">
+# <img src="https://raw.githubusercontent.com/tarcieri/micromath/develop/img/micromath.png" width="640">
 
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
@@ -124,7 +124,7 @@ For more information, please see [CODE_OF_CONDUCT.md].
 
 ## License
 
-Copyright © 2019 NeoBirth Developers
+Copyright © 2019 tarcieri Developers
 
 Dual licensed under your choice of either of:
 
@@ -141,15 +141,15 @@ Apache 2.0 and MIT licenses.
 [crate-link]: https://crates.io/crates/micromath
 [docs-img]: https://docs.rs/micromath/badge.svg
 [docs-link]: https://docs.rs/micromath/
-[build-image]: https://github.com/neobirth/micromath/workflows/Rust/badge.svg
-[build-link]: https://github.com/neobirth/micromath/actions
+[build-image]: https://github.com/tarcieri/micromath/workflows/Rust/badge.svg
+[build-link]: https://github.com/tarcieri/micromath/actions
 [safety-image]: https://img.shields.io/badge/unsafe-forbidden-success.svg
 [safety-link]: https://github.com/rust-secure-code/safety-dance/
 [msrv-image]: https://img.shields.io/badge/rustc-1.36+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
-[license-link]: https://github.com/NeoBirth/micromath/blob/develop/LICENSE-APACHE
-[gitter-image]: https://badges.gitter.im/NeoBirth/micromath.svg
-[gitter-link]: https://gitter.im/NeoBirth/community
+[license-link]: https://github.com/tarcieri/micromath/blob/develop/LICENSE-APACHE
+[gitter-image]: https://badges.gitter.im/tarcieri/micromath.svg
+[gitter-link]: https://gitter.im/tarcieri/community
 
 [//]: # (general links)
 
@@ -204,4 +204,4 @@ Apache 2.0 and MIT licenses.
 [vek crate]: https://github.com/yoanlcq/vek
 [approx crate]: https://crates.io/crates/approx
 [cc]: https://contributor-covenant.org
-[CODE_OF_CONDUCT.md]: https://github.com/NeoBirth/micromath/blob/develop/CODE_OF_CONDUCT.md
+[CODE_OF_CONDUCT.md]: https://github.com/tarcieri/micromath/blob/develop/CODE_OF_CONDUCT.md
