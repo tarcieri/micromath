@@ -6,7 +6,6 @@
 [![Safety Dance][safety-image]][safety-link]
 ![MSRV][msrv-image]
 [![Apache 2.0/MIT Licensed][license-image]][license-link]
-[![Gitter Chat][gitter-image]][gitter-link]
 
 Embedded-friendly (i.e. `no_std`) Rust math library featuring fast, safe
 floating point approximations for common arithmetic operations, trigonometry,
@@ -87,35 +86,6 @@ with a minor version bump.
   - [variance]
 - [Quaternions]
 
-## Comparisons with other Rust crates
-
-### `libm` crate
-
-The [libm crate] contains a port of MUSL's libm to Rust, providing
-high-precision implementations of common arithmetic functions.
-
-`micromath` trades precision for performance, instead using the best-available
-approximations of the same functions, implemented using safe conversions
-between `f32` and `u32`.
-
-The approximations are generally calculated using a combination of bit
-twiddling and magic constants, as opposed to the FPU-heavy approaches used by
-`libm`. These approaches are culled from recent academic research papers as
-well as older approaches which have been commonly used in games and other
-performance critical use cases where approximations are adequate.
-
-### `vek` crate
-
-The [vek crate] provides a rich library for 2D and 3D vector types.
-Unfortunately, due to a [number of issues](https://github.com/yoanlcq/vek/issues/20)
-including a transitive `std` dependency through the [approx crate],
-`vek` does not support `no_std`. According to the crate's author, the potential
-fixes are nontrivial (and involve addressing problems such as transcendantal
-functions causing overflow panics).
-
-`micromath` has been written from the ground up to support `no_std` use cases.
-In fact, it doesn't even have a `std` feature!
-
 ## Code of Conduct
 
 We abide by the [Contributor Covenant][cc] and ask that you do as well.
@@ -124,7 +94,7 @@ For more information, please see [CODE_OF_CONDUCT.md].
 
 ## License
 
-Copyright © 2019 tarcieri Developers
+Copyright © 2019-2021 tarcieri Developers
 
 Dual licensed under your choice of either of:
 
@@ -148,8 +118,6 @@ Apache 2.0 and MIT licenses.
 [msrv-image]: https://img.shields.io/badge/rustc-1.36+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
 [license-link]: https://github.com/tarcieri/micromath/blob/main/LICENSE-APACHE
-[gitter-image]: https://badges.gitter.im/tarcieri/micromath.svg
-[gitter-link]: https://gitter.im/tarcieri/community
 
 [//]: # (general links)
 
