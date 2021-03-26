@@ -1,11 +1,9 @@
-# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+name: CI
 
 on:
   pull_request: {}
   push:
     branches: main
-
-name: Rust
 
 jobs:
   check:
