@@ -81,7 +81,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/tarcieri/micromath/main/img/micromath-sq.png",
-    html_root_url = "https://docs.rs/micromath/1.1.0"
+    html_root_url = "https://docs.rs/micromath/1.1.1"
 )]
 #![forbid(unsafe_code)]
 #![warn(
