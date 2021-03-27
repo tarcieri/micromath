@@ -78,6 +78,7 @@
 //! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
 
 #![no_std]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/tarcieri/micromath/main/img/micromath-sq.png",
     html_root_url = "https://docs.rs/micromath/1.1.0"
@@ -91,18 +92,27 @@
     unused_qualifications
 )]
 
-mod f32ext;
 #[cfg(feature = "quaternion")]
+#[cfg_attr(docsrs, doc(cfg(feature = "quaternion")))]
 pub mod quaternion;
+
 #[cfg(feature = "statistics")]
+#[cfg_attr(docsrs, doc(cfg(feature = "statistics")))]
 pub mod statistics;
+
 #[cfg(feature = "vector")]
+#[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
 pub mod vector;
 
+mod f32ext;
+
 pub use crate::f32ext::F32Ext;
+
 #[cfg(feature = "quaternion")]
 pub use crate::quaternion::Quaternion;
+
 #[cfg(feature = "vector")]
-pub use crate::vector::{Vector, VectorExt};
-#[cfg(feature = "vector")]
-pub use generic_array;
+pub use {
+    crate::vector::{Vector, VectorExt},
+    generic_array,
+};
