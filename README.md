@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/tarcieri/micromath/main/img/micromath.png" width="640">
+# <img src="https://raw.githubusercontent.com/tarcieri/micromath/main/img/micromath.png" width="800">
 
 [![Crate][crate-img]][crate-link]
 [![Docs][docs-img]][docs-link]
