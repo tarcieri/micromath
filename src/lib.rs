@@ -10,8 +10,8 @@
 //! processing, these approximations are often sufficient and the performance
 //! gains worth the lost precision.
 //!
-//! These approximations are provided by the [micromath::F32Ext] trait which is
-//! impl'd for `f32`, providing a drop-in `std`-compatible (sans lost precision) API.
+//! These approximations are provided by the [`F32Ext`] trait which is impl'd
+//! for `f32`, providing a drop-in `std`-compatible (sans lost precision) API.
 //!
 //! ```
 //! use micromath::F32Ext;
@@ -36,7 +36,7 @@
 //!
 //! ## Vector types
 //!
-//! See the [`vector` module] for more information on vector types.
+//! See the [`vector`] module for more information on vector types.
 //!
 //! The following vector types are available, all of which have `pub x` and
 //! `pub y` (and on 3D vectors, `pub z`) members:
@@ -53,29 +53,16 @@
 //!
 //! ## Statistical analysis
 //!
-//! See the [`statistics` module] for more information on statistical analysis
+//! See the [`statistics`] module for more information on statistical analysis
 //! traits and functionality.
 //!
 //! The following traits are available and impl'd for slices and iterators of
 //! `f32` (and can be impl'd for other types):
 //!
-//! - [Mean] - compute arithmetic mean with the `mean()` method
-//! - [StdDev] - compute standard deviation with the `stddev()` method
-//! - [Trim] - cull outliers from a sample slice with the `trim()` method.
-//! - [Variance] - compute variance with the `variance() method
-//!
-//! ## Quaternions
-//!
-//! See the [`quaternion` module] for more information.
-//!
-//! [micromath::F32Ext]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html
-//! [`vector` module]: https://docs.rs/micromath/latest/micromath/vector/index.html
-//! [`statistics` module]: https://docs.rs/micromath/latest/micromath/statistics/index.html
-//! [`quaternion` module]: https://docs.rs/micromath/latest/micromath/quaternion/index.html
-//! [Mean]: https://docs.rs/micromath/latest/micromath/statistics/trait.Mean.html
-//! [StdDev]: https://docs.rs/micromath/latest/micromath/statistics/trait.StdDev.html
-//! [Trim]: https://docs.rs/micromath/latest/micromath/statistics/trim/trait.Trim.html
-//! [Variance]: https://docs.rs/micromath/latest/micromath/statistics/trait.Variance.html
+//! - [`Mean`][`statistics::Mean`] - compute arithmetic mean with the `mean()` method.
+//! - [`StdDev`][`statistics::StdDev`] - compute standard deviation with the `stddev()` method.
+//! - [`Trim`][`statistics::Trim`] - cull outliers from a sample slice with the `trim()` method.
+//! - [`Variance`][`statistics::Variance`] - compute variance with the `variance()` method.
 
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]
@@ -93,8 +80,7 @@
 )]
 
 #[cfg(feature = "quaternion")]
-#[cfg_attr(docsrs, doc(cfg(feature = "quaternion")))]
-pub mod quaternion;
+mod quaternion;
 
 #[cfg(feature = "statistics")]
 #[cfg_attr(docsrs, doc(cfg(feature = "statistics")))]
