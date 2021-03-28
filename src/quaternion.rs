@@ -1,52 +1,49 @@
-// Adapted from the madgwick crate: https://github.com/japaric/madgwick
-// Copyright (c) 2018 Jorge Aparicio
-//
-// Original sources dual licensed under your choice of the Apache 2.0
-// and/or MIT licenses, which matches this crate's licensing terms.
-//
-// See toplevel LICENSE-MIT for more information on the MIT license.
-// Apache 2.0 license follows:
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-//! Quaternions are a number system that extends the complex numbers which can
-//! be used for efficiently computing spatial rotations.
+//! Adapted from the `madgwick` crate: <https://github.com/japaric/madgwick>
+//! Copyright (c) 2018 Jorge Aparicio
 //!
-//! The `quaternion` Cargo feature must be enabled to use this functionality.
+//! Original sources dual licensed under your choice of the Apache 2.0
+//! and/or MIT licenses, which matches this crate's licensing terms.
 //!
-//! Quaternions are computed as the quotient of two directed lines in a
-//! three-dimensional space, or equivalently as the quotient of two vectors.
+//! See toplevel LICENSE-MIT for more information on the MIT license.
+//! Apache 2.0 license follows:
 //!
-//! For given real numbers `a`, `b`, `c`, and `d`, they take the form:
+//! Licensed under the Apache License, Version 2.0 (the "License");
+//! you may not use this file except in compliance with the License.
+//! You may obtain a copy of the License at:
 //!
-//! `a + bi + cj + dk`
+//! <https://www.apache.org/licenses/LICENSE-2.0>
 //!
-//! where `i`, `j`, and `k` are the fundamental quaternion units:
-//!
-//! `i² = j² = k² = i*j*k = -1`
-//!
-//! Quaternion multiplication is noncommutative:
-//!
-//! | x | 1  | i  | j  | k  |
-//! |---|----|----|----|----|
-//! | 1 | 1  | i  | j  | k  |
-//! | i | i  | -1 | k  | -j |
-//! | j | j  | -k | -1 | i  |
-//! | k | k  | j  | -i | -1 |
+//! Unless required by applicable law or agreed to in writing, software
+//! distributed under the License is distributed on an "AS IS" BASIS,
+//! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//! See the License for the specific language governing permissions and
+//! limitations under the License.
 
 use core::ops::{AddAssign, Mul, MulAssign, SubAssign};
 
-/// Quaternion
+/// Quaternions are a number system that extends the complex numbers which can
+/// be used for efficiently computing spatial rotations.
+///
+/// They're computed as the quotient of two directed lines in a
+/// three-dimensional space, or equivalently as the quotient of two vectors.
+///
+/// For given real numbers `a`, `b`, `c`, and `d`, they take the form:
+///
+/// `a + bi + cj + dk`
+///
+/// where `i`, `j`, and `k` are the fundamental quaternion units:
+///
+/// `i² = j² = k² = i*j*k = -1`
+///
+/// Quaternion multiplication is non-commutative:
+///
+/// | x | 1  | i  | j  | k  |
+/// |---|----|----|----|----|
+/// | 1 | 1  | i  | j  | k  |
+/// | i | i  | -1 | k  | -j |
+/// | j | j  | -k | -1 | i  |
+/// | k | k  | j  | -i | -1 |
+#[cfg_attr(docsrs, doc(cfg(feature = "quaternion")))]
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Quaternion(pub f32, pub f32, pub f32, pub f32);
 
