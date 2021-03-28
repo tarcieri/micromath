@@ -7,7 +7,7 @@ use core::{
     fmt::Debug,
     iter::FromIterator,
     marker::PhantomData,
-    ops::{Add, AddAssign, Div, Index, Mul, MulAssign, Sub},
+    ops::{Add, AddAssign, Div, Index, Mul, MulAssign, Sub, SubAssign},
 };
 
 #[allow(unused_imports)]
@@ -15,15 +15,15 @@ use crate::f32ext::F32Ext;
 
 /// Components of numeric vectors.
 ///
-/// All components must be `Copy` + `Sized` types which support a minimal
-/// set of arithmeticic operations (`Add`, `Sub`, `Mul`, `Div`), as well as
-/// `Default`, `PartialEq` and `PartialOrd`.
+/// All components must be [`Copy`] + [`Sized`] types which support a minimal
+/// set of arithmetic operations ([`Add`], [`Sub`], [`Mul`], [`Div`]), as well as
+/// [`Default`], [`PartialEq`] and [`PartialOrd`].
 ///
 /// This trait is impl'd for the following primitive types:
 ///
-/// - `i8`, `i16`, `i32`
-/// - `u8`, `u16`, `u32`
-/// - `f32`
+/// - [`i8`], [`i16`], [`i32`]
+/// - [`u8`], [`u16`], [`u32`]
+/// - [`f32`]
 pub trait Component:
     Copy
     + Debug
@@ -239,6 +239,29 @@ where
     }
 }
 
+impl<C> Sub for Vector2d<C>
+where
+    C: Component,
+{
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self {
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+        }
+    }
+}
+
+impl<C> SubAssign for Vector2d<C>
+where
+    C: Component,
+{
+    fn sub_assign(&mut self, other: Self) {
+        *self = *self - other;
+    }
+}
+
 impl<C> Mul<C> for Vector2d<C>
 where
     C: Component,
@@ -440,6 +463,30 @@ where
 {
     fn add_assign(&mut self, other: Self) {
         *self = *self + other;
+    }
+}
+
+impl<C> Sub for Vector3d<C>
+where
+    C: Component,
+{
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self {
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+            z: self.z - rhs.z,
+        }
+    }
+}
+
+impl<C> SubAssign for Vector3d<C>
+where
+    C: Component,
+{
+    fn sub_assign(&mut self, other: Self) {
+        *self = *self - other;
     }
 }
 
