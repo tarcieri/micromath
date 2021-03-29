@@ -4,14 +4,14 @@ use super::sqrt::sqrt_approx;
 
 /// Calculate the length of the hypotenuse of a right-angle triangle given
 /// legs of length `x` and `y`.
-pub(super) fn hypot_approx(x: f32, y: f32) -> f32 {
+pub(crate) fn hypot_approx(x: f32, y: f32) -> f32 {
     sqrt_approx(x * x + y * y)
 }
 
 #[cfg(test)]
 mod tests {
     use super::{hypot_approx, sqrt_approx};
-    use crate::f32ext::abs::abs;
+    use crate::float::abs::abs;
     use core::f32;
 
     #[test]

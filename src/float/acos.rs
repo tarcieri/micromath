@@ -6,14 +6,14 @@
 use super::{atan::atan_approx, sqrt::sqrt_approx};
 
 /// Computes `acos(x)` approximation in radians in the range `[0, pi]`
-pub(super) fn acos_approx(x: f32) -> f32 {
+pub(crate) fn acos_approx(x: f32) -> f32 {
     atan_approx(sqrt_approx(1.0 - x * x) / x)
 }
 
 #[cfg(test)]
 mod tests {
     use super::acos_approx;
-    use crate::f32ext::{abs::abs, cos::cos_approx};
+    use crate::float::{abs::abs, cos::cos_approx};
     use core::f32;
 
     const MAX_ERROR: f32 = 0.03;

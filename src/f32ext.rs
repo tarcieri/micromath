@@ -1,34 +1,6 @@
-//! `f32` extension providing various arithmetic approximations and polyfills
-//! for `std` functionality.
+//! `f32` extension
 
-mod abs;
-mod acos;
-mod asin;
-mod atan;
-mod atan2;
-mod ceil;
-mod copysign;
-mod cos;
-mod div_euclid;
-mod exp;
-mod floor;
-mod fract;
-mod hypot;
-mod inv;
-mod invsqrt;
-mod ln;
-mod log;
-mod log10;
-mod log2;
-mod powf;
-mod powi;
-mod rem_euclid;
-mod round;
-mod sin;
-mod sqrt;
-mod tan;
-mod trunc;
-mod utils;
+use crate::float;
 
 /// `f32` extension providing various arithmetic approximations and polyfills
 /// for `std` functionality.
@@ -128,118 +100,118 @@ pub trait F32Ext: Sized {
 
 impl F32Ext for f32 {
     fn abs(self) -> f32 {
-        self::abs::abs(self)
+        float::abs::abs(self)
     }
 
     fn asin(self) -> f32 {
-        self::asin::asin_approx(self)
+        float::asin::asin_approx(self)
     }
 
     fn acos(self) -> f32 {
-        self::acos::acos_approx(self)
+        float::acos::acos_approx(self)
     }
 
     fn atan(self) -> f32 {
-        self::atan::atan_approx(self)
+        float::atan::atan_approx(self)
     }
 
     fn atan_norm(self) -> f32 {
-        self::atan::atan_norm_approx(self)
+        float::atan::atan_norm_approx(self)
     }
 
     fn atan2(self, other: f32) -> f32 {
-        self::atan2::atan2_approx(self, other)
+        float::atan2::atan2_approx(self, other)
     }
 
     fn atan2_norm(self, other: f32) -> f32 {
-        self::atan2::atan2_norm_approx(self, other)
+        float::atan2::atan2_norm_approx(self, other)
     }
 
     fn ceil(self) -> f32 {
-        self::ceil::ceil(self)
+        float::ceil::ceil(self)
     }
 
     fn cos(self) -> f32 {
-        self::cos::cos_approx(self)
+        float::cos::cos_approx(self)
     }
 
     fn div_euclid(self, other: f32) -> f32 {
-        self::div_euclid::div_euclid(self, other)
+        float::div_euclid::div_euclid(self, other)
     }
 
     fn floor(self) -> f32 {
-        self::floor::floor(self)
+        float::floor::floor(self)
     }
 
     fn hypot(self, other: f32) -> f32 {
-        self::hypot::hypot_approx(self, other)
+        float::hypot::hypot_approx(self, other)
     }
 
     fn inv(self) -> f32 {
-        self::inv::inv_approx(self)
+        float::inv::inv_approx(self)
     }
 
     fn invsqrt(self) -> f32 {
-        self::invsqrt::invsqrt_approx(self)
+        float::invsqrt::invsqrt_approx(self)
     }
 
     fn rem_euclid(self, other: f32) -> f32 {
-        self::rem_euclid::rem_euclid(self, other)
+        float::rem_euclid::rem_euclid(self, other)
     }
 
     fn sin(self) -> f32 {
-        self::sin::sin_approx(self)
+        float::sin::sin_approx(self)
     }
 
     fn sqrt(self) -> f32 {
-        self::sqrt::sqrt_approx(self)
+        float::sqrt::sqrt_approx(self)
     }
 
     fn tan(self) -> f32 {
-        self::tan::tan_approx(self)
+        float::tan::tan_approx(self)
     }
 
     fn trunc(self) -> f32 {
-        self::trunc::trunc_sign(self)
+        float::trunc::trunc_sign(self)
     }
 
     fn round(self) -> f32 {
-        self::round::round(self)
+        float::round::round(self)
     }
 
     fn fract(self) -> f32 {
-        self::fract::fract_sign(self)
+        float::fract::fract_sign(self)
     }
 
     fn copysign(self, sign: f32) -> f32 {
-        self::copysign::copysign(self, sign)
+        float::copysign::copysign(self, sign)
     }
 
     fn ln(self) -> f32 {
-        self::ln::ln_1to2_series_approximation(self)
+        float::ln::ln_1to2_series_approximation(self)
     }
 
     fn exp(self) -> f32 {
-        self::exp::exp_ln2_approximation(self, 4)
+        float::exp::exp_ln2_approximation(self, 4)
     }
 
     fn log(self, base: f32) -> f32 {
-        self::log::log_ln_approx(self, base)
+        float::log::log_ln_approx(self, base)
     }
 
     fn log2(self) -> f32 {
-        self::log2::log2_ln_approx(self)
+        float::log2::log2_ln_approx(self)
     }
 
     fn log10(self) -> f32 {
-        self::log10::log10_ln_approx(self)
+        float::log10::log10_ln_approx(self)
     }
 
     fn powf(self, n: f32) -> f32 {
-        self::powf::powf_exp_ln_approx(self, n)
+        float::powf::powf_exp_ln_approx(self, n)
     }
 
     fn powi(self, n: i32) -> f32 {
-        self::powi::powi_exp_by_squaring(self, n)
+        float::powi::powi_exp_by_squaring(self, n)
     }
 }

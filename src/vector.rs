@@ -11,7 +11,7 @@ use core::{
 };
 
 #[allow(unused_imports)]
-use crate::f32ext::F32Ext;
+use crate::F32Ext;
 
 /// Components of numeric vectors.
 ///

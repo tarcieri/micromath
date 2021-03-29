@@ -1,10 +1,10 @@
 /// x^n with fractional n approximation for f32
 use super::exp;
 use super::ln;
-use crate::f32ext::utils::FloatComponents;
+use crate::float::utils::FloatComponents;
 use core::f32;
 
-pub(super) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
+pub(crate) fn powf_exp_ln_approx(x: f32, n: f32) -> f32 {
     // using x^n = exp(ln(x^n)) = exp(n*ln(x))
     if x < 0.0 {
         if !n.is_integer() {

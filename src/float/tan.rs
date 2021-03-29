@@ -3,14 +3,14 @@
 use super::{cos::cos_approx, sin::sin_approx};
 
 /// Computes `tan(x)` approximation in radians.
-pub(super) fn tan_approx(x: f32) -> f32 {
+pub(crate) fn tan_approx(x: f32) -> f32 {
     sin_approx(x) / cos_approx(x)
 }
 
 #[cfg(test)]
 mod tests {
     use super::tan_approx;
-    use crate::f32ext::abs::abs;
+    use crate::float::abs::abs;
 
     /// Maximum error in radians
     // TODO(tarcieri): this is kinda bad, find a better approximation?

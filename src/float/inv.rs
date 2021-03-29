@@ -1,11 +1,11 @@
 /// Fast approximation of `1/x`.
 /// Method described at: <https://bits.stephan-brumme.com/inverse.html>
-pub(super) fn inv_approx(x: f32) -> f32 {
+pub(crate) fn inv_approx(x: f32) -> f32 {
     f32::from_bits(0x7f00_0000 - x.to_bits())
 }
 
 #[cfg(test)]
-pub(super) mod tests {
+pub(crate) mod tests {
     use super::inv_approx;
 
     /// Deviation from the actual value (8%)

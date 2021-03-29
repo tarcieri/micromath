@@ -1,7 +1,7 @@
 /// log base 2 approximation for f32
 use super::ln;
 use core::f32;
-pub(super) fn log2_ln_approx(x: f32) -> f32 {
+pub(crate) fn log2_ln_approx(x: f32) -> f32 {
     //using change of base log2(x) = ln(x)/ln(2)
     let ln2_recip: f32 = f32::consts::LOG2_E;
     let fract_base_ln = ln2_recip;
