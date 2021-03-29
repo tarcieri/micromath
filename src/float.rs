@@ -86,7 +86,7 @@ impl AddAssign<f32> for F32 {
 impl AddAssign<F32> for f32 {
     #[inline]
     fn add_assign(&mut self, rhs: F32) {
-        *self /= rhs.0;
+        *self += rhs.0;
     }
 }
 
