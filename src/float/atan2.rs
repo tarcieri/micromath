@@ -7,14 +7,14 @@ use super::abs::abs;
 use core::f32::consts::PI;
 
 /// Computes an `atan2(y,x)` approximation in radians.
-pub(super) fn atan2_approx(y: f32, x: f32) -> f32 {
+pub(crate) fn atan2_approx(y: f32, x: f32) -> f32 {
     let n = atan2_norm_approx(y, x);
     PI / 2.0 * if n > 2.0 { n - 4.0 } else { n }
 }
 
 /// Approximates `atan2(y,x)` normalized to the `[0, 4)` range with a maximum
 /// error of `0.1620` degrees.
-pub(super) fn atan2_norm_approx(y: f32, x: f32) -> f32 {
+pub(crate) fn atan2_norm_approx(y: f32, x: f32) -> f32 {
     const SIGN_MASK: u32 = 0x8000_0000;
     const B: f32 = 0.596_227;
 

@@ -8,7 +8,7 @@ use core::u32;
 //excessive precision ignored because it hides the origin of the numbers used for the ln(1.0->2.0)
 // polynomial
 #[allow(clippy::excessive_precision)]
-pub(super) fn ln_1to2_series_approximation(x: f32) -> f32 {
+pub(crate) fn ln_1to2_series_approximation(x: f32) -> f32 {
     // idea from https://stackoverflow.com/a/44232045/
     // modified to not be restricted to int range and only values of x above 1.0.
     // and got rid of most of the slow conversions,

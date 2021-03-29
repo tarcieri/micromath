@@ -118,7 +118,7 @@ impl Mul<Quaternion> for f32 {
 #[cfg(test)]
 mod tests {
     use super::Quaternion;
-    use crate::f32ext::F32Ext;
+    use crate::F32Ext;
 
     const MAX_ERROR: f32 = 0.05;
 

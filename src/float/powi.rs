@@ -1,10 +1,10 @@
 use super::abs;
 use super::utils;
 /// x^n where n is an integer
-use crate::f32ext::utils::FloatComponents;
+use crate::float::utils::FloatComponents;
 use core::f32;
 
-pub(super) fn powi_exp_by_squaring(x: f32, n: i32) -> f32 {
+pub(crate) fn powi_exp_by_squaring(x: f32, n: i32) -> f32 {
     // source: https://stackoverflow.com/a/101613
     // note not optimal for all powers, is NP complete
     // https://en.wikipedia.org/wiki/Addition-chain_exponentiation

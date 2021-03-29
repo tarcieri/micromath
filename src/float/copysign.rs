@@ -3,7 +3,7 @@ use super::utils;
 use core::f32;
 use core::u32;
 
-pub(super) fn copysign(destination: f32, source: f32) -> f32 {
+pub(crate) fn copysign(destination: f32, source: f32) -> f32 {
     let source_bits: u32 = source.to_bits();
     let source_sign: u32 = source_bits & utils::SIGN_MASK;
     let signless_destination_bits: u32 = destination.to_bits() & !utils::SIGN_MASK;

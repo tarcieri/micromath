@@ -7,13 +7,13 @@ use super::abs::abs;
 use core::f32;
 
 /// Computes `atan(x)` approximation in radians.
-pub(super) fn atan_approx(x: f32) -> f32 {
+pub(crate) fn atan_approx(x: f32) -> f32 {
     f32::consts::FRAC_PI_2 * atan_norm_approx(x)
 }
 
 /// Approximates `atan(x)` normalized to the `[−1,1]` range with a maximum
 /// error of `0.1620` degrees.
-pub(super) fn atan_norm_approx(x: f32) -> f32 {
+pub(crate) fn atan_norm_approx(x: f32) -> f32 {
     const SIGN_MASK: u32 = 0x8000_0000;
     const B: f32 = 0.596_227;
 

@@ -1,7 +1,7 @@
 /// log_b(a) approximation for f32
 use super::ln;
 
-pub(super) fn log_ln_approx(x: f32, base: f32) -> f32 {
+pub(crate) fn log_ln_approx(x: f32, base: f32) -> f32 {
     //using change of base log_base(x) = ln(x)/ln(base)
     let fract_base_ln = 1.0 / ln::ln_1to2_series_approximation(base);
     let value_ln = ln::ln_1to2_series_approximation(x);

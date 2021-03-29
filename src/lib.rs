@@ -79,9 +79,6 @@
     unused_qualifications
 )]
 
-#[cfg(feature = "quaternion")]
-mod quaternion;
-
 #[cfg(feature = "statistics")]
 #[cfg_attr(docsrs, doc(cfg(feature = "statistics")))]
 pub mod statistics;
@@ -91,8 +88,11 @@ pub mod statistics;
 pub mod vector;
 
 mod f32ext;
+mod float;
+#[cfg(feature = "quaternion")]
+mod quaternion;
 
-pub use crate::f32ext::F32Ext;
+pub use crate::{f32ext::F32Ext, float::F32};
 
 #[cfg(feature = "quaternion")]
 pub use crate::quaternion::Quaternion;

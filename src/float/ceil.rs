@@ -1,7 +1,7 @@
 use super::floor::floor;
 
 /// Floating point ceiling approximation for a single-precision float
-pub(super) fn ceil(x: f32) -> f32 {
+pub(crate) fn ceil(x: f32) -> f32 {
     -floor(-x)
 }
 

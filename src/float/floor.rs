@@ -1,5 +1,5 @@
 /// Floating point floor approximation for a single-precision float.
-pub(super) fn floor(x: f32) -> f32 {
+pub(crate) fn floor(x: f32) -> f32 {
     let mut x_trunc = (x as i32) as f32;
 
     if x < x_trunc {

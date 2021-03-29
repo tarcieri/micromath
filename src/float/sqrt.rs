@@ -1,11 +1,11 @@
 /// Square root approximation function for a single-precision float.
 /// Method described at: <https://bits.stephan-brumme.com/squareRoot.html>
-pub(super) fn sqrt_approx(x: f32) -> f32 {
+pub(crate) fn sqrt_approx(x: f32) -> f32 {
     f32::from_bits((x.to_bits() + 0x3f80_0000) >> 1)
 }
 
 #[cfg(test)]
-pub(super) mod tests {
+pub(crate) mod tests {
     use super::sqrt_approx;
 
     /// Deviation from the actual value (5%)

@@ -5,7 +5,7 @@ use super::utils::FloatComponents;
 use core::f32;
 use core::u32;
 
-pub(super) fn trunc_sign(x: f32) -> f32 {
+pub(crate) fn trunc_sign(x: f32) -> f32 {
     let x_bits: u32 = x.to_bits();
     let exponent: i32 = x.extract_exponent_value();
     //exponent is negative, there is no whole number, just return zero

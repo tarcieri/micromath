@@ -4,14 +4,14 @@ use super::cos::cos_approx;
 use core::f32::consts::PI;
 
 /// Approximates `sin(x)` in radians with a maximum error of `0.002`
-pub(super) fn sin_approx(x: f32) -> f32 {
+pub(crate) fn sin_approx(x: f32) -> f32 {
     cos_approx(x - PI / 2.0)
 }
 
 #[cfg(test)]
 mod tests {
     use super::sin_approx;
-    use crate::f32ext::{abs::abs, cos::tests::MAX_ERROR};
+    use crate::float::{abs::abs, cos::tests::MAX_ERROR};
 
     /// Sine test vectors - `(input, output)`
     const TEST_VECTORS: &[(f32, f32)] = &[

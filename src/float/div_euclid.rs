@@ -1,7 +1,7 @@
 /// Euclidean division for f32
 use super::trunc;
 
-pub(super) fn div_euclid(x: f32, y: f32) -> f32 {
+pub(crate) fn div_euclid(x: f32, y: f32) -> f32 {
     let q = trunc::trunc_sign(x / y);
     if x % y < 0.0 {
         return if y > 0.0 { q - 1.0 } else { q + 1.0 };

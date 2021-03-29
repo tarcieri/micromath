@@ -6,7 +6,7 @@ use super::floor::floor;
 use core::f32;
 
 /// Approximates `cos(x)` in radians with a maximum error of `0.002`
-pub(super) fn cos_approx(mut x: f32) -> f32 {
+pub(crate) fn cos_approx(mut x: f32) -> f32 {
     x *= f32::consts::FRAC_1_PI / 2.0;
     x -= 0.25 + floor(x + 0.25);
     x *= 16.0 * (abs(x) - 0.5);
@@ -15,7 +15,7 @@ pub(super) fn cos_approx(mut x: f32) -> f32 {
 }
 
 #[cfg(test)]
-pub(super) mod tests {
+pub(crate) mod tests {
     use super::{abs, cos_approx};
 
     /// Maximum error in radians

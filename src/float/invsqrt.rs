@@ -1,13 +1,13 @@
 /// Inverse square root approximation function for a single-precision float.
 /// Method described at: <https://bits.stephan-brumme.com/invSquareRoot.html>
-pub(super) fn invsqrt_approx(x: f32) -> f32 {
+pub(crate) fn invsqrt_approx(x: f32) -> f32 {
     f32::from_bits(0x5f37_5a86 - (x.to_bits() >> 1))
 }
 
 #[cfg(test)]
 mod tests {
     use super::invsqrt_approx;
-    use crate::f32ext::sqrt::tests::TEST_VECTORS;
+    use crate::float::sqrt::tests::TEST_VECTORS;
 
     /// Deviation from the actual value (5%)
     const MAX_ERROR: f32 = 0.05;

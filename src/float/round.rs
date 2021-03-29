@@ -1,6 +1,6 @@
 use super::copysign::copysign;
 
-pub(super) fn round(x: f32) -> f32 {
+pub(crate) fn round(x: f32) -> f32 {
     ((x + copysign(0.5, x)) as i32) as f32
 }
 

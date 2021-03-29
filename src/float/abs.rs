@@ -2,7 +2,7 @@
 /// Method described at: <https://bits.stephan-brumme.com/absFloat.html>
 ///
 /// Constant-time, data-independent implementation.
-pub(super) fn abs(n: f32) -> f32 {
+pub(crate) fn abs(n: f32) -> f32 {
     f32::from_bits(n.to_bits() & 0x7FFF_FFFF)
 }
 

@@ -3,7 +3,7 @@ use super::abs;
 use super::fract;
 use super::trunc;
 use super::utils;
-use crate::f32ext::utils::FloatComponents;
+use crate::float::utils::FloatComponents;
 use core::f32;
 use core::i32;
 use core::u32;
@@ -18,7 +18,7 @@ pub(crate) fn exp_smallx(x: f32, iter: u32) -> f32 {
     total
 }
 
-pub(super) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
+pub(crate) fn exp_ln2_approximation(x: f32, partial_iter: u32) -> f32 {
     // idea from# https://stackoverflow.com/a/6985769/2036035
     if x == 0.0_f32 {
         return 1.0;

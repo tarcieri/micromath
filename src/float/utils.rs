@@ -7,7 +7,7 @@ pub const EXPONENT_BIAS: u32 = 127;
 // MANTISSA_DIGITS is availible in core::f32, but the actual bits taken up are 24 - 1
 pub const MANTISSA_BITS: u32 = 23;
 
-pub(super) trait FloatComponents<IntType = i32, UIntType = u32> {
+pub(crate) trait FloatComponents<IntType = i32, UIntType = u32> {
     fn extract_sign_bit(self) -> UIntType;
     fn extract_exponent_bits(self) -> UIntType;
     fn extract_mantissa_bits(self) -> UIntType;
