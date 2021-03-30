@@ -1,8 +1,8 @@
 use core::f32;
 use core::i32;
-pub const SIGN_MASK: u32 = 0b10000000_00000000_00000000_00000000;
-pub const EXPONENT_MASK: u32 = 0b01111111_10000000_00000000_00000000;
-pub const MANTISSA_MASK: u32 = 0b00000000_01111111_11111111_11111111;
+pub const SIGN_MASK: u32 = 0b1000_0000_0000_0000_0000_0000_0000_0000;
+pub const EXPONENT_MASK: u32 = 0b0111_1111_1000_0000_0000_0000_0000_0000;
+pub const MANTISSA_MASK: u32 = 0b0000_0000_0111_1111_1111_1111_1111_1111;
 pub const EXPONENT_BIAS: u32 = 127;
 // MANTISSA_DIGITS is availible in core::f32, but the actual bits taken up are 24 - 1
 pub const MANTISSA_BITS: u32 = 23;
@@ -21,20 +21,25 @@ impl FloatComponents for f32 {
     fn extract_sign_bit(self) -> u32 {
         (self.to_bits() & SIGN_MASK).overflowing_shr(32 - 1).0
     }
+
     fn extract_exponent_bits(self) -> u32 {
         (self.to_bits() & EXPONENT_MASK)
             .overflowing_shr(MANTISSA_BITS)
             .0
     }
+
     fn extract_mantissa_bits(self) -> u32 {
         self.to_bits() & MANTISSA_MASK
     }
+
     fn extract_exponent_value(self) -> i32 {
         (self.extract_exponent_bits() as i32) - EXPONENT_BIAS as i32
     }
+
     fn without_sign(self) -> f32 {
         f32::from_bits(self.to_bits() & !SIGN_MASK)
     }
+
     fn set_exponent(self, exponent: i32) -> f32 {
         debug_assert!(exponent <= 127 && exponent >= -128);
         let without_exponent: u32 = self.to_bits() & !EXPONENT_MASK;
@@ -43,6 +48,7 @@ impl FloatComponents for f32 {
             .0;
         f32::from_bits(without_exponent | only_exponent)
     }
+
     fn is_integer(&self) -> bool {
         let exponent: i32 = self.extract_exponent_value();
         let self_bits = self.to_bits();

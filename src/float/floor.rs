@@ -1,25 +1,31 @@
-/// Floating point floor approximation for a single-precision float.
-pub(crate) fn floor(x: f32) -> f32 {
-    let mut x_trunc = (x as i32) as f32;
+//! Floating point floor approximation for a single-precision float.
 
-    if x < x_trunc {
-        x_trunc -= 1.0;
+use super::F32;
+
+impl F32 {
+    /// Returns the largest integer less than or equal to a number.
+    pub fn floor(self) -> Self {
+        let mut res = (self.0 as i32) as f32;
+
+        if self.0 < res {
+            res -= 1.0;
+        }
+
+        Self(res)
     }
-
-    x_trunc
 }
 
 #[cfg(test)]
 mod tests {
-    use super::floor;
+    use super::F32;
 
     #[test]
     fn sanity_check() {
-        assert_eq!(floor(-1.1), -2.0);
-        assert_eq!(floor(-0.1), -1.0);
-        assert_eq!(floor(0.0), 0.0);
-        assert_eq!(floor(1.0), 1.0);
-        assert_eq!(floor(1.1), 1.0);
-        assert_eq!(floor(2.9), 2.0);
+        assert_eq!(F32(-1.1).floor().0, -2.0);
+        assert_eq!(F32(-0.1).floor().0, -1.0);
+        assert_eq!(F32(0.0).floor().0, 0.0);
+        assert_eq!(F32(1.0).floor().0, 1.0);
+        assert_eq!(F32(1.1).floor().0, 1.0);
+        assert_eq!(F32(2.9).floor().0, 2.0);
     }
 }

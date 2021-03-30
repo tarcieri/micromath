@@ -1,28 +1,33 @@
-use super::utils;
-/// copy the sign over from another number
-use core::f32;
-use core::u32;
+//! Copy the sign over from another number.
 
-pub(crate) fn copysign(destination: f32, source: f32) -> f32 {
-    let source_bits: u32 = source.to_bits();
-    let source_sign: u32 = source_bits & utils::SIGN_MASK;
-    let signless_destination_bits: u32 = destination.to_bits() & !utils::SIGN_MASK;
-    f32::from_bits(signless_destination_bits | source_sign)
+use super::{utils::SIGN_MASK, F32};
+
+impl F32 {
+    /// Returns a number composed of the magnitude of `self` and the sign of
+    /// `sign`.
+    pub fn copysign(self, sign: Self) -> Self {
+        let source_bits = sign.to_bits();
+        let source_sign = source_bits & SIGN_MASK;
+        let signless_destination_bits = self.to_bits() & !SIGN_MASK;
+        Self::from_bits(signless_destination_bits | source_sign)
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::copysign;
+    use super::F32;
+
     #[test]
     fn sanity_check() {
-        assert_eq!(copysign(1.0, -1.0), -1.0);
-        assert_eq!(copysign(-1.0, 1.0), 1.0);
-        assert_eq!(copysign(1.0, 1.0), 1.0);
-        assert_eq!(copysign(-1.0, -1.0), -1.0);
-        let large_float: f32 = 100_000_000.13425345345;
-        assert_eq!(copysign(large_float, -large_float), -large_float);
-        assert_eq!(copysign(-large_float, large_float), large_float);
-        assert_eq!(copysign(large_float, large_float), large_float);
-        assert_eq!(copysign(-large_float, -large_float), -large_float);
+        assert_eq!(F32(1.0).copysign(F32(-1.0)).0, -1.0);
+        assert_eq!(F32(-1.0).copysign(F32(1.0)).0, 1.0);
+        assert_eq!(F32(1.0).copysign(F32(1.0)).0, 1.0);
+        assert_eq!(F32(-1.0).copysign(F32(-1.0)).0, -1.0);
+
+        let large_float = F32(100_000_000.13425345345);
+        assert_eq!(large_float.copysign(-large_float), -large_float);
+        assert_eq!((-large_float).copysign(large_float), large_float);
+        assert_eq!(large_float.copysign(large_float), large_float);
+        assert_eq!((-large_float).copysign(-large_float), -large_float);
     }
 }

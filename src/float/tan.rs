@@ -1,16 +1,17 @@
 //! Tangent approximation for a single-precision float.
 
-use super::{cos::cos_approx, sin::sin_approx};
+use super::F32;
 
-/// Computes `tan(x)` approximation in radians.
-pub(crate) fn tan_approx(x: f32) -> f32 {
-    sin_approx(x) / cos_approx(x)
+impl F32 {
+    /// Computes `tan(x)` approximation in radians.
+    pub fn tan(self) -> Self {
+        self.sin() / self.cos()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::tan_approx;
-    use crate::float::abs::abs;
+    use super::F32;
 
     /// Maximum error in radians
     // TODO(tarcieri): this is kinda bad, find a better approximation?
@@ -68,9 +69,9 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        for (x, expected) in TEST_VECTORS {
-            let tan_x = tan_approx(*x);
-            let delta = abs(tan_x - expected);
+        for &(x, expected) in TEST_VECTORS {
+            let tan_x = F32(x).tan();
+            let delta = (tan_x - expected).abs();
 
             assert!(
                 delta <= MAX_ERROR,
@@ -84,11 +85,11 @@ mod tests {
 
     #[test]
     fn zero() {
-        assert_eq!(tan_approx(0.0), 0.0);
+        assert_eq!(F32::ZERO.tan(), F32::ZERO);
     }
 
     #[test]
     fn nan() {
-        assert!(tan_approx(core::f32::NAN).is_nan());
+        assert!(F32::NAN.tan().is_nan());
     }
 }
