@@ -1,25 +1,25 @@
-//! arcsin approximation for a single-precision float using method
-//! described at:
+//! arcsin approximation for a single-precision float.
 //!
+//! Method described at:
 //! <https://dsp.stackexchange.com/questions/25770/looking-for-an-arcsin-algorithm>
 
-use super::{atan::atan_approx, invsqrt::invsqrt_approx};
+use super::F32;
 
-/// Computes `asin(x)` approximation in radians in the range `[-pi/2, pi/2]`.
-pub(crate) fn asin_approx(x: f32) -> f32 {
-    atan_approx(x * invsqrt_approx(1.0 - x * x))
+impl F32 {
+    /// Computes `asin(x)` approximation in radians in the range `[-pi/2, pi/2]`.
+    pub fn asin(self) -> Self {
+        (self * (Self::ONE - self * self).invsqrt()).atan()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::asin_approx;
-    use crate::float::{abs::abs, sin::sin_approx};
-    use core::f32;
+    use super::F32;
+    use core::f32::consts::FRAC_PI_2;
 
     #[test]
     fn sanity_check() {
-        let f = f32::consts::FRAC_PI_2;
-        let abs_difference = abs(asin_approx(sin_approx(f)) - f32::consts::FRAC_PI_2);
-        assert!(abs_difference <= f32::EPSILON);
+        let difference = F32(FRAC_PI_2).sin().asin() - FRAC_PI_2;
+        assert!(difference.abs() <= F32::EPSILON);
     }
 }

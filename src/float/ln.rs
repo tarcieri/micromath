@@ -1,55 +1,64 @@
-/// natural log (ln) approximation for f32
-use super::abs;
-use super::utils;
-use super::utils::FloatComponents;
-use core::f32;
-use core::u32;
+//! natural log (ln) approximation for a single-precision float.
+//!
+//! Method described at: <https://stackoverflow.com/a/44232045/>
+//!
+//! Modified to not be restricted to int range and only values of x above 1.0.
+//! Also got rid of most of the slow conversions. Should work for all positive values of x.
 
-//excessive precision ignored because it hides the origin of the numbers used for the ln(1.0->2.0)
-// polynomial
-#[allow(clippy::excessive_precision)]
-pub(crate) fn ln_1to2_series_approximation(x: f32) -> f32 {
-    // idea from https://stackoverflow.com/a/44232045/
-    // modified to not be restricted to int range and only values of x above 1.0.
-    // and got rid of most of the slow conversions,
-    // should work for all positive values of x.
+use super::{EXPONENT_MASK, F32};
+use core::f32::consts::LN_2;
 
-    //x may essentially be 1.0 but, as clippy notes, these kinds of
-    //floating point comparisons can fail when the bit pattern is not the sames
-    if abs::abs(x - 1.0_f32) < f32::EPSILON {
-        return 0.0_f32;
-    }
-    let x_less_than_1: bool = x < 1.0;
-    // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
-    // the precision of such an approximation is assumed not good enough.
-    let x_working: f32 = if x_less_than_1 { 1.0 / x } else { x };
-    //according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
-    //get exponent value
-    let base2_exponent: u32 = x_working.extract_exponent_value() as u32;
-    let divisor: f32 = f32::from_bits(x_working.to_bits() & utils::EXPONENT_MASK);
-    //supposedly normalizing between 1.0 and 2.0
-    let x_working: f32 = x_working / divisor;
-    //approximate polynomial generated from maple in the post using Remez Algorithm:
-    //https://en.wikipedia.org/wiki/Remez_algorithm
-    let ln_1to2_polynomial: f32 = -1.741_793_9_f32
-        + (2.821_202_6_f32
-            + (-1.469_956_8_f32 + (0.447_179_55_f32 - 0.056_570_851_f32 * x_working) * x_working)
-                * x_working)
-            * x_working;
-    // ln(2) * n + ln(y)
-    let result: f32 = (base2_exponent as f32) * f32::consts::LN_2 + ln_1to2_polynomial;
-    if x_less_than_1 {
-        -result
-    } else {
-        result
+impl F32 {
+    /// Returns the natural logarithm of the number.
+    // Note: excessive precision ignored because it hides the origin of the numbers used for the
+    // ln(1.0->2.0) polynomial
+    #[allow(clippy::excessive_precision)]
+    pub fn ln(self) -> Self {
+        // x may essentially be 1.0 but, as clippy notes, these kinds of
+        // floating point comparisons can fail when the bit pattern is not the sames
+        if (self - Self::ONE).abs() < f32::EPSILON {
+            return Self::ZERO;
+        }
+
+        let x_less_than_1 = self < 1.0;
+
+        // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
+        // the precision of such an approximation is assumed not good enough.
+        let x_working = if x_less_than_1 { 1.0 / self } else { self };
+
+        // according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
+        // get exponent value
+        let base2_exponent = x_working.extract_exponent_value() as u32;
+        let divisor = f32::from_bits(x_working.to_bits() & EXPONENT_MASK);
+
+        // supposedly normalizing between 1.0 and 2.0
+        let x_working = x_working / divisor;
+
+        // approximate polynomial generated from maple in the post using Remez Algorithm:
+        // https://en.wikipedia.org/wiki/Remez_algorithm
+        let ln_1to2_polynomial = -1.741_793_9
+            + (2.821_202_6
+                + (-1.469_956_8 + (0.447_179_55 - 0.056_570_851 * x_working) * x_working)
+                    * x_working)
+                * x_working;
+
+        // ln(2) * n + ln(y)
+        let result = (base2_exponent as f32) * LN_2 + ln_1to2_polynomial;
+
+        if x_less_than_1 {
+            -result
+        } else {
+            result
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::super::abs;
-    use super::ln_1to2_series_approximation;
+    use super::F32;
+
     pub(crate) const MAX_ERROR: f32 = 0.001;
+
     /// ln(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1e-20, -46.0517),
@@ -95,10 +104,10 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        assert_eq!(ln_1to2_series_approximation(1_f32), 0_f32);
-        for (x, expected) in TEST_VECTORS {
-            let ln_x = ln_1to2_series_approximation(*x);
-            let relative_error = abs::abs(ln_x - *expected) / *expected;
+        assert_eq!(F32::ONE.ln(), F32::ZERO);
+        for &(x, expected) in TEST_VECTORS {
+            let ln_x = F32(x).ln();
+            let relative_error = (ln_x - expected).abs() / expected;
 
             assert!(
                 relative_error <= MAX_ERROR,

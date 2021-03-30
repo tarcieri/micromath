@@ -1,19 +1,20 @@
-/// log base 2 approximation for f32
-use super::ln;
-use core::f32;
-pub(crate) fn log10_ln_approx(x: f32) -> f32 {
-    //using change of base log10(x) = ln(x)/ln(10)
-    let ln10_recip = f32::consts::LOG10_E;
-    let fract_base_ln = ln10_recip;
-    let value_ln = ln::ln_1to2_series_approximation(x);
-    value_ln * fract_base_ln
+//! log base 2 approximation for a single-precision float.
+
+use super::F32;
+use core::f32::consts::LOG10_E;
+
+impl F32 {
+    /// Returns the base 10 logarithm of the number.
+    pub fn log10(self) -> Self {
+        self.ln() * LOG10_E
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::super::abs;
-    use super::log10_ln_approx;
+    use super::F32;
     pub(crate) const MAX_ERROR: f32 = 0.001;
+
     /// log10(x) test vectors - `(input, output)`
     pub(crate) const TEST_VECTORS: &[(f32, f32)] = &[
         (1e-20, -20.0),
@@ -59,10 +60,11 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        assert_eq!(log10_ln_approx(1_f32), 0_f32);
-        for (x, expected) in TEST_VECTORS {
-            let ln_x = log10_ln_approx(*x);
-            let relative_error = abs::abs(ln_x - *expected) / *expected;
+        assert_eq!(F32::ONE.log10(), F32::ZERO);
+
+        for &(x, expected) in TEST_VECTORS {
+            let ln_x = F32(x).log10();
+            let relative_error = (ln_x - expected).abs() / expected;
 
             assert!(
                 relative_error <= MAX_ERROR,

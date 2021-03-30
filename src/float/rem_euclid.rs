@@ -1,26 +1,32 @@
-/// Euclidean reminder for f32
-use super::abs;
+//! Calculate Euclidian remainder for a single-precision float.
 
-pub(crate) fn rem_euclid(x: f32, y: f32) -> f32 {
-    let r = x % y;
-    if r < 0.0 {
-        r + abs::abs(y)
-    } else {
-        r
+use super::F32;
+
+impl F32 {
+    /// Calculates the least non-negative remainder of `self (mod rhs)`.
+    pub fn rem_euclid(self, rhs: Self) -> Self {
+        let r = self % rhs;
+
+        if r >= Self::ZERO {
+            r
+        } else {
+            r + rhs.abs()
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::rem_euclid;
+    use super::F32;
+
     #[test]
     fn sanity_check() {
-        let a = 7.0;
-        let b = 4.0;
+        let a = F32(7.0);
+        let b = F32(4.0);
 
-        assert_eq!(rem_euclid(a, b), 3.0);
-        assert_eq!(rem_euclid(-a, b), 1.0);
-        assert_eq!(rem_euclid(a, -b), 3.0);
-        assert_eq!(rem_euclid(-a, -b), 1.0);
+        assert_eq!(a.rem_euclid(b), F32(3.0));
+        assert_eq!((-a).rem_euclid(b), F32(1.0));
+        assert_eq!(a.rem_euclid(-b), F32(3.0));
+        assert_eq!((-a).rem_euclid(-b), F32(1.0));
     }
 }

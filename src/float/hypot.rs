@@ -1,24 +1,23 @@
-//! Calculate length of the hypotenuse of a right triangle
+//! Calculate length of the hypotenuse of a right triangle.
 
-use super::sqrt::sqrt_approx;
+use super::F32;
 
-/// Calculate the length of the hypotenuse of a right-angle triangle given
-/// legs of length `x` and `y`.
-pub(crate) fn hypot_approx(x: f32, y: f32) -> f32 {
-    sqrt_approx(x * x + y * y)
+impl F32 {
+    /// Calculate the length of the hypotenuse of a right-angle triangle.
+    pub fn hypot(self, rhs: Self) -> Self {
+        (self * self + rhs * rhs).sqrt()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{hypot_approx, sqrt_approx};
-    use crate::float::abs::abs;
-    use core::f32;
+    use super::F32;
 
     #[test]
     fn sanity_check() {
-        let x = 3.0f32;
-        let y = 4.0f32;
-        let abs_difference = abs(hypot_approx(x, y) - sqrt_approx(25.0));
-        assert!(abs_difference <= f32::EPSILON);
+        let x = F32(3.0);
+        let y = F32(4.0);
+        let difference = x.hypot(y) - F32(25.0).sqrt();
+        assert!(difference.abs() <= F32::EPSILON);
     }
 }

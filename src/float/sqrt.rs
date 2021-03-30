@@ -1,12 +1,25 @@
-/// Square root approximation function for a single-precision float.
-/// Method described at: <https://bits.stephan-brumme.com/squareRoot.html>
-pub(crate) fn sqrt_approx(x: f32) -> f32 {
-    f32::from_bits((x.to_bits() + 0x3f80_0000) >> 1)
+//! Square root approximation function for a single-precision float.
+//!
+//! Method described at: <https://bits.stephan-brumme.com/squareRoot.html>
+
+use super::F32;
+
+impl F32 {
+    /// Returns the square root of a number.
+    ///
+    /// Returns [`Self::NAN`] if `self` is a negative number.
+    pub fn sqrt(self) -> Self {
+        if self >= Self::ZERO {
+            Self::from_bits((self.to_bits() + 0x3f80_0000) >> 1)
+        } else {
+            Self::NAN
+        }
+    }
 }
 
 #[cfg(test)]
 pub(crate) mod tests {
-    use super::sqrt_approx;
+    use super::F32;
 
     /// Deviation from the actual value (5%)
     pub(crate) const MAX_ERROR: f32 = 0.05;
@@ -36,8 +49,8 @@ pub(crate) mod tests {
 
     #[test]
     fn sanity_check() {
-        for (x, expected) in TEST_VECTORS {
-            let sqrt_x = sqrt_approx(*x);
+        for &(x, expected) in TEST_VECTORS {
+            let sqrt_x = F32(x).sqrt();
             let allowed_delta = x * MAX_ERROR;
             let actual_delta = sqrt_x - expected;
 
@@ -49,5 +62,10 @@ pub(crate) mod tests {
                 expected
             );
         }
+    }
+
+    #[test]
+    fn negative_is_nan() {
+        assert!(F32(-1.0).sqrt().is_nan());
     }
 }
