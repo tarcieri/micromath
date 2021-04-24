@@ -1,15 +1,12 @@
 //! Floating point whole number for a single-precision float.
 
-use super::{
-    utils::{FloatComponents, MANTISSA_MASK},
-    F32,
-};
+use super::{F32, MANTISSA_MASK};
 
 impl F32 {
     /// Returns the integer part of a number.
     pub fn trunc(self) -> Self {
         let x_bits = self.to_bits();
-        let exponent = self.0.extract_exponent_value();
+        let exponent = self.extract_exponent_value();
 
         // exponent is negative, there is no whole number, just return zero
         if exponent < 0 {

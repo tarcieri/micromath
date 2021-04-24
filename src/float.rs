@@ -27,7 +27,6 @@ pub(crate) mod sin;
 pub(crate) mod sqrt;
 pub(crate) mod tan;
 pub(crate) mod trunc;
-pub(crate) mod utils;
 
 use core::{
     cmp::Ordering,
@@ -42,21 +41,17 @@ use core::{
 pub(crate) const SIGN_MASK: u32 = 0b1000_0000_0000_0000_0000_0000_0000_0000;
 
 /// Exponent mask.
-#[allow(dead_code)]
 pub(crate) const EXPONENT_MASK: u32 = 0b0111_1111_1000_0000_0000_0000_0000_0000;
 
 /// Mantissa mask.
-#[allow(dead_code)]
 pub(crate) const MANTISSA_MASK: u32 = 0b0000_0000_0111_1111_1111_1111_1111_1111;
 
 /// Exponent mask.
-#[allow(dead_code)]
 pub(crate) const EXPONENT_BIAS: u32 = 127;
 
 /// Mantissa bits.
 ///
 /// Note: `MANTISSA_DIGITS` is available in `core::f32`, but the actual bits taken up are 24 - 1.
-#[allow(dead_code)]
 pub(crate) const MANTISSA_BITS: u32 = 23;
 
 /// 32-bit floating point wrapper which implements fast approximation-based
@@ -136,6 +131,20 @@ impl F32 {
         self.0.is_finite()
     }
 
+    /// Returns `true` if `self` has a positive sign, including `+0.0`, `NaN`s with
+    /// positive sign bit and positive infinity.
+    #[inline]
+    pub fn is_sign_positive(self) -> bool {
+        self.0.is_sign_positive()
+    }
+
+    /// Returns `true` if `self` has a negative sign, including `-0.0`, `NaN`s with
+    /// negative sign bit and negative infinity.
+    #[inline]
+    pub fn is_sign_negative(self) -> bool {
+        self.0.is_sign_negative()
+    }
+
     /// Raw transmutation to `u32`.
     ///
     /// This is currently identical to `transmute::<f32, u32>(self)` on all platforms.
@@ -176,6 +185,45 @@ impl F32 {
     /// Remove sign.
     pub(crate) fn without_sign(self) -> Self {
         Self::from_bits(self.to_bits() & !SIGN_MASK)
+    }
+
+    /// Set the exponent to the given value.
+    pub(crate) fn set_exponent(self, exponent: i32) -> Self {
+        debug_assert!(exponent <= 127 && exponent >= -128);
+        let without_exponent: u32 = self.to_bits() & !EXPONENT_MASK;
+        let only_exponent: u32 = ((exponent + EXPONENT_BIAS as i32) as u32)
+            .overflowing_shl(MANTISSA_BITS)
+            .0;
+
+        Self::from_bits(without_exponent | only_exponent)
+    }
+
+    /// Is this floating point value equivalent to an integer?
+    pub(crate) fn is_integer(&self) -> bool {
+        let exponent = self.extract_exponent_value();
+        let self_bits = self.to_bits();
+
+        // if exponent is negative we shouldn't remove anything, this stops an opposite shift.
+        let exponent_clamped = i32::max(exponent, 0) as u32;
+
+        // find the part of the fraction that would be left over
+        let fractional_part = (self_bits).overflowing_shl(exponent_clamped).0 & MANTISSA_MASK;
+
+        // if fractional part contains anything, we know it *isn't* an integer.
+        // if zero there will be nothing in the fractional part
+        // if it is whole, there will be nothing in the fractional part
+        fractional_part == 0
+    }
+
+    /// Is this floating point value even?
+    fn is_even(&self) -> bool {
+        // any floating point value that doesn't fit in an i32 range is even,
+        // and will loose 1's digit precision at exp values of 23+
+        if self.extract_exponent_value() >= 31 {
+            true
+        } else {
+            (self.0 as i32) % 2 == 0
+        }
     }
 }
 
