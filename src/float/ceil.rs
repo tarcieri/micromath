@@ -3,7 +3,8 @@
 use super::F32;
 
 impl F32 {
-    pub(crate) fn ceil(self) -> Self {
+    /// Returns the smallest integer greater than or equal to a number.
+    pub fn ceil(self) -> Self {
         -(-self).floor()
     }
 }

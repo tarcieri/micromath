@@ -3,7 +3,7 @@
 use super::F32;
 
 impl F32 {
-    /// Computes `tan(x)` approximation in radians.
+    /// Approximates `tan(x)` in radians with a maximum error of `0.6`.
     pub fn tan(self) -> Self {
         self.sin() / self.cos()
     }

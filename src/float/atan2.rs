@@ -6,7 +6,8 @@ use super::F32;
 use core::f32::consts::PI;
 
 impl F32 {
-    /// Computes the four quadrant arctangent of `self` (`y`) and `rhs` (`x`) in radians.
+    /// Approximates the four quadrant arctangent of `self` (`y`) and
+    /// `rhs` (`x`) in radians with a maximum error of `0.002`.
     ///
     /// - `x = 0`, `y = 0`: `0`
     /// - `x >= 0`: `arctan(y/x)` -> `[-pi/2, pi/2]`

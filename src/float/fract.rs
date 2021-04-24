@@ -1,13 +1,13 @@
 //! Floating point fractional number for a single-precision float.
 
-use super::utils::{FloatComponents, EXPONENT_BIAS, MANTISSA_BITS, MANTISSA_MASK};
 use super::F32;
+use super::{EXPONENT_BIAS, MANTISSA_BITS, MANTISSA_MASK};
 
 impl F32 {
-    /// Returns the fractional part of a number.
+    /// Returns the fractional part of a number with sign.
     pub fn fract(self) -> Self {
-        let x_bits: u32 = self.to_bits();
-        let exponent: i32 = self.0.extract_exponent_value();
+        let x_bits = self.to_bits();
+        let exponent = self.extract_exponent_value();
 
         // we know it is *only* fraction
         if exponent < 0 {

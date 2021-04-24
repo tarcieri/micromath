@@ -1,4 +1,4 @@
-//! natural log (ln) approximation for a single-precision float.
+//! Natural log (ln) approximation for a single-precision float.
 //!
 //! Method described at: <https://stackoverflow.com/a/44232045/>
 //!
@@ -9,7 +9,7 @@ use super::{EXPONENT_MASK, F32};
 use core::f32::consts::LN_2;
 
 impl F32 {
-    /// Returns the natural logarithm of the number.
+    /// Approximates the natural logarithm of the number.
     // Note: excessive precision ignored because it hides the origin of the numbers used for the
     // ln(1.0->2.0) polynomial
     #[allow(clippy::excessive_precision)]

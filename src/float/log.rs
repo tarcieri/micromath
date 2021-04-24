@@ -3,7 +3,7 @@
 use super::F32;
 
 impl F32 {
-    /// Returns the logarithm of the number with respect to an arbitrary base.
+    /// Approximates the logarithm of the number with respect to an arbitrary base.
     pub fn log(self, base: Self) -> Self {
         (Self::ONE / base.ln()) * self.ln()
     }

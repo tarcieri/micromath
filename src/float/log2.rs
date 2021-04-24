@@ -4,7 +4,7 @@ use super::F32;
 use core::f32::consts::LOG2_E;
 
 impl F32 {
-    /// Returns the base 2 logarithm of the number.
+    /// Approximates the base 2 logarithm of the number.
     pub fn log2(self) -> Self {
         self.ln() * LOG2_E
     }

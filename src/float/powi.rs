@@ -7,19 +7,16 @@
 //! will result in an addition multiplication for x^15 for example
 
 use super::{F32, MANTISSA_BITS};
-use crate::float::utils::FloatComponents;
 
 impl F32 {
-    /// Raises a number to an integer power.
+    /// Approximates a number raised to an integer power.
     pub fn powi(self, n: i32) -> Self {
-        let x = self.0;
-
-        let mut base = x;
+        let mut base = self;
         let mut abs_n = i32::abs(n);
         let mut result = 1.0;
 
         if n < 0 {
-            base = 1.0 / x;
+            base = 1.0 / self;
         }
 
         if n == 0 {
@@ -27,7 +24,7 @@ impl F32 {
         }
 
         // 0.0 == 0.0 and -0.0 according to IEEE standards.
-        if x == 0.0 && n > 0 {
+        if self == Self::ZERO && n > 0 {
             return self;
         }
 
@@ -36,13 +33,13 @@ impl F32 {
         if !(0.5..2.0).contains(&self.abs().0) {
             // Approximation if we end up outside of the range of floating point values,
             // then we end early
-            let approx_final_exponent = x.extract_exponent_value() * n;
+            let approx_final_exponent = self.extract_exponent_value() * n;
             let max_representable_exponent = 127;
             let min_representable_exponent = -126 - (MANTISSA_BITS as i32);
             if approx_final_exponent > max_representable_exponent
-                || (x == 0.0 && approx_final_exponent < 0)
+                || (self == Self::ZERO && approx_final_exponent < 0)
             {
-                if x.is_sign_positive() || n & 1 == 0 {
+                if self.is_sign_positive() || n & 1 == 0 {
                     return Self::INFINITY;
                 } else {
                     return Self::NEG_INFINITY;

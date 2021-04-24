@@ -7,7 +7,8 @@ use super::F32;
 use core::f32::consts::FRAC_PI_2;
 
 impl F32 {
-    /// Computes `atan(x)` approximation in radians.
+    /// Approximates `atan(x)` approximation in radians with a maximum error of
+    /// `0.002`.
     ///
     /// Returns [`Self::NAN`] if the number is [`Self::NAN`].
     pub fn atan(self) -> Self {
