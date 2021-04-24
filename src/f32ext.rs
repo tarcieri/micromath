@@ -206,7 +206,7 @@ impl F32Ext for f32 {
 
     #[inline]
     fn powf(self, n: f32) -> f32 {
-        F32(self).powf(n).0
+        F32(self).powf(F32(n)).0
     }
 
     #[inline]

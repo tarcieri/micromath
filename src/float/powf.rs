@@ -1,26 +1,21 @@
 //! `x^n` with fractional `n` approximation for a single-precision float.
 
 use super::F32;
-use crate::float::utils::FloatComponents;
 
 impl F32 {
     /// Raises a number to a floating point power.
-    pub fn powf(self, n: f32) -> Self {
+    pub fn powf(self, n: Self) -> Self {
         // using x^n = exp(ln(x^n)) = exp(n*ln(x))
-        if self.0 < 0.0 {
-            if !n.is_integer() {
-                Self::NAN
-            } else {
-                // if n is even, then we know that the result will have no sign, so we can remove it
-                if n.is_even() {
-                    (n * self.without_sign().ln()).exp()
-                } else {
-                    // if n isn't even, we need to multiply by -1.0 at the end.
-                    -(n * self.without_sign().ln()).exp()
-                }
-            }
-        } else {
+        if self >= Self::ZERO {
             (n * self.ln()).exp()
+        } else if !n.is_integer() {
+            Self::NAN
+        } else if n.is_even() {
+            // if n is even, then we know that the result will have no sign, so we can remove it
+            (n * self.without_sign().ln()).exp()
+        } else {
+            // if n isn't even, we need to multiply by -1.0 at the end.
+            -(n * self.without_sign().ln()).exp()
         }
     }
 }
@@ -169,7 +164,7 @@ mod tests {
     #[test]
     fn sanity_check() {
         for &(x, expected) in TEST_VECTORS_POW3 {
-            let exp_x = F32(3.0).powf(x);
+            let exp_x = F32(3.0).powf(F32(x));
             let relative_error = calc_relative_error(exp_x, expected);
 
             assert!(
@@ -183,7 +178,7 @@ mod tests {
         }
 
         for &(x, expected) in TEST_VECTORS_POW150 {
-            let exp_x = F32(150.0).powf(x);
+            let exp_x = F32(150.0).powf(F32(x));
             let relative_error = calc_relative_error(exp_x, expected);
 
             assert!(
@@ -197,7 +192,7 @@ mod tests {
         }
 
         for &(base_input, power_input, expected) in TEST_VECTORS_MISC {
-            let exp_x = F32(base_input).powf(power_input);
+            let exp_x = F32(base_input).powf(F32(power_input));
             let relative_error = calc_relative_error(exp_x, expected);
 
             assert!(

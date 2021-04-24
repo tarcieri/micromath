@@ -1,6 +1,6 @@
 //! Copy the sign over from another number.
 
-use super::{utils::SIGN_MASK, F32};
+use super::{F32, SIGN_MASK};
 
 impl F32 {
     /// Returns a number composed of the magnitude of `self` and the sign of

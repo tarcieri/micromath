@@ -2,10 +2,7 @@
 //!
 //! Method described at: <https://stackoverflow.com/a/6985769/2036035>
 
-use super::{
-    utils::{self, FloatComponents},
-    F32,
-};
+use super::{EXPONENT_BIAS, F32};
 use core::f32::consts;
 
 impl F32 {
@@ -38,22 +35,22 @@ impl F32 {
 
         //guaranteed to be 0 < x < 1.0
         let x_fract = x_fract * consts::LN_2;
-        let fract_exp = x_fract.exp_smallx(partial_iter).0;
+        let fract_exp = x_fract.exp_smallx(partial_iter);
 
         //need the 2^n portion, we can just extract that from the whole number exp portion
         let fract_exponent: i32 = fract_exp
             .extract_exponent_value()
             .saturating_add(x_trunc.0 as i32);
 
-        if fract_exponent < -(utils::EXPONENT_BIAS as i32) {
+        if fract_exponent < -(EXPONENT_BIAS as i32) {
             return Self::ZERO;
         }
 
-        if fract_exponent > ((utils::EXPONENT_BIAS + 1_u32) as i32) {
+        if fract_exponent > ((EXPONENT_BIAS + 1) as i32) {
             return Self::INFINITY;
         }
 
-        fract_exp.set_exponent(fract_exponent).into()
+        fract_exp.set_exponent(fract_exponent)
     }
 
     /// if x is between 0.0 and 1.0, we can approximate it with the a series
