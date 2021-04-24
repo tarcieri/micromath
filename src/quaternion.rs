@@ -19,7 +19,7 @@
 //! See the License for the specific language governing permissions and
 //! limitations under the License.
 
-use core::ops::{AddAssign, Mul, MulAssign, SubAssign};
+use core::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
 
 /// Quaternions are a number system that extends the complex numbers which can
 /// be used for efficiently computing spatial rotations.
@@ -48,19 +48,43 @@ use core::ops::{AddAssign, Mul, MulAssign, SubAssign};
 pub struct Quaternion(pub f32, pub f32, pub f32, pub f32);
 
 impl Quaternion {
-    /// Returns the conjugate of this quaternion
+    /// Returns the conjugate of this quaternion.
     pub fn conj(self) -> Self {
         Quaternion(self.0, -self.1, -self.2, -self.3)
     }
 
-    /// Returns the norm of this quaternion
+    /// Returns the dot product of this quaternion.
+    pub fn dot(self, rhs: Self) -> f32 {
+        self.0 * rhs.0 + self.1 * rhs.1 + self.2 * rhs.2 + self.3 * rhs.3
+    }
+
+    /// Compute the inverse of this quaternion.
+    pub fn inv(self) -> Self {
+        let norm = self.norm();
+        self.conj() * (1.0 / (norm * norm))
+    }
+
+    /// Returns the norm of this quaternion.
     pub fn norm(self) -> f32 {
         self.0 * self.0 + self.1 * self.1 + self.2 * self.2 + self.3 * self.3
     }
 }
 
-impl AddAssign<Quaternion> for Quaternion {
-    fn add_assign(&mut self, rhs: Quaternion) {
+impl Add for Quaternion {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self {
+        Self(
+            self.0 + rhs.0,
+            self.1 + rhs.1,
+            self.2 + rhs.2,
+            self.3 + rhs.3,
+        )
+    }
+}
+
+impl AddAssign for Quaternion {
+    fn add_assign(&mut self, rhs: Self) {
         self.0 += rhs.0;
         self.1 += rhs.1;
         self.2 += rhs.2;
@@ -68,17 +92,21 @@ impl AddAssign<Quaternion> for Quaternion {
     }
 }
 
-impl MulAssign<f32> for Quaternion {
-    fn mul_assign(&mut self, k: f32) {
-        self.0 *= k;
-        self.1 *= k;
-        self.2 *= k;
-        self.3 *= k;
+impl Sub for Quaternion {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self {
+        Self(
+            self.0 - rhs.0,
+            self.1 - rhs.1,
+            self.2 - rhs.2,
+            self.3 - rhs.3,
+        )
     }
 }
 
-impl SubAssign<Quaternion> for Quaternion {
-    fn sub_assign(&mut self, rhs: Quaternion) {
+impl SubAssign for Quaternion {
+    fn sub_assign(&mut self, rhs: Self) {
         self.0 -= rhs.0;
         self.1 -= rhs.1;
         self.2 -= rhs.2;
@@ -86,11 +114,11 @@ impl SubAssign<Quaternion> for Quaternion {
     }
 }
 
-impl Mul<Quaternion> for Quaternion {
+impl Mul for Quaternion {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
-        Quaternion(
+        Self(
             self.0 * other.0 - self.1 * other.1 - self.2 * other.2 - self.3 * other.3,
             self.0 * other.1 + self.1 * other.0 + self.2 * other.3 - self.3 * other.2,
             self.0 * other.2 - self.1 * other.3 + self.2 * other.0 + self.3 * other.1,
@@ -112,6 +140,12 @@ impl Mul<Quaternion> for f32 {
 
     fn mul(self, q: Quaternion) -> Quaternion {
         q * self
+    }
+}
+
+impl MulAssign<f32> for Quaternion {
+    fn mul_assign(&mut self, k: f32) {
+        *self = *self * k;
     }
 }
 
