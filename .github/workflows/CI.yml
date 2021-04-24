@@ -41,6 +41,7 @@ jobs:
           override: true
           profile: minimal
       - run: cargo build --target ${{ matrix.target }} --release --no-default-features
+      - run: cargo build --target ${{ matrix.target }} --release --no-default-features --features num-traits
 
   test:
     runs-on: ubuntu-latest

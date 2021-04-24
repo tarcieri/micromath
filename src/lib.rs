@@ -98,3 +98,7 @@ pub use crate::{f32ext::F32Ext, float::F32};
 
 #[cfg(feature = "quaternion")]
 pub use crate::quaternion::Quaternion;
+
+#[cfg(feature = "num-traits")]
+#[cfg_attr(docsrs, doc(cfg(feature = "num-traits")))]
+pub use num_traits;
