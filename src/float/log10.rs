@@ -4,7 +4,7 @@ use super::F32;
 use core::f32::consts::LOG10_E;
 
 impl F32 {
-    /// Returns the base 10 logarithm of the number.
+    /// Approximates the base 10 logarithm of the number.
     pub fn log10(self) -> Self {
         self.ln() * LOG10_E
     }

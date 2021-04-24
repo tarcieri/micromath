@@ -4,7 +4,7 @@ use super::F32;
 use super::{EXPONENT_BIAS, MANTISSA_BITS, MANTISSA_MASK};
 
 impl F32 {
-    /// Returns the fractional part of a number.
+    /// Returns the fractional part of a number with sign.
     pub fn fract(self) -> Self {
         let x_bits = self.to_bits();
         let exponent = self.extract_exponent_value();

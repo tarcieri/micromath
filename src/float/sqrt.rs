@@ -5,7 +5,7 @@
 use super::F32;
 
 impl F32 {
-    /// Returns the square root of a number.
+    /// Approximates the square root of a number with an average deviation of ~5%.
     ///
     /// Returns [`Self::NAN`] if `self` is a negative number.
     pub fn sqrt(self) -> Self {

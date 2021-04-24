@@ -9,74 +9,74 @@ pub trait F32Ext: Sized {
     /// implementation.
     fn abs(self) -> f32;
 
-    /// Approximate `acos(x)` in radians in the range `[0, pi]`
+    /// Approximates `acos(x)` in radians in the range `[0, pi]`
     fn acos(self) -> f32;
 
-    /// Approximate `asin(x)` in radians in the range `[-pi/2, pi/2]`.
+    /// Approximates `asin(x)` in radians in the range `[-pi/2, pi/2]`.
     fn asin(self) -> f32;
 
-    /// Approximate `atan(x)` in radians with a maximum error of `0.002`.
+    /// Approximates `atan(x)` in radians with a maximum error of `0.002`.
     fn atan(self) -> f32;
 
-    /// Approximate `atan(x)` normalized to the `[−1,1]` range with a maximum
+    /// Approximates `atan(x)` normalized to the `[−1,1]` range with a maximum
     /// error of `0.1620` degrees.
     fn atan_norm(self) -> f32;
 
-    /// Approximate the four quadrant arctangent `atan2(x)` in radians, with
+    /// Approximates the four quadrant arctangent `atan2(x)` in radians, with
     /// a maximum error of `0.002`.
     fn atan2(self, other: f32) -> f32;
 
-    /// Approximate the four quadrant arctangent.
+    /// Approximates the four quadrant arctangent.
     /// Normalized to the `[0,4)` range with a maximum error of `0.1620` degrees.
     fn atan2_norm(self, other: f32) -> f32;
 
-    /// Approximate floating point ceiling.
+    /// Approximates floating point ceiling.
     fn ceil(self) -> f32;
 
     /// Copies the sign from one number to another and returns it.
     fn copysign(self, sign: f32) -> f32;
 
-    /// Approximate cosine in radians with a maximum error of `0.002`.
+    /// Approximates cosine in radians with a maximum error of `0.002`.
     fn cos(self) -> f32;
 
     /// Calculates Euclidean division, the matching method for `rem_euclid`.
     fn div_euclid(self, other: f32) -> f32;
 
-    /// Approximate `e^x`.
+    /// Approximates `e^x`.
     fn exp(self) -> f32;
 
-    /// Approximate floating point floor.
+    /// Approximates floating point floor.
     fn floor(self) -> f32;
 
     /// Retrieve the fractional part of floating point with sign.
     fn fract(self) -> f32;
 
-    /// Approximate the length of the hypotenuse of a right-angle triangle given
+    /// Approximates the length of the hypotenuse of a right-angle triangle given
     /// legs of length `x` and `y`.
     fn hypot(self, other: f32) -> f32;
 
-    /// Approximate `1/x` with an average deviation of ~8%.
+    /// Approximates `1/x` with an average deviation of ~8%.
     fn inv(self) -> f32;
 
-    /// Approximate inverse square root with an average deviation of ~5%.
+    /// Approximates inverse square root with an average deviation of ~5%.
     fn invsqrt(self) -> f32;
 
-    /// Approximate `ln(x)`.
+    /// Approximates `ln(x)`.
     fn ln(self) -> f32;
 
-    /// Approximate `log` with an arbitrary base.
+    /// Approximates `log` with an arbitrary base.
     fn log(self, base: f32) -> f32;
 
-    /// Approximate `log2`.
+    /// Approximates `log2`.
     fn log2(self) -> f32;
 
-    /// Approximate `log10`.
+    /// Approximates `log10`.
     fn log10(self) -> f32;
 
-    /// Approximate `self^n`.
+    /// Approximates `self^n`.
     fn powf(self, n: f32) -> f32;
 
-    /// Approximate `self^n` where n is an `i32`
+    /// Approximates `self^n` where n is an `i32`
     fn powi(self, n: i32) -> f32;
 
     /// Calculates the least nonnegative remainder of `self (mod other)`.
@@ -85,13 +85,13 @@ pub trait F32Ext: Sized {
     /// Round the number part of floating point with sign.
     fn round(self) -> f32;
 
-    /// Approximate sine in radians with a maximum error of `0.002`.
+    /// Approximates sine in radians with a maximum error of `0.002`.
     fn sin(self) -> f32;
 
-    /// Approximate square root with an average deviation of ~5%.
+    /// Approximates square root with an average deviation of ~5%.
     fn sqrt(self) -> f32;
 
-    /// Approximate `tan(x)` in radians with a maximum error of `0.6`.
+    /// Approximates `tan(x)` in radians with a maximum error of `0.6`.
     fn tan(self) -> f32;
 
     /// Retrieve whole number part of floating point with sign.
