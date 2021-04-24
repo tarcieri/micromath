@@ -3,7 +3,7 @@
 use super::F32;
 
 impl F32 {
-    /// Raises a number to a floating point power.
+    /// Approximates a number raised to a floating point power.
     pub fn powf(self, n: Self) -> Self {
         // using x^n = exp(ln(x^n)) = exp(n*ln(x))
         if self >= Self::ZERO {
@@ -143,7 +143,7 @@ mod tests {
         (10.0, 5.766_504e21),
     ];
 
-    ///  misc powf(x,n) test vectors - `(base_input, power_input, output)`
+    /// misc powf(x,n) test vectors - `(base_input, power_input, output)`
     pub(crate) const TEST_VECTORS_MISC: &[(f32, f32, f32)] = &[
         (-0.5881598, 2.0, 0.345_931_95),
         (-0.5881598, 3.2, f32::NAN),

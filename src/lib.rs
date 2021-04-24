@@ -2,7 +2,7 @@
 //! floating point approximations for common arithmetic operations, as well as
 //! 2D and 3D vector types, statistical analysis functions, and quaternions.
 //!
-//! ## Floating point approximations
+//! ## Floating point approximations: `F32` and `F32Ext`
 //!
 //! `micromath` supports approximating many arithmetic operations on `f32`
 //! using bitwise operations, providing great performance and small code size
@@ -10,8 +10,12 @@
 //! processing, these approximations are often sufficient and the performance
 //! gains worth the lost precision.
 //!
-//! These approximations are provided by the [`F32Ext`] trait which is impl'd
-//! for `f32`, providing a drop-in `std`-compatible (sans lost precision) API.
+//! These approximations are defined on the [`F32`] newtype wrapper.
+//!
+//! ### `F32Ext` extension trait
+//!
+//! Floating point approximations can used via the the [`F32Ext`] trait which
+//! is impl'd for `f32`, providing a drop-in `std`-compatible API.
 //!
 //! ```
 //! use micromath::F32Ext;
@@ -19,8 +23,6 @@
 //! let n = 2.0.sqrt();
 //! assert_eq!(n, 1.5); // close enough
 //! ```
-//!
-//! ### Unused import warnings when linking `std`
 //!
 //! Since the `F32Ext` trait provides methods which are already defined in
 //! `std`, in cases where your crate links `std` the `F32Ext` versions of

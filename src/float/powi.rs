@@ -9,7 +9,7 @@
 use super::{F32, MANTISSA_BITS};
 
 impl F32 {
-    /// Raises a number to an integer power.
+    /// Approximates a number raised to an integer power.
     pub fn powi(self, n: i32) -> Self {
         let mut base = self;
         let mut abs_n = i32::abs(n);
