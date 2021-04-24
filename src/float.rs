@@ -37,6 +37,9 @@ use core::{
     str::FromStr,
 };
 
+#[cfg(feature = "num-traits")]
+use num_traits::{Num, One, Zero};
+
 /// Sign mask.
 pub(crate) const SIGN_MASK: u32 = 0b1000_0000_0000_0000_0000_0000_0000_0000;
 
@@ -582,5 +585,39 @@ impl UpperExp for F32 {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:E}", self.0)
+    }
+}
+
+#[cfg(feature = "num-traits")]
+#[cfg_attr(docsrs, doc(cfg(feature = "num-traits")))]
+impl Zero for F32 {
+    fn zero() -> Self {
+        Self::ZERO
+    }
+
+    fn is_zero(&self) -> bool {
+        Self::ZERO == *self
+    }
+}
+
+#[cfg(feature = "num-traits")]
+#[cfg_attr(docsrs, doc(cfg(feature = "num-traits")))]
+impl One for F32 {
+    fn one() -> Self {
+        Self::ONE
+    }
+
+    fn is_one(&self) -> bool {
+        Self::ONE == *self
+    }
+}
+
+#[cfg(feature = "num-traits")]
+#[cfg_attr(docsrs, doc(cfg(feature = "num-traits")))]
+impl Num for F32 {
+    type FromStrRadixErr = num_traits::ParseFloatError;
+
+    fn from_str_radix(str: &str, radix: u32) -> Result<Self, Self::FromStrRadixErr> {
+        f32::from_str_radix(str, radix).map(Self)
     }
 }

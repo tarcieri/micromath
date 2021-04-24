@@ -19,9 +19,13 @@ Optimizes for performance and small code size at the cost of precision.
 
 Requires Rust **1.47** or newer.
 
-In the future, we reserve the right to change MSRV (i.e. MSRV is out-of-scope
-for this crate's SemVer guarantees), however when we do it will be accompanied by
-a minor version bump.
+## SemVer Policy
+
+We reserve the right to change the following in future releases with a minor
+version bump *only*:
+
+- MSRV
+- `num-traits` version (optional dependency)
 
 ## Features
 

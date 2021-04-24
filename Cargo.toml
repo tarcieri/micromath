@@ -15,6 +15,9 @@ edition     = "2018"
 categories  = ["embedded", "mathematics", "science", "no-std"]
 keywords    = ["math", "quaternions", "statistics", "trigonometry", "vector"]
 
+[dependencies]
+num-traits = { version = "0.2", optional = true, default-features = false }
+
 [features]
 quaternion = []
 statistics = []
