@@ -21,6 +21,9 @@
 
 use core::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
 
+#[cfg(feature = "vector")]
+use crate::vector::{Component, F32x3, Vector3d};
+
 /// Quaternions are a number system that extends the complex numbers which can
 /// be used for efficiently computing spatial rotations.
 ///
@@ -59,14 +62,48 @@ impl Quaternion {
     }
 
     /// Compute the inverse of this quaternion.
+    ///
+    /// Panics if [`Quaternion::norm`] is zero.
     pub fn inv(self) -> Self {
         let norm = self.norm();
+        assert_ne!(norm, 0.0, "quaternion norm is zero");
         self.conj() * (1.0 / (norm * norm))
     }
 
     /// Returns the norm of this quaternion.
     pub fn norm(self) -> f32 {
         self.0 * self.0 + self.1 * self.1 + self.2 * self.2 + self.3 * self.3
+    }
+
+    /// Rotate a 3D vector using this quaternion.
+    #[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
+    pub fn rotate<C>(self, v: Vector3d<C>) -> F32x3
+    where
+        C: Component + Into<f32>,
+    {
+        let q1 = Quaternion::from(v);
+        let q2 = self * q1 * self.inv();
+        F32x3 {
+            x: q2.1,
+            y: q2.2,
+            z: q2.3,
+        }
+    }
+
+    /// Convert this quaternion into a 3D vector.
+    ///
+    /// Returns `None` if the `a` component of this quaternion is non-zero.
+    #[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
+    pub fn to_vector3d(self) -> Option<F32x3> {
+        if (-f32::EPSILON..f32::EPSILON).contains(&self.0) {
+            Some(F32x3 {
+                x: self.1,
+                y: self.2,
+                z: self.3,
+            })
+        } else {
+            None
+        }
     }
 }
 
@@ -85,10 +122,7 @@ impl Add for Quaternion {
 
 impl AddAssign for Quaternion {
     fn add_assign(&mut self, rhs: Self) {
-        self.0 += rhs.0;
-        self.1 += rhs.1;
-        self.2 += rhs.2;
-        self.3 += rhs.3;
+        *self = *self + rhs;
     }
 }
 
@@ -107,10 +141,7 @@ impl Sub for Quaternion {
 
 impl SubAssign for Quaternion {
     fn sub_assign(&mut self, rhs: Self) {
-        self.0 -= rhs.0;
-        self.1 -= rhs.1;
-        self.2 -= rhs.2;
-        self.3 -= rhs.3;
+        *self = *self - rhs;
     }
 }
 
@@ -131,7 +162,7 @@ impl Mul<f32> for Quaternion {
     type Output = Self;
 
     fn mul(self, k: f32) -> Self {
-        Quaternion(self.0 * k, self.1 * k, self.2 * k, self.3 * k)
+        Self(self.0 * k, self.1 * k, self.2 * k, self.3 * k)
     }
 }
 
@@ -146,6 +177,30 @@ impl Mul<Quaternion> for f32 {
 impl MulAssign<f32> for Quaternion {
     fn mul_assign(&mut self, k: f32) {
         *self = *self * k;
+    }
+}
+
+#[cfg(feature = "vector")]
+#[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
+impl<C> From<Vector3d<C>> for Quaternion
+where
+    C: Component + Into<f32>,
+{
+    fn from(v: Vector3d<C>) -> Quaternion {
+        Self(0.0, v.x.into(), v.y.into(), v.z.into())
+    }
+}
+
+#[cfg(feature = "vector")]
+#[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
+impl<C> Mul<Vector3d<C>> for Quaternion
+where
+    C: Component + Into<f32>,
+{
+    type Output = F32x3;
+
+    fn mul(self, v: Vector3d<C>) -> F32x3 {
+        self.rotate(v)
     }
 }
 
