@@ -24,7 +24,7 @@ impl F32 {
 
         // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
         // the precision of such an approximation is assumed not good enough.
-        let x_working = if x_less_than_1 { 1.0 / self } else { self };
+        let x_working = if x_less_than_1 { self.inv() } else { self };
 
         // according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
         // get exponent value
