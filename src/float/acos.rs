@@ -12,7 +12,7 @@ impl F32 {
         if self > 0.0 {
             ((Self::ONE - self * self).sqrt() / self).atan()
         } else if self == 0.0 {
-            F32(PI / 2.0)
+            Self(PI / 2.0)
         } else {
             ((Self::ONE - self * self).sqrt() / self).atan() + PI
         }
