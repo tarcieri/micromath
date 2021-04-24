@@ -30,6 +30,7 @@ pub(crate) mod trunc;
 pub(crate) mod utils;
 
 use core::{
+    cmp::Ordering,
     fmt::{self, Display, LowerExp, UpperExp},
     iter::{Product, Sum},
     num::ParseFloatError,
@@ -37,10 +38,146 @@ use core::{
     str::FromStr,
 };
 
+/// Sign mask.
+pub(crate) const SIGN_MASK: u32 = 0b1000_0000_0000_0000_0000_0000_0000_0000;
+
+/// Exponent mask.
+#[allow(dead_code)]
+pub(crate) const EXPONENT_MASK: u32 = 0b0111_1111_1000_0000_0000_0000_0000_0000;
+
+/// Mantissa mask.
+#[allow(dead_code)]
+pub(crate) const MANTISSA_MASK: u32 = 0b0000_0000_0111_1111_1111_1111_1111_1111;
+
+/// Exponent mask.
+#[allow(dead_code)]
+pub(crate) const EXPONENT_BIAS: u32 = 127;
+
+/// Mantissa bits.
+///
+/// Note: `MANTISSA_DIGITS` is available in `core::f32`, but the actual bits taken up are 24 - 1.
+#[allow(dead_code)]
+pub(crate) const MANTISSA_BITS: u32 = 23;
+
 /// 32-bit floating point wrapper which implements fast approximation-based
 /// operations.
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 pub struct F32(pub f32);
+
+impl F32 {
+    /// The value `0.0`.
+    pub const ZERO: Self = Self(0.0);
+
+    /// The value `1.0`.
+    pub const ONE: Self = Self(1.0);
+
+    /// The radix or base of the internal representation of `f32`.
+    pub const RADIX: u32 = f32::RADIX;
+
+    /// Number of significant digits in base 2.
+    pub const MANTISSA_DIGITS: u32 = f32::MANTISSA_DIGITS;
+
+    /// Approximate number of significant digits in base 10.
+    pub const DIGITS: u32 = f32::DIGITS;
+
+    /// [Machine epsilon] value for `f32`.
+    ///
+    /// This is the difference between `1.0` and the next larger representable number.
+    ///
+    /// [Machine epsilon]: https://en.wikipedia.org/wiki/Machine_epsilon
+    pub const EPSILON: Self = Self(f32::EPSILON);
+
+    /// Smallest finite `f32` value.
+    pub const MIN: Self = Self(f32::MIN);
+
+    /// Smallest positive normal `f32` value.
+    pub const MIN_POSITIVE: Self = Self(f32::MIN_POSITIVE);
+
+    /// Largest finite `f32` value.
+    pub const MAX: Self = Self(f32::MAX);
+
+    /// One greater than the minimum possible normal power of 2 exponent.
+    pub const MIN_EXP: i32 = f32::MIN_EXP;
+
+    /// Maximum possible power of 2 exponent.
+    pub const MAX_EXP: i32 = f32::MAX_EXP;
+
+    /// Minimum possible normal power of 10 exponent.
+    pub const MIN_10_EXP: i32 = f32::MIN_10_EXP;
+
+    /// Maximum possible power of 10 exponent.
+    pub const MAX_10_EXP: i32 = f32::MAX_10_EXP;
+
+    /// Not a Number (NaN).
+    pub const NAN: Self = Self(f32::NAN);
+
+    /// Infinity (∞).
+    pub const INFINITY: Self = Self(f32::INFINITY);
+
+    /// Negative infinity (−∞).
+    pub const NEG_INFINITY: Self = Self(f32::NEG_INFINITY);
+
+    /// Returns `true` if this value is `NaN`.
+    #[inline]
+    pub fn is_nan(self) -> bool {
+        self.0.is_nan()
+    }
+
+    /// Returns `true` if this value is positive infinity or negative infinity, and
+    /// `false` otherwise.
+    #[inline]
+    pub fn is_infinite(self) -> bool {
+        self.0.is_infinite()
+    }
+
+    /// Returns `true` if this number is neither infinite nor `NaN`.
+    #[inline]
+    pub fn is_finite(self) -> bool {
+        self.0.is_finite()
+    }
+
+    /// Raw transmutation to `u32`.
+    ///
+    /// This is currently identical to `transmute::<f32, u32>(self)` on all platforms.
+    ///
+    /// See [`F32::from_bits`] for some discussion of the portability of this operation
+    /// (there are almost no issues).
+    #[inline]
+    pub fn to_bits(self) -> u32 {
+        self.0.to_bits()
+    }
+
+    /// Raw transmutation from `u32`.
+    ///
+    /// This is currently identical to `transmute::<u32, f32>(v)` on all platforms.
+    /// It turns out this is incredibly portable, for two reasons:
+    ///
+    /// - Floats and Ints have the same endianness on all supported platforms.
+    /// - IEEE-754 very precisely specifies the bit layout of floats.
+    ///
+    /// See [`f32::from_bits`] for more information.
+    #[inline]
+    pub fn from_bits(v: u32) -> Self {
+        Self(f32::from_bits(v))
+    }
+
+    /// Extract exponent bits.
+    pub(crate) fn extract_exponent_bits(self) -> u32 {
+        (self.to_bits() & EXPONENT_MASK)
+            .overflowing_shr(MANTISSA_BITS)
+            .0
+    }
+
+    /// Extract the exponent of a float's value.
+    pub(crate) fn extract_exponent_value(self) -> i32 {
+        (self.extract_exponent_bits() as i32) - EXPONENT_BIAS as i32
+    }
+
+    /// Remove sign.
+    pub(crate) fn without_sign(self) -> Self {
+        Self::from_bits(self.to_bits() & !SIGN_MASK)
+    }
+}
 
 impl Add for F32 {
     type Output = F32;
@@ -257,6 +394,30 @@ impl Neg for F32 {
     #[inline]
     fn neg(self) -> F32 {
         F32(-self.0)
+    }
+}
+
+impl PartialEq<f32> for F32 {
+    fn eq(&self, other: &f32) -> bool {
+        self.0.eq(other)
+    }
+}
+
+impl PartialEq<F32> for f32 {
+    fn eq(&self, other: &F32) -> bool {
+        self.eq(&other.0)
+    }
+}
+
+impl PartialOrd<f32> for F32 {
+    fn partial_cmp(&self, other: &f32) -> Option<Ordering> {
+        self.0.partial_cmp(other)
+    }
+}
+
+impl PartialOrd<F32> for f32 {
+    fn partial_cmp(&self, other: &F32) -> Option<Ordering> {
+        self.partial_cmp(&other.0)
     }
 }
 

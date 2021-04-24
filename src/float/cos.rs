@@ -1,22 +1,24 @@
 //! Cosine approximation. Method from:
 //! <https://stackoverflow.com/posts/28050328/revisions>
 
-use super::abs::abs;
-use super::floor::floor;
-use core::f32;
+use super::F32;
+use core::f32::consts::FRAC_1_PI;
 
-/// Approximates `cos(x)` in radians with a maximum error of `0.002`
-pub(crate) fn cos_approx(mut x: f32) -> f32 {
-    x *= f32::consts::FRAC_1_PI / 2.0;
-    x -= 0.25 + floor(x + 0.25);
-    x *= 16.0 * (abs(x) - 0.5);
-    x += 0.225 * x * (abs(x) - 1.0);
-    x
+impl F32 {
+    /// Approximates `cos(x)` in radians with a maximum error of `0.002`.
+    pub fn cos(self) -> Self {
+        let mut x = self;
+        x *= FRAC_1_PI / 2.0;
+        x -= 0.25 + (x + 0.25).floor().0;
+        x *= 16.0 * (x.abs() - 0.5);
+        x += 0.225 * x * (x.abs() - 1.0);
+        x
+    }
 }
 
 #[cfg(test)]
 pub(crate) mod tests {
-    use super::{abs, cos_approx};
+    use super::F32;
 
     /// Maximum error in radians
     pub(crate) const MAX_ERROR: f32 = 0.002;
@@ -73,9 +75,9 @@ pub(crate) mod tests {
 
     #[test]
     fn sanity_check() {
-        for (x, expected) in TEST_VECTORS {
-            let cos_x = cos_approx(*x);
-            let delta = abs(cos_x - expected);
+        for &(x, expected) in TEST_VECTORS {
+            let cos_x = F32(x).cos();
+            let delta = (cos_x - expected).abs();
 
             assert!(
                 delta <= MAX_ERROR,

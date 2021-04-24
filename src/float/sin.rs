@@ -1,17 +1,19 @@
-//! Sine approximation, implemented in terms of `cos(x)`
+//! Sine approximation, implemented in terms of `cos(x)`.
 
-use super::cos::cos_approx;
+use super::F32;
 use core::f32::consts::PI;
 
-/// Approximates `sin(x)` in radians with a maximum error of `0.002`
-pub(crate) fn sin_approx(x: f32) -> f32 {
-    cos_approx(x - PI / 2.0)
+impl F32 {
+    /// Approximates `sin(x)` in radians with a maximum error of `0.002`.
+    pub fn sin(self) -> Self {
+        (self - PI / 2.0).cos()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::sin_approx;
-    use crate::float::{abs::abs, cos::tests::MAX_ERROR};
+    use super::F32;
+    use crate::float::cos::tests::MAX_ERROR;
 
     /// Sine test vectors - `(input, output)`
     const TEST_VECTORS: &[(f32, f32)] = &[
@@ -65,9 +67,9 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        for (x, expected) in TEST_VECTORS {
-            let sin_x = sin_approx(*x);
-            let delta = abs(sin_x - expected);
+        for &(x, expected) in TEST_VECTORS {
+            let sin_x = F32(x).sin();
+            let delta = (sin_x - expected).abs();
 
             assert!(
                 delta <= MAX_ERROR,

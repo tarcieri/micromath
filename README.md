@@ -17,20 +17,11 @@ Optimizes for performance and small code size at the cost of precision.
 
 ## Minimum Supported Rust Version
 
-Requires Rust **1.36** or newer.
+Requires Rust **1.47** or newer.
 
-## Semver Policy
-
-In the future, we reserve the right to change the following:
-
-- Minimum Supported Rust Version
-- `generic-array` version (presently `^0.14`)
-
-i.e. these are explicitly out of scope for the SemVer guarantees this
-crate provides.
-
-However, when we change either of these things, we will accompany them
-with a minor version bump.
+In the future, we reserve the right to change MSRV (i.e. MSRV is out-of-scope
+for this crate's SemVer guarantees), however when we do it will be accompanied by
+a minor version bump.
 
 ## Features
 
@@ -115,7 +106,7 @@ Apache 2.0 and MIT licenses.
 [build-link]: https://github.com/tarcieri/micromath/actions
 [safety-image]: https://img.shields.io/badge/unsafe-forbidden-success.svg
 [safety-link]: https://github.com/rust-secure-code/safety-dance/
-[msrv-image]: https://img.shields.io/badge/rustc-1.36+-blue.svg
+[msrv-image]: https://img.shields.io/badge/rustc-1.47+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
 [license-link]: https://github.com/tarcieri/micromath/blob/main/LICENSE-APACHE
 

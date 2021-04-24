@@ -1,21 +1,24 @@
-use super::floor::floor;
+//! Floating point ceiling approximation for a single-precision float.
 
-/// Floating point ceiling approximation for a single-precision float
-pub(crate) fn ceil(x: f32) -> f32 {
-    -floor(-x)
+use super::F32;
+
+impl F32 {
+    pub(crate) fn ceil(self) -> Self {
+        -(-self).floor()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::ceil;
+    use super::F32;
 
     #[test]
     fn sanity_check() {
-        assert_eq!(ceil(-1.1), -1.0);
-        assert_eq!(ceil(-0.1), 0.0);
-        assert_eq!(ceil(0.0), 0.0);
-        assert_eq!(ceil(1.0), 1.0);
-        assert_eq!(ceil(1.1), 2.0);
-        assert_eq!(ceil(2.9), 3.0);
+        assert_eq!(F32(-1.1).ceil().0, -1.0);
+        assert_eq!(F32(-0.1).ceil().0, 0.0);
+        assert_eq!(F32(0.0).ceil().0, 0.0);
+        assert_eq!(F32(1.0).ceil().0, 1.0);
+        assert_eq!(F32(1.1).ceil().0, 2.0);
+        assert_eq!(F32(2.9).ceil().0, 3.0);
     }
 }

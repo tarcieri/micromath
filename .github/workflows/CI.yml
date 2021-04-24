@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         rust:
-          - 1.36.0 # MSRV
+          - 1.47.0 # MSRV
           - stable
         target:
           # - armv7a-none-eabi
@@ -49,7 +49,7 @@ jobs:
         include:
           # 32-bit Linux
           - target: i686-unknown-linux-gnu
-            rust: 1.36.0 # MSRV
+            rust: 1.47.0 # MSRV
             deps: sudo apt update && sudo apt install gcc-multilib
           - target: i686-unknown-linux-gnu
             rust: stable
@@ -57,7 +57,7 @@ jobs:
 
           # 64-bit Linux
           - target: x86_64-unknown-linux-gnu
-            rust: 1.36.0 # MSRV
+            rust: 1.47.0 # MSRV
           - target: x86_64-unknown-linux-gnu
             rust: stable
 
@@ -92,7 +92,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.36.0 # MSRV
+          toolchain: 1.47.0 # MSRV
           components: clippy
           override: true
           profile: minimal

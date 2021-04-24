@@ -1,42 +1,51 @@
-/// Floating point whole number for f32
-use super::copysign;
-use super::utils;
-use super::utils::FloatComponents;
-use core::f32;
-use core::u32;
+//! Floating point whole number for a single-precision float.
 
-pub(crate) fn trunc_sign(x: f32) -> f32 {
-    let x_bits: u32 = x.to_bits();
-    let exponent: i32 = x.extract_exponent_value();
-    //exponent is negative, there is no whole number, just return zero
-    if exponent < 0_i32 {
-        return copysign::copysign(0.0_f32, x);
-    }
-    let exponent_clamped = i32::max(exponent, 0_i32) as u32;
+use super::{
+    utils::{FloatComponents, MANTISSA_MASK},
+    F32,
+};
 
-    // find the part of the fraction that would be left over
-    let fractional_part: u32 = x_bits.overflowing_shl(exponent_clamped).0 & utils::MANTISSA_MASK;
-    // if there isn't a fraction we can just return the whole thing.
-    if fractional_part == 0_u32 {
-        return x;
+impl F32 {
+    /// Returns the integer part of a number.
+    pub fn trunc(self) -> Self {
+        let x_bits = self.to_bits();
+        let exponent = self.0.extract_exponent_value();
+
+        // exponent is negative, there is no whole number, just return zero
+        if exponent < 0 {
+            return F32::ZERO.copysign(self);
+        }
+
+        let exponent_clamped = i32::max(exponent, 0) as u32;
+
+        // find the part of the fraction that would be left over
+        let fractional_part = x_bits.overflowing_shl(exponent_clamped).0 & MANTISSA_MASK;
+
+        // if there isn't a fraction we can just return the whole thing.
+        if fractional_part == 0_u32 {
+            return self;
+        }
+
+        let fractional_mask = fractional_part.overflowing_shr(exponent_clamped).0;
+
+        Self::from_bits(x_bits & !fractional_mask)
     }
-    let fractional_mask: u32 = fractional_part.overflowing_shr(exponent_clamped).0;
-    f32::from_bits(x_bits & !fractional_mask)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::trunc_sign;
+    use super::F32;
+
     #[test]
     fn sanity_check() {
-        assert_eq!(trunc_sign(-1.1), -1.0);
-        assert_eq!(trunc_sign(-0.1), -0.0);
-        assert_eq!(trunc_sign(0.0), 0.0);
-        assert_eq!(trunc_sign(1.0), 1.0);
-        assert_eq!(trunc_sign(1.1), 1.0);
-        assert_eq!(trunc_sign(2.9), 2.0);
+        assert_eq!(F32(-1.1).trunc(), F32(-1.0));
+        assert_eq!(F32(-0.1).trunc(), F32(-0.0));
+        assert_eq!(F32(0.0).trunc(), F32(0.0));
+        assert_eq!(F32(1.0).trunc(), F32(1.0));
+        assert_eq!(F32(1.1).trunc(), F32(1.0));
+        assert_eq!(F32(2.9).trunc(), F32(2.0));
 
-        assert_eq!(trunc_sign(-100_000_000.13425345345), -100_000_000.0);
-        assert_eq!(trunc_sign(100_000_000.13425345345), 100_000_000.0);
+        assert_eq!(F32(-100_000_000.13425345345).trunc(), F32(-100_000_000.0));
+        assert_eq!(F32(100_000_000.13425345345).trunc(), F32(100_000_000.0));
     }
 }

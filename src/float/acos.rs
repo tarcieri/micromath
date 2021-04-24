@@ -1,27 +1,27 @@
-//! arccos approximation for a single-precision float using method
-//! described at:
+//! arccos approximation for a single-precision float.
 //!
+//! Method described at:
 //! <https://math.stackexchange.com/questions/2908908/express-arccos-in-terms-of-arctan>
 
-use super::{atan::atan_approx, sqrt::sqrt_approx};
+use super::F32;
 
-/// Computes `acos(x)` approximation in radians in the range `[0, pi]`
-pub(crate) fn acos_approx(x: f32) -> f32 {
-    atan_approx(sqrt_approx(1.0 - x * x) / x)
+impl F32 {
+    /// Computes `acos(x)` approximation in radians in the range `[0, pi]`.
+    pub(crate) fn acos(self) -> Self {
+        ((Self::ONE - self * self).sqrt() / self).atan()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::acos_approx;
-    use crate::float::{abs::abs, cos::cos_approx};
-    use core::f32;
+    use super::F32;
+    use core::f32::consts::FRAC_PI_4;
 
     const MAX_ERROR: f32 = 0.03;
 
     #[test]
     fn sanity_check() {
-        let f = f32::consts::FRAC_PI_4;
-        let abs_difference = abs(acos_approx(cos_approx(f)) - f32::consts::FRAC_PI_4);
-        assert!(abs_difference <= MAX_ERROR);
+        let difference = F32(FRAC_PI_4).cos().acos() - FRAC_PI_4;
+        assert!(difference.abs() <= MAX_ERROR);
     }
 }

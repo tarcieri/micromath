@@ -1,25 +1,34 @@
-/// Euclidean division for f32
-use super::trunc;
+//! Calculates Euclidian division for a single-precision float.
 
-pub(crate) fn div_euclid(x: f32, y: f32) -> f32 {
-    let q = trunc::trunc_sign(x / y);
-    if x % y < 0.0 {
-        return if y > 0.0 { q - 1.0 } else { q + 1.0 };
+use super::F32;
+
+impl F32 {
+    /// Calculates Euclidean division, the matching method for `rem_euclid`.
+    pub fn div_euclid(self, rhs: Self) -> Self {
+        let q = (self / rhs).trunc();
+
+        if self % rhs >= Self::ZERO {
+            q
+        } else if rhs > Self::ZERO {
+            q - Self::ONE
+        } else {
+            q + Self::ONE
+        }
     }
-    q
 }
 
 #[cfg(test)]
 mod tests {
-    use super::div_euclid;
+    use super::F32;
+
     #[test]
     fn sanity_check() {
-        let a = 7.0;
-        let b = 4.0;
+        let a = F32(7.0);
+        let b = F32(4.0);
 
-        assert_eq!(div_euclid(a, b), 1.0);
-        assert_eq!(div_euclid(-a, b), -2.0);
-        assert_eq!(div_euclid(a, -b), -1.0);
-        assert_eq!(div_euclid(-a, -b), 2.0);
+        assert_eq!(a.div_euclid(b), F32(1.0));
+        assert_eq!((-a).div_euclid(b), F32(-2.0));
+        assert_eq!(a.div_euclid(-b), F32(-1.0));
+        assert_eq!((-a).div_euclid(-b), F32(2.0));
     }
 }
