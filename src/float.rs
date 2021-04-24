@@ -38,7 +38,7 @@ use core::{
 };
 
 #[cfg(feature = "num-traits")]
-use num_traits::{Num, One, Zero};
+use num_traits::{Inv, Num, One, Zero};
 
 /// Sign mask.
 pub(crate) const SIGN_MASK: u32 = 0b1000_0000_0000_0000_0000_0000_0000_0000;
@@ -619,5 +619,27 @@ impl Num for F32 {
 
     fn from_str_radix(str: &str, radix: u32) -> Result<Self, Self::FromStrRadixErr> {
         f32::from_str_radix(str, radix).map(Self)
+    }
+}
+
+#[cfg(feature = "num-traits")]
+#[cfg_attr(docsrs, doc(cfg(feature = "num-traits")))]
+impl Inv for F32 {
+    type Output = Self;
+
+    fn inv(self) -> Self {
+        self.inv()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[allow(unused_imports)] // remove when we have more tests
+    use super::F32;
+
+    #[cfg(feature = "num-traits")]
+    #[test]
+    fn inv_trait() {
+        assert_eq!(num_traits::Inv::inv(F32(2.0)), F32(0.5));
     }
 }
