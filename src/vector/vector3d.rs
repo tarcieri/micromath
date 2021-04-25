@@ -1,6 +1,7 @@
 //! 3-dimensional vector
 
 use super::{Component, Vector};
+use crate::F32;
 use core::{
     iter::FromIterator,
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
@@ -244,6 +245,16 @@ impl From<U8x3> for F32x3 {
 
 impl From<U16x3> for F32x3 {
     fn from(vector: U16x3) -> F32x3 {
+        Self {
+            x: vector.x.into(),
+            y: vector.y.into(),
+            z: vector.z.into(),
+        }
+    }
+}
+
+impl From<Vector3d<F32>> for F32x3 {
+    fn from(vector: Vector3d<F32>) -> F32x3 {
         Self {
             x: vector.x.into(),
             y: vector.y.into(),
