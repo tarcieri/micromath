@@ -99,6 +99,7 @@ impl Quaternion {
     {
         let half_theta = F32(theta.into() * 0.5);
 
+        // TODO(tarcieri): refactor `Quaternion` to be (f32 + F32x3)
         let v = F32x3 {
             x: v.x.into(),
             y: v.y.into(),
