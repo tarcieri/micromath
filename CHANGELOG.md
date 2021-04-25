@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.0-pre (2021-04-24)
+### Added
+- `Vector` subtraction support ([#71])
+- `F32` newtype ([#72], [#75])
+- `num-traits` support ([#80])
+- `Quaternion::dot` and `::inv` ([#81])
+- `Vector3d` ops for `Quaternion` ([#82])
+- `Quaternion::magnitude`, `::scale`, `::to_array`, and `::IDENTITY` ([#83])
+- `Quaternion::axis_angle` ([#84])
+- `Quaternion::new` ([#85])
+
+### Changed
+- Refactor `Vector` types ([#69])
+- MSRV 1.47+ ([#75])
+- Make `Quaternion` opaque and module private ([#70], [#85])
+
+### Fixed
+- `acos()` behavior for zero/negative ([#79])
+
+[#69]: https://github.com/tarcieri/micromath/pull/69
+[#70]: https://github.com/tarcieri/micromath/pull/70
+[#71]: https://github.com/tarcieri/micromath/pull/71
+[#72]: https://github.com/tarcieri/micromath/pull/72
+[#75]: https://github.com/tarcieri/micromath/pull/75
+[#79]: https://github.com/tarcieri/micromath/pull/79
+[#80]: https://github.com/tarcieri/micromath/pull/80
+[#81]: https://github.com/tarcieri/micromath/pull/81
+[#82]: https://github.com/tarcieri/micromath/pull/82
+[#83]: https://github.com/tarcieri/micromath/pull/83
+[#84]: https://github.com/tarcieri/micromath/pull/84
+[#85]: https://github.com/tarcieri/micromath/pull/85
+
 ## 1.1.1 (2021-03-27)
 ### Added
 - `doc_cfg` ([#64])
