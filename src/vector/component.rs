@@ -1,5 +1,6 @@
 //! Components of numeric vectors.
 
+use crate::F32;
 use core::{
     fmt::Debug,
     ops::{Add, Div, Mul, Sub},
@@ -39,3 +40,4 @@ impl Component for u8 {}
 impl Component for u16 {}
 impl Component for u32 {}
 impl Component for f32 {}
+impl Component for F32 {}

@@ -86,6 +86,23 @@ impl Quaternion {
         self.0 * self.0 + self.1 * self.1 + self.2 * self.2 + self.3 * self.3
     }
 
+    /// Compute a quaternion for the given axis vector and angle.
+    #[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
+    pub fn axis_angle<C>(v: Vector3d<C>, theta: C) -> Self
+    where
+        C: Component + Into<f32>,
+    {
+        let half_theta = F32(theta.into() * 0.5);
+
+        let v = F32x3 {
+            x: v.x.into(),
+            y: v.y.into(),
+            z: v.z.into(),
+        } * half_theta.sin().0;
+
+        Self(half_theta.cos().0, v.x, v.y, v.z)
+    }
+
     /// Rotate a 3D vector using this quaternion.
     #[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
     pub fn rotate<C>(self, v: Vector3d<C>) -> F32x3
