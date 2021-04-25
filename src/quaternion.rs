@@ -49,11 +49,16 @@ use crate::vector::{Component, F32x3, Vector3d};
 /// | k | k  | j  | -i | -1 |
 #[cfg_attr(docsrs, doc(cfg(feature = "quaternion")))]
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Quaternion(pub f32, pub f32, pub f32, pub f32);
+pub struct Quaternion(f32, f32, f32, f32);
 
 impl Quaternion {
     /// Identity quaternion.
     pub const IDENTITY: Self = Self(1.0, 0.0, 0.0, 0.0);
+
+    /// Create a new quaternion.
+    pub const fn new(a: f32, b: f32, c: f32, d: f32) -> Self {
+        Self(a, b, c, d)
+    }
 
     /// Returns the conjugate of this quaternion.
     pub fn conj(self) -> Self {
@@ -155,6 +160,18 @@ impl AddAssign for Quaternion {
 impl Default for Quaternion {
     fn default() -> Self {
         Self::IDENTITY
+    }
+}
+
+impl From<(f32, f32, f32, f32)> for Quaternion {
+    fn from(q: (f32, f32, f32, f32)) -> Quaternion {
+        Self::new(q.0, q.1, q.2, q.3)
+    }
+}
+
+impl From<Quaternion> for (f32, f32, f32, f32) {
+    fn from(q: Quaternion) -> (f32, f32, f32, f32) {
+        (q.0, q.1, q.2, q.3)
     }
 }
 
