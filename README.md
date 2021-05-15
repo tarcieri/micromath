@@ -102,7 +102,7 @@ Apache 2.0 and MIT licenses.
 
 [//]: # (badges)
 
-[crate-img]: https://img.shields.io/crates/v/micromath.svg
+[crate-img]: https://img.shields.io/crates/v/micromath.svg?logo=rust
 [crate-link]: https://crates.io/crates/micromath
 [docs-img]: https://docs.rs/micromath/badge.svg
 [docs-link]: https://docs.rs/micromath/

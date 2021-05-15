@@ -1,6 +1,6 @@
 [package]
 name        = "micromath"
-version     = "2.0.0-pre" # Also update html_root_url in lib.rs when bumping this
+version     = "2.0.0" # Also update html_root_url in lib.rs when bumping this
 description = """
 Embedded-friendly math library featuring fast floating point approximations
 (with small code size) for common arithmetic operations, trigonometry,
@@ -21,7 +21,7 @@ num-traits = { version = "0.2", optional = true, default-features = false }
 [features]
 quaternion = []
 statistics = []
-vector = []
+vector     = []
 
 [package.metadata.docs.rs]
 all-features = true
