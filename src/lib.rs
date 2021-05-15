@@ -70,7 +70,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/tarcieri/micromath/main/img/micromath-sq.png",
-    html_root_url = "https://docs.rs/micromath/2.0.0-pre"
+    html_root_url = "https://docs.rs/micromath/2.0.0"
 )]
 #![forbid(unsafe_code)]
 #![warn(
