@@ -109,19 +109,32 @@ impl Quaternion {
         Self(half_theta.cos().0, v.x, v.y, v.z)
     }
 
-    /// Rotate a 3D vector using this quaternion.
+    /// Rotate a 3D vector using this quaternion, assumes the quaternion is of unit length.
     #[cfg_attr(docsrs, doc(cfg(feature = "vector")))]
     pub fn rotate<C>(self, v: Vector3d<C>) -> F32x3
     where
         C: Component + Into<f32>,
     {
-        let q = self * Quaternion::from(v) * self.inv();
+        let Quaternion(qw, qx, qy, qz) = self;
 
-        F32x3 {
-            x: q.1,
-            y: q.2,
-            z: q.3,
-        }
+        let qwsq = qw * qw;
+        let qxsq = qx * qx;
+        let qysq = qy * qy;
+        let qzsq = qz * qz;
+
+        let x = (qwsq + qxsq - qysq - qzsq) * v.x.into()
+            + (2. * (qx * qy - qw * qz)) * v.y.into()
+            + (2. * (qx * qz + qw * qy)) * v.z.into();
+
+        let y = (2. * (qx * qy + qw * qz)) * v.x.into()
+            + (qwsq - qxsq + qysq - qzsq) * v.y.into()
+            + (2. * (qy * qz - qw * qx)) * v.z.into();
+
+        let z = (2. * (qx * qz - qw * qy)) * v.x.into()
+            + (2. * (qy * qz + qw * qx)) * v.y.into()
+            + (qwsq - qxsq - qysq + qzsq) * v.z.into();
+
+        F32x3 { x, y, z }
     }
 
     /// Scale by a scalar.
