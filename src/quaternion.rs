@@ -148,6 +148,26 @@ impl Quaternion {
     pub fn to_array(&self) -> [f32; 4] {
         [self.0, self.1, self.2, self.3]
     }
+
+    /// Access the `w` / `a` real component
+    pub fn w(&self) -> f32 {
+        self.0
+    }
+
+    /// Access the `x` / `b` / `i` imaginary component
+    pub fn x(&self) -> f32 {
+        self.1
+    }
+
+    /// Access the `y` / `c` / `j` imaginary component
+    pub fn y(&self) -> f32 {
+        self.2
+    }
+
+    /// Access the `z` / `d` / `k` imaginary component
+    pub fn z(&self) -> f32 {
+        self.3
+    }
 }
 
 impl Add for Quaternion {
