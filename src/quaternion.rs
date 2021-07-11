@@ -133,9 +133,49 @@ impl Quaternion {
         Self(self.0 * k, self.1 * k, self.2 * k, self.3 * k)
     }
 
+    /// Normalize the quaternion.
+    pub fn normalize(self) -> Self {
+        let norm = self.norm();
+        assert_ne!(norm, 0.0, "quaternion norm is zero");
+        let n = F32(norm).invsqrt();
+
+        self.scale(n)
+    }
+
+    /// Get the (roll, pitch, yaw) Euler angles, assumes the quaternion is normalized.
+    pub fn to_euler(&self) -> (f32, f32, f32) {
+        let r = F32(2. * (self.0 * self.1 + self.2 * self.3))
+            .atan2(F32(1. - 2. * (self.1 * self.1 + self.2 * self.2)));
+        let p = F32(2. * (self.0 * self.2 - self.1 * self.3)).asin();
+        let y = F32(2. * (self.0 * self.3 + self.1 * self.2))
+            .atan2(F32(1. - 2. * (self.2 * self.2 + self.3 * self.3)));
+
+        (r.0, p.0, y.0)
+    }
+
     /// Convert this quaternion into an array.
     pub fn to_array(&self) -> [f32; 4] {
         [self.0, self.1, self.2, self.3]
+    }
+
+    /// Access the `w` / `a` real component
+    pub fn w(&self) -> f32 {
+        self.0
+    }
+
+    /// Access the `x` / `b` / `i` imaginary component
+    pub fn x(&self) -> f32 {
+        self.1
+    }
+
+    /// Access the `y` / `c` / `j` imaginary component
+    pub fn y(&self) -> f32 {
+        self.2
+    }
+
+    /// Access the `z` / `d` / `k` imaginary component
+    pub fn z(&self) -> f32 {
+        self.3
     }
 }
 
