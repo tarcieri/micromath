@@ -60,6 +60,51 @@ impl Quaternion {
         Self(a, b, c, d)
     }
 
+    /// Get the quaternion that represents the smallest rotation between two vectors.
+    #[cfg(feature = "vector")]
+    pub fn from_two_vectors<C>(u: Vector3d<C>, v: Vector3d<C>) -> Self
+    where
+        C: Component + Into<f32>,
+    {
+        // Implementation from http://lolengine.net/blog/2014/02/24/quaternion-from-two-vectors-final
+        use crate::vector::Vector;
+
+        let n_uv = F32(u.dot(u).into() * v.dot(v).into()).sqrt();
+        let mut realpart = n_uv + u.dot(v).into();
+
+        let w = if realpart < 1e-6 * n_uv {
+            realpart = F32(0.);
+
+            if F32(u.x.into()).abs() > F32(u.z.into()).abs() {
+                Vector3d {
+                    x: -u.y.into(),
+                    y: u.x.into(),
+                    z: 0.,
+                }
+            } else {
+                Vector3d {
+                    x: 0.,
+                    y: -u.z.into(),
+                    z: u.y.into(),
+                }
+            }
+        } else {
+            F32x3 {
+                x: u.x.into(),
+                y: u.y.into(),
+                z: u.z.into(),
+            } * F32x3 {
+                x: v.x.into(),
+                y: v.y.into(),
+                z: v.z.into(),
+            }
+        };
+
+        let q = Quaternion(realpart.0, w.x, w.y, w.z);
+        let n = F32(q.norm()).invsqrt();
+        q * n.0
+    }
+
     /// Returns the conjugate of this quaternion.
     pub fn conj(self) -> Self {
         Quaternion(self.0, -self.1, -self.2, -self.3)
@@ -257,6 +302,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::Quaternion;
+    use crate::vector::Vector3d;
     use crate::F32Ext;
 
     const MAX_ERROR: f32 = 0.05;
@@ -324,5 +370,26 @@ mod tests {
 
         let s = r * 0.5;
         assert_eq!(s, Quaternion(1.0, 2.0, 3.0, 4.0));
+    }
+
+    #[test]
+    fn smallest_rot() {
+        use crate::vector::Vector;
+
+        let v1 = Vector3d {
+            x: 0.,
+            y: 0.,
+            z: 1.,
+        };
+        let v2 = Vector3d {
+            x: 0.,
+            y: 1.,
+            z: 0.,
+        };
+
+        let q = Quaternion::from_two_vectors(v1, v2);
+        let v1_r = q.rotate(v1);
+
+        assert!((v1_r - v2).magnitude() < 1e-1);
     }
 }
