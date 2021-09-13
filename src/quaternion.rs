@@ -191,6 +191,15 @@ impl Quaternion {
         Self(self.0 * k, self.1 * k, self.2 * k, self.3 * k)
     }
 
+    /// Normalize the quaternion.
+    pub fn normalize(self) -> Self {
+        let norm = self.norm();
+        assert_ne!(norm, 0.0, "quaternion norm is zero");
+        let n = F32(norm).invsqrt();
+
+        self.scale(n)
+    }
+
     /// Get the (roll, pitch, yaw) Euler angles, assumes the quaternion is normalized.
     pub fn to_euler(&self) -> (f32, f32, f32) {
         let r = F32(2. * (self.0 * self.1 + self.2 * self.3))
