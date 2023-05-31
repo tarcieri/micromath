@@ -12,6 +12,7 @@
 
 #![no_std]
 #![no_main]
+#![feature(core_intrinsics)]
 
 use teensy4_bsp as bsp;
 use teensy4_panic as _;
@@ -21,6 +22,9 @@ use bsp::hal;
 
 mod uart_writer;
 use uart_writer::UartWriter;
+
+mod run_bench;
+use run_bench::run_bench;
 
 #[bsp::rt::entry]
 fn main() -> ! {
@@ -48,14 +52,17 @@ fn main() -> ! {
     us_timer.set_divider(1);
     us_timer.set_mode(hal::gpt::Mode::FreeRunning);
     us_timer.enable();
+    let time_us = move || us_timer.count();
 
     // Write welcome message
     writeln!(uart, "===== Micromath Benchmark =====");
-    writeln!(uart, "Git Version: {}", git_version::git_version!());
+    //writeln!(uart, "Git Version: {}", git_version::git_version!());
     writeln!(uart);
 
-    writeln!(uart, "Time: {}", us_timer.count());
-    writeln!(uart, "Time: {}", us_timer.count());
+    // Run benchmarks
+    run_bench!(time_us, uart, cos);
+    run_bench!(time_us, uart, sin);
+    run_bench!(time_us, uart, sqrt);
 
     loop {}
 }
