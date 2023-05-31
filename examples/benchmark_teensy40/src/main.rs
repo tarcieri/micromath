@@ -56,7 +56,14 @@ fn main() -> ! {
 
     // Write welcome message
     writeln!(uart, "===== Micromath Benchmark =====");
-    //writeln!(uart, "Git Version: {}", git_version::git_version!());
+    writeln!(uart, "Git Version: {}", git_version::git_version!());
+    writeln!(uart);
+
+    writeln!(uart, "All values in ns/iter.");
+    writeln!(uart);
+    write!(uart, "        ");
+    write!(uart, " micromath");
+    write!(uart, "      libm");
     writeln!(uart);
 
     // Run benchmarks

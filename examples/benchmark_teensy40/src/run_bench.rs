@@ -1,13 +1,19 @@
 macro_rules! run_bench {
     ($time_us:expr, $uart:expr, $f:ident) => {{
-        writeln!($uart, "{}:", core::stringify!($f));
+        write!($uart, "{:<8}", core::stringify!($f));
 
+        run_bench!(@run_bench $time_us, $uart, |num| micromath::F32(num).$f());
+
+        writeln!($uart);
+    }};
+
+    (@run_bench $time_us:expr, $uart:expr, $f:expr) => {{
         const COUNT: u64 = 4096;
 
         let t_start = $time_us();
         for _ in 0..COUNT {
             run_bench!(@unroll_64 {
-                run_bench!(@iteration $f, 1.2345);
+                run_bench!(@iteration 1.2345, $f);
             })
         }
         let t_end = $time_us();
@@ -24,33 +30,8 @@ macro_rules! run_bench {
 
         // writeln!($uart, "    {} iterations in {} us", iterations, duration_us);
         // writeln!($uart, "    {} ps/iter", ps_per_iter);
-        writeln!($uart, "    {}.{} ns/iter", ns_per_iter_full, ns_per_iter_rest);
+        write!($uart, "{:>8}.{}", ns_per_iter_full, ns_per_iter_rest);
     }};
-
-    // (@iteration_64 $f:ident, $val:expr) => {{
-    //     run_bench!(@iteration_32 $f, $val);
-    //     run_bench!(@iteration_32 $f, $val);
-    // }};
-
-    // (@iteration_32 $f:ident, $val:expr) => {{
-    //     run_bench!(@iteration_16 $f, $val);
-    //     run_bench!(@iteration_16 $f, $val);
-    // }};
-
-    // (@iteration_16 $f:ident, $val:expr) => {{
-    //     run_bench!(@iteration_8 $f, $val);
-    //     run_bench!(@iteration_8 $f, $val);
-    // }};
-
-    // (@iteration_8 $f:ident, $val:expr) => {{
-    //     run_bench!(@iteration_4 $f, $val);
-    //     run_bench!(@iteration_4 $f, $val);
-    // }};
-
-    // (@iteration_4 $f:ident, $val:expr) => {{
-    //     run_bench!(@iteration_2 $f, $val);
-    //     run_bench!(@iteration_2 $f, $val);
-    // }};
 
     (@unroll_64 $b:block) => {{
         run_bench!(@unroll_32 $b);
@@ -76,10 +57,10 @@ macro_rules! run_bench {
         {$b}{$b}
     }};
 
-    (@iteration $f:ident, $val:expr) => {{
+    (@iteration $val:expr, $f:expr) => {{
         const NUM_CONST: f32 = $val;
         let num = core::intrinsics::black_box(NUM_CONST);
-        let result = micromath::F32(num).$f();
+        let result = $f(num);
         core::intrinsics::black_box(result);
     }};
 }
