@@ -1,0 +1,46 @@
+[package]
+authors = ["Finomnis <finomnis@gmail.com>"]
+name = "micromath_benchmark_teensy40"
+edition = "2021"
+version = "0.1.0"
+
+[dependencies]
+# Base dependencies
+cortex-m = "0.7.7"
+embedded-hal = "0.2.7"
+teensy4-panic = "0.2.2"
+
+# Board support package
+teensy4-bsp = { version = "0.4.2", features = ["rt"] }
+imxrt-log = { version = "0.1.1", default-features = false, features = [
+    "log",
+    "lpuart",
+] }
+
+# Packages necessary for board usage
+log = "0.4.18"  # Logging
+nb = "1.1.0"    # Async
+fugit = "0.3.6" # Time
+
+# Project dependencies
+micromath = { path = "../../" }
+
+
+# cargo build/run
+[profile.dev]
+codegen-units = 1
+debug = 2
+debug-assertions = true # <-
+incremental = false
+opt-level = 'z'         # <-
+overflow-checks = true  # <-
+
+# cargo build/run --release
+[profile.release]
+codegen-units = 1
+debug = 2
+debug-assertions = false # <-
+incremental = false
+lto = 'fat'
+opt-level = 3            # <-
+overflow-checks = false  # <-

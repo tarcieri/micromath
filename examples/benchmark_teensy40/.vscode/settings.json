@@ -1,0 +1,13 @@
+{
+    "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
+    // override the default setting (`cargo check --all-targets`) which produces the following error
+    // "can't find crate for `test`" when the default compilation target is a no_std target
+    // with these changes RA will call `cargo check --bins` on save
+    "rust-analyzer.checkOnSave.allTargets": false,
+    "rust-analyzer.checkOnSave.extraArgs": [
+        "--bins"
+    ],
+    "rust-analyzer.linkedProjects": [
+        "Cargo.toml",
+    ],
+}
