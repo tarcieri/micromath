@@ -18,22 +18,20 @@ use teensy4_panic as _;
 
 use bsp::board;
 
-use embedded_hal::serial::{Read, Write};
+mod uart_writer;
+use uart_writer::UartWriter;
 
 #[bsp::rt::entry]
 fn main() -> ! {
-    let board::Resources {
-        pins,
-        mut gpio2,
-        lpuart2,
-        ..
-    } = board::t40(board::instances());
-    let led = board::led(&mut gpio2, pins.p13);
+    let board::Resources { pins, lpuart2, .. } = board::t40(board::instances());
 
-    let mut lpuart2: board::Lpuart2 = board::lpuart(lpuart2, pins.p14, pins.p15, 115200);
-    loop {
-        led.toggle();
-        let byte = nb::block!(lpuart2.read()).unwrap();
-        nb::block!(lpuart2.write(byte)).unwrap();
-    }
+    // Initialize uart
+    let mut uart = UartWriter::new(board::lpuart(lpuart2, pins.p14, pins.p15, 115200));
+    writeln!(uart);
+
+    // Write welcome message
+    writeln!(uart, "===== Micromath Benchmark =====");
+    writeln!(uart, "Git Version: {}", git_version::git_version!());
+
+    loop {}
 }
