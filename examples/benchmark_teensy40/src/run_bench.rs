@@ -1,9 +1,17 @@
 macro_rules! run_bench {
     ($time_us:expr, $uart:expr, $f:ident) => {{
-        write!($uart, "{:<8}", core::stringify!($f));
+        write!($uart, "{:<10}", core::stringify!($f));
 
-        run_bench!(@run_bench $time_us, $uart, |num| micromath::F32(num).$f());
-        run_bench!(@run_bench $time_us, $uart, |num| libm::Libm::<f32>::$f(num));
+        run_bench!(@run_bench $time_us, $uart, |num| <f32 as micromath::F32Ext>::$f(num));
+
+        writeln!($uart);
+    }};
+
+    ($time_us:expr, $uart:expr, $f:ident, $flibm:ident) => {{
+        write!($uart, "{:<10}", core::stringify!($f));
+
+        run_bench!(@run_bench $time_us, $uart, |num| <f32 as micromath::F32Ext>::$f(num));
+        run_bench!(@run_bench $time_us, $uart, |num| libm::$flibm(num));
 
         writeln!($uart);
     }};
@@ -11,15 +19,21 @@ macro_rules! run_bench {
     (@run_bench $time_us:expr, $uart:expr, $f:expr) => {{
         const COUNT: u64 = 4096;
 
+        const VALUE: f32 = 0.12345;
+
+        if !$f(VALUE).is_finite() {
+            writeln!($uart, "  ERROR: {} did not produce a finite value!", core::stringify!($f));
+        }
+
         let t_start = $time_us();
         for _ in 0..COUNT {
-            run_bench!(@unroll_64 {
-                run_bench!(@iteration 1.2345, $f);
+            run_bench!(@unroll_32 {
+                run_bench!(@iteration VALUE, $f);
             })
         }
         let t_end = $time_us();
 
-        let iterations: u64 = COUNT * 64;
+        let iterations: u64 = COUNT * 32;
 
         let duration_us = u64::from(t_end - t_start);
         let duration_ps = duration_us * 1_000_000;
