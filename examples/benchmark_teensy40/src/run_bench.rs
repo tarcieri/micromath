@@ -3,6 +3,7 @@ macro_rules! run_bench {
         write!($uart, "{:<8}", core::stringify!($f));
 
         run_bench!(@run_bench $time_us, $uart, |num| micromath::F32(num).$f());
+        run_bench!(@run_bench $time_us, $uart, |num| libm::Libm::<f32>::$f(num));
 
         writeln!($uart);
     }};
