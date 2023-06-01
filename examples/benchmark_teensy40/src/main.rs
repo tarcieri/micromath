@@ -89,5 +89,14 @@ fn main() -> ! {
     run_bench!(time_us, uart, tan, tanf);
     run_bench!(time_us, uart, trunc, truncf);
 
-    loop {}
+    // Blink with a cycle length of 2 seconds, to make it verifyable that
+    // our timer runs at the correct speed.
+    loop {
+        let time_s = time_us() / 1_000_000;
+        if time_s % 2 == 0 {
+            led.set();
+        } else {
+            led.clear();
+        }
+    }
 }
