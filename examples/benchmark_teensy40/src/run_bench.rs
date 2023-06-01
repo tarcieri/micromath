@@ -35,6 +35,13 @@ macro_rules! run_bench {
             writeln!($uart, "  ERROR: {} did not produce a finite value!", core::stringify!($f));
         }
 
+        // Warmup
+        for _ in 0..COUNT {
+            //run_bench!(@unroll_32 {
+                run_bench!(@iteration VALUE, $f);
+            //})
+        }
+
         let t_start = $time_us();
         for _ in 0..COUNT {
             //run_bench!(@unroll_32 {
@@ -42,6 +49,13 @@ macro_rules! run_bench {
             //})
         }
         let t_end = $time_us();
+
+        // Warmup
+        for _ in 0..COUNT {
+            //run_bench!(@unroll_32 {
+                run_bench!(@iteration VALUE, |val| val);
+            //})
+        }
 
         let t_empty_start = $time_us();
         for _ in 0..COUNT {
