@@ -25,29 +25,29 @@ The following software tools have to be installed:
 
 ```none
 ===== Micromath Benchmark =====
-Git Version: 8e2f06e
+Git Version: deb8988
 
 All values in ns/iter.
 
             micromath       libm intrinsics
 abs              15.0       15.0       10.0
-acos            173.3       96.7
-asin            103.3       85.0
-atan             80.0       68.3
+acos            173.3      120.0
+asin            103.3      136.7
+atan             80.0       78.3
 atan_norm        75.0
-ceil             43.3       38.3
-cos              98.3     1603.3
-exp             176.7      101.7
-floor            36.7       35.0
+ceil             43.3       41.7
+cos              98.3     1655.0
+exp             231.7      115.0
+floor            36.7       38.3
 fract            20.0
 inv              15.0
 invsqrt          15.0
-ln              156.7      141.7
-log2            163.3      153.3
-log10           163.3      158.3
+ln              158.3      145.0
+log2            161.7      155.0
+log10           161.7      160.0
 round            30.0
-sin             103.3     1722.8
-sqrt             46.7      475.0       31.7
-tan             153.3     2524.6
+sin             103.3     1703.3
+sqrt             46.7      470.0       31.7
+tan             153.3     2531.3
 trunc            21.7       43.3
 ```
