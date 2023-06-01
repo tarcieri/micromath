@@ -62,11 +62,13 @@ fn main() -> ! {
     writeln!(uart, "All values in ns/iter.");
     writeln!(uart);
     write!(uart, "          ");
-    write!(uart, " micromath");
-    write!(uart, "      libm");
+    write!(uart, "  micromath");
+    write!(uart, "       libm");
+    write!(uart, " intrinsics");
     writeln!(uart);
 
     // Run benchmarks
+    run_bench!(time_us, uart, abs, fabsf, fabsf32);
     run_bench!(time_us, uart, acos, acosf);
     run_bench!(time_us, uart, asin, asinf);
     run_bench!(time_us, uart, atan, atanf);
@@ -81,9 +83,9 @@ fn main() -> ! {
     run_bench!(time_us, uart, ln, logf);
     run_bench!(time_us, uart, log2, log2f);
     run_bench!(time_us, uart, log10, log10f);
-    run_bench!(time_us, uart, round, roundf);
+    run_bench!(time_us, uart, round);
     run_bench!(time_us, uart, sin, sinf);
-    run_bench!(time_us, uart, sqrt, sqrtf);
+    run_bench!(time_us, uart, sqrt, sqrtf, sqrtf32);
     run_bench!(time_us, uart, tan, tanf);
     run_bench!(time_us, uart, trunc, truncf);
 
