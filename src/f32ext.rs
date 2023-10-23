@@ -73,17 +73,26 @@ pub trait F32Ext: Sized {
     /// Approximates `log10`.
     fn log10(self) -> f32;
 
+    /// Computes `(self * a) + b`.
+    fn mul_add(self, a: f32, b: f32) -> f32;
+
     /// Approximates `self^n`.
     fn powf(self, n: f32) -> f32;
 
     /// Approximates `self^n` where n is an `i32`
     fn powi(self, n: i32) -> f32;
 
+    /// Returns the reciprocal (inverse) of a number, `1/x`.
+    fn recip(self) -> f32;
+
     /// Calculates the least nonnegative remainder of `self (mod other)`.
     fn rem_euclid(self, other: f32) -> f32;
 
     /// Round the number part of floating point with sign.
     fn round(self) -> f32;
+
+    /// Returns a number that represents the sign of `self`.
+    fn signum(self) -> f32;
 
     /// Approximates sine in radians with a maximum error of `0.002`.
     fn sin(self) -> f32;
@@ -205,6 +214,11 @@ impl F32Ext for f32 {
     }
 
     #[inline]
+    fn mul_add(self, a: f32, b: f32) -> f32 {
+        F32(self).mul_add(F32(a), F32(b)).0
+    }
+
+    #[inline]
     fn powf(self, n: f32) -> f32 {
         F32(self).powf(F32(n)).0
     }
@@ -215,6 +229,11 @@ impl F32Ext for f32 {
     }
 
     #[inline]
+    fn recip(self) -> f32 {
+        F32(self).recip().0
+    }
+
+    #[inline]
     fn rem_euclid(self, other: f32) -> f32 {
         F32(self).rem_euclid(F32(other)).0
     }
@@ -222,6 +241,11 @@ impl F32Ext for f32 {
     #[inline]
     fn round(self) -> f32 {
         F32(self).round().0
+    }
+
+    #[inline]
+    fn signum(self) -> f32 {
+        F32(self).signum().0
     }
 
     #[inline]
