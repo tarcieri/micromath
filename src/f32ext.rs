@@ -97,6 +97,10 @@ pub trait F32Ext: Sized {
     /// Approximates sine in radians with a maximum error of `0.002`.
     fn sin(self) -> f32;
 
+    /// Simultaneously computes the sine and cosine of the number, `x`.
+    /// Returns `(sin(x), cos(x))`.
+    fn sin_cos(self) -> (f32, f32);
+
     /// Approximates square root with an average deviation of ~5%.
     fn sqrt(self) -> f32;
 
@@ -251,6 +255,11 @@ impl F32Ext for f32 {
     #[inline]
     fn sin(self) -> f32 {
         F32(self).sin().0
+    }
+
+    #[inline]
+    fn sin_cos(self) -> (f32, f32) {
+        (F32(self).sin().0, F32(self).cos().0)
     }
 
     #[inline]

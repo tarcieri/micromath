@@ -57,6 +57,7 @@ version bump *only*:
     - [fract]
     - [copysign]
     - [signum]
+    - [sin_cos]
     - [mul_add]
     - [recip]
 

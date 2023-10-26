@@ -27,6 +27,7 @@ pub(crate) mod rem_euclid;
 pub(crate) mod round;
 pub(crate) mod signum;
 pub(crate) mod sin;
+pub(crate) mod sin_cos;
 pub(crate) mod sqrt;
 pub(crate) mod tan;
 pub(crate) mod trunc;
