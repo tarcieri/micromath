@@ -56,6 +56,10 @@ version bump *only*:
     - [trunc]
     - [fract]
     - [copysign]
+    - [signum]
+    - [sin_cos]
+    - [mul_add]
+    - [recip]
 
 - [Algebraic vector types]:
   - 2D:
