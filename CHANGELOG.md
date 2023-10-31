@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.1.0 (2023-10-31)
+### Added
+- Accessors to quaternion elements ([#89])
+- Quaternion -> Euler conversion ([#90])
+- Method for normalizing a quaternion ([#91])
+- Method to get the quaternion which is the smallest rotation between two vectors ([#94])
+- `recip`, `mul_add` and `signum` ([#100])
+
+[#89]: https://github.com/tarcieri/micromath/pull/89
+[#90]: https://github.com/tarcieri/micromath/pull/90
+[#91]: https://github.com/tarcieri/micromath/pull/91
+[#94]: https://github.com/tarcieri/micromath/pull/94
+[#100]: https://github.com/tarcieri/micromath/pull/100
+
 ## 2.0.0 (2021-05-15)
 ### Added
 - `Vector` subtraction support ([#71])
