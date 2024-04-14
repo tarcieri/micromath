@@ -146,6 +146,10 @@ Apache 2.0 and MIT licenses.
 [trunc]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.trunc
 [fract]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.fract
 [copysign]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.copysign
+[signum]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.signum
+[sin_cos]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sin_cos
+[mul_add]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.mul_add
+[recip]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.recip
 [Algebraic vector types]: https://docs.rs/micromath/latest/micromath/vector/index.html
 [I8x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I8x2.html
 [I16x2]: https://docs.rs/micromath/latest/micromath/vector/struct.I16x2.html
