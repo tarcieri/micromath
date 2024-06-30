@@ -262,3 +262,14 @@ impl From<Vector3d<F32>> for F32x3 {
         }
     }
 }
+
+#[cfg(feature = "defmt")]
+#[cfg_attr(docsrs, doc(cfg(feature = "defmt")))]
+impl<C> defmt::Format for Vector3d<C>
+where
+    C: Component + defmt::Format,
+{
+    fn format(&self, fmt: defmt::Formatter<'_>) {
+        defmt::write!(fmt, "({}, {}, {})", self.x, self.y, self.z)
+    }
+}

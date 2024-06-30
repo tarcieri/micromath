@@ -16,12 +16,14 @@ categories  = ["embedded", "mathematics", "science", "no-std"]
 keywords    = ["math", "quaternions", "statistics", "trigonometry", "vector"]
 
 [dependencies]
+defmt = { version = "0.3.8", optional = true, default-features = false }
 num-traits = { version = "0.2", optional = true, default-features = false }
 
 [features]
 quaternion = []
 statistics = []
 vector     = []
+defmt      = ["dep:defmt"]
 
 [package.metadata.docs.rs]
 all-features = true
