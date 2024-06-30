@@ -5,7 +5,10 @@
 use super::F32;
 
 impl F32 {
-    /// Fast approximation of `1/x`.
+    /// Fast approximation of the reciprocal (inverse) of a number, `1/x`.
+    ///
+    /// Assumes that the underlying data is in IEEE 754 format.
+    #[doc(alias = "recip")]
     pub fn inv(self) -> Self {
         Self(f32::from_bits(0x7f00_0000 - self.0.to_bits()))
     }
