@@ -1,6 +1,6 @@
 //! 3-dimensional vector
 
-use super::{Component, Vector};
+use super::{Component, Vector, Vector2d};
 use crate::F32;
 use core::{
     iter::FromIterator,
@@ -45,10 +45,29 @@ impl<C> Vector3d<C>
 where
     C: Component,
 {
+    /// Initializes a new instance of the `Vector3d` struct.
+    pub fn new(x: C, y: C, z: C) -> Self {
+        Self { x, y, z }
+    }
+
     /// Return a 3-element array containing the coordinates
     // TODO(tarcieri): move this to the `Vector` trait leveraging const generics?
     pub fn to_array(&self) -> [C; 3] {
         [self.x, self.y, self.z]
+    }
+
+    /// Calculates the inner product.
+    pub fn dot(self, rhs: Self) -> C {
+        (self.x * rhs.x) + (self.y * rhs.y) + (self.z * rhs.z)
+    }
+
+    /// Calculates the outer product.
+    pub fn cross(&self, rhs: Self) -> Vector3d<C> {
+        Self {
+            x: (self.y * rhs.z) - (self.z * rhs.y),
+            y: (self.z * rhs.x) - (self.x * rhs.z),
+            z: (self.x * rhs.y) - (self.y * rhs.x),
+        }
     }
 }
 
@@ -92,6 +111,20 @@ where
 
     fn dot(self, rhs: Self) -> C {
         (self.x * rhs.x) + (self.y * rhs.y) + (self.z * rhs.z)
+    }
+}
+
+impl<C> From<Vector2d<C>> for Vector3d<C>
+where
+    C: Component,
+{
+    fn from(vector: Vector2d<C>) -> Self {
+        let zero = C::default();
+        Self {
+            x: vector.x,
+            y: vector.y,
+            z: zero,
+        }
     }
 }
 
@@ -211,11 +244,7 @@ where
     type Output = Self;
 
     fn mul(self, rhs: Self) -> Self {
-        Self {
-            x: (self.y * rhs.z) - (self.z * rhs.y),
-            y: (self.z * rhs.x) - (self.x * rhs.z),
-            z: (self.x * rhs.y) - (self.y * rhs.x),
-        }
+        self.cross(rhs)
     }
 }
 
@@ -333,5 +362,26 @@ mod tests {
         assert_eq!(arr[0], 1);
         assert_eq!(arr[1], 2);
         assert_eq!(arr[2], 3);
+    }
+
+    #[test]
+    fn cross() {
+        let lhs = Vector3d::new(1, 2, 3);
+        let rhs = Vector3d::new(4, 5, 6);
+        let cross = lhs.cross(rhs);
+        assert_eq!(cross.x, -3);
+        assert_eq!(cross.y, 6);
+        assert_eq!(cross.z, -3);
+
+        let mul = lhs * rhs;
+        assert_eq!(mul, cross);
+    }
+
+    #[test]
+    fn dot() {
+        let lhs = Vector3d::new(1, 2, 3);
+        let rhs = Vector3d::new(4, 5, 6);
+        let dot = lhs.dot(rhs);
+        assert_eq!(dot, 32);
     }
 }

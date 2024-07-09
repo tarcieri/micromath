@@ -1,6 +1,6 @@
 //! 2-dimensional vector
 
-use super::{Component, Vector};
+use super::{Component, Vector, Vector3d};
 use core::{
     iter::FromIterator,
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
@@ -41,10 +41,27 @@ impl<C> Vector2d<C>
 where
     C: Component,
 {
+    /// Initializes a new instance of the `Vector2d` struct.
+    pub fn new(x: C, y: C) -> Self {
+        Self { x, y }
+    }
+
     /// Return a 2-element array containing the coordinates
     // TODO(tarcieri): move this to the `Vector` trait leveraging const generics?
     pub fn to_array(&self) -> [C; 2] {
         [self.x, self.y]
+    }
+
+    /// Calculates the inner product.
+    pub fn dot(self, rhs: Self) -> C {
+        (self.x * rhs.x) + (self.y * rhs.y)
+    }
+
+    /// Calculates the outer product.
+    ///
+    /// Note that due to tye type of operation, the result is a [`Vector3d`], not a [`Vector2d`].
+    pub fn cross(&self, rhs: Self) -> Vector3d<C> {
+        Vector3d::from(*self) * Vector3d::from(rhs)
     }
 }
 
@@ -85,7 +102,7 @@ where
     }
 
     fn dot(self, rhs: Self) -> C {
-        (self.x * rhs.x) + (self.y * rhs.y)
+        self.dot(rhs)
     }
 }
 
@@ -206,6 +223,17 @@ where
     }
 }
 
+impl<C> Mul<Vector2d<C>> for Vector2d<C>
+where
+    C: Component,
+{
+    type Output = Vector3d<C>;
+
+    fn mul(self, rhs: Vector2d<C>) -> Vector3d<C> {
+        self.cross(rhs)
+    }
+}
+
 impl<C> MulAssign<C> for Vector2d<C>
 where
     C: Component,
@@ -286,5 +314,26 @@ mod tests {
         let arr: [_; 2] = vec.into();
         assert_eq!(arr[0], 1);
         assert_eq!(arr[1], 2);
+    }
+
+    #[test]
+    fn cross() {
+        let lhs = Vector2d::new(1, 2);
+        let rhs = Vector2d::new(3, 4);
+        let cross = lhs.cross(rhs);
+        assert_eq!(cross.x, 0);
+        assert_eq!(cross.y, 0);
+        assert_eq!(cross.z, -2);
+
+        let mul = lhs * rhs;
+        assert_eq!(mul, cross);
+    }
+
+    #[test]
+    fn dot() {
+        let lhs = Vector2d::new(1, 2);
+        let rhs = Vector2d::new(3, 4);
+        let dot = lhs.dot(rhs);
+        assert_eq!(dot, 11);
     }
 }

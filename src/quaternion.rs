@@ -67,8 +67,6 @@ impl Quaternion {
         C: Component + Into<f32>,
     {
         // Implementation from http://lolengine.net/blog/2014/02/24/quaternion-from-two-vectors-final
-        use crate::vector::Vector;
-
         let n_uv = F32(u.dot(u).into() * v.dot(v).into()).sqrt();
         let mut realpart = n_uv + u.dot(v).into();
 
