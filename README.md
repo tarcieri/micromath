@@ -17,7 +17,7 @@ Optimizes for performance and small code size at the cost of precision.
 
 ## Minimum Supported Rust Version
 
-Requires Rust **1.47** or newer.
+Requires Rust **1.48** or newer.
 
 ## SemVer Policy
 
@@ -102,7 +102,7 @@ Dual licensed under your choice of either of:
 
 Incorporates portions of some tests from the [libm crate].
 Copyright © 2018 Jorge Aparicio and also dual licensed under the
-Apache 2.0 and MIT licenses. 
+Apache 2.0 and MIT licenses.
 
 [//]: # (badges)
 
@@ -114,7 +114,7 @@ Apache 2.0 and MIT licenses.
 [build-link]: https://github.com/tarcieri/micromath/actions
 [safety-image]: https://img.shields.io/badge/unsafe-forbidden-success.svg
 [safety-link]: https://github.com/rust-secure-code/safety-dance/
-[msrv-image]: https://img.shields.io/badge/rustc-1.47+-blue.svg
+[msrv-image]: https://img.shields.io/badge/rustc-1.48+-blue.svg
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
 [license-link]: https://github.com/tarcieri/micromath/blob/main/LICENSE-APACHE
 
