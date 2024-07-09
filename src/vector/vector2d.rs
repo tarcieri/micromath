@@ -57,9 +57,22 @@ where
         (self.x * rhs.x) + (self.y * rhs.y)
     }
 
+    /// Calculates the perpendicular dot product.
+    ///
+    /// This value can be understood as the `z` component of the [`cross`](Self::cross) product
+    /// between two `Vector2d` instances in 3D space, or the signed area of the parallelogram
+    /// formed by the two vectors.
+    ///
+    /// This value can be used to perform side tests without having to promote the vectors
+    /// into [`Vector3d`] instances.
+    pub fn perpendicular_dot(self, rhs: Self) -> C {
+        (self.x * rhs.y) - (self.y * rhs.x)
+    }
+
     /// Calculates the outer product.
     ///
-    /// Note that due to tye type of operation, the result is a [`Vector3d`], not a [`Vector2d`].
+    /// Note that due to tye type of operation, the result is a [`Vector3d`], not a `Vector2d`.
+    /// See also [`perpendicular_dot`](Self::perpendicular_dot) for a simplified version.
     pub fn cross(&self, rhs: Self) -> Vector3d<C> {
         Vector3d::from(*self) * Vector3d::from(rhs)
     }
@@ -327,6 +340,9 @@ mod tests {
 
         let mul = lhs * rhs;
         assert_eq!(mul, cross);
+
+        let perp_dot = lhs.perpendicular_dot(rhs);
+        assert_eq!(perp_dot, cross.z);
     }
 
     #[test]
