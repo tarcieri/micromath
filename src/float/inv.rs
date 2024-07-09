@@ -7,29 +7,29 @@ use super::F32;
 impl F32 {
     /// Fast approximation of `1/x`.
     pub fn inv(self) -> Self {
-        // Check if the value is too large for the approximation, NaN (e.g. 0x7fC0_0000) or infinity.
-        let bits = self.0.to_bits();
-        if bits >= 0x7f00_0000 {
-            return if self.0.is_infinite() {
-                // 1/∞ = 0; by definition.
-                if self.0.is_sign_positive() {
-                    Self(0.0)
-                }else {
-                    Self(-0.0)
-                }
-            } else if self.0.is_nan() {
-                Self(f32::NAN)
-            } else {
-                // Values larger than the threshold result in zero for 1/x
-                Self(0.0)
-            }
-        }
-
         // Perform the bit manipulation for the approximation
         // The constant 0x7f00_0000 corresponds to the bit pattern for 1.0 in IEEE 754 format.
         // Subtracting the bits of the original number from this constant effectively inverts the exponent,
         // resulting in an approximation of the reciprocal.
-        Self(f32::from_bits(0x7f00_0000 - bits))
+        match 0x7f00_0000_u32.checked_sub(self.0.to_bits()) {
+            Some(result) => Self(f32::from_bits(result)),
+            // Check if the value is too large for the approximation, NaN (e.g. 0x7fC0_0000) or infinity.
+            None => {
+                if self.0.is_infinite() {
+                    // 1/∞ = 0; by definition.
+                    if self.0.is_sign_positive() {
+                        Self(0.0)
+                    } else {
+                        Self(-0.0)
+                    }
+                } else if self.0.is_nan() {
+                    Self(f32::NAN)
+                } else {
+                    // Values larger than the threshold result in zero for 1/x
+                    Self(0.0)
+                }
+            }
+        }
     }
 }
 
