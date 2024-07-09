@@ -8,6 +8,7 @@ pub(crate) mod atan2;
 pub(crate) mod ceil;
 pub(crate) mod copysign;
 pub(crate) mod cos;
+pub(crate) mod cosh;
 pub(crate) mod div_euclid;
 pub(crate) mod exp;
 pub(crate) mod floor;
