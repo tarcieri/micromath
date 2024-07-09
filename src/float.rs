@@ -226,7 +226,7 @@ impl F32 {
     /// Is this floating point value even?
     fn is_even(&self) -> bool {
         // any floating point value that doesn't fit in an i32 range is even,
-        // and will loose 1's digit precision at exp values of 23+
+        // and will lose 1's digit precision at exp values of 23+
         if self.extract_exponent_value() >= 31 {
             true
         } else {
