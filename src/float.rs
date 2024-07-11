@@ -636,6 +636,14 @@ impl Inv for F32 {
     }
 }
 
+#[cfg(feature = "defmt")]
+#[cfg_attr(docsrs, doc(cfg(feature = "defmt")))]
+impl defmt::Format for F32 {
+    fn format(&self, fmt: defmt::Formatter<'_>) {
+        defmt::write!(fmt, "{}", self.0)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[allow(unused_imports)] // remove when we have more tests
