@@ -251,6 +251,17 @@ impl From<U16x2> for F32x2 {
     }
 }
 
+#[cfg(feature = "defmt")]
+#[cfg_attr(docsrs, doc(cfg(feature = "defmt")))]
+impl<C> defmt::Format for Vector2d<C>
+where
+    C: Component + defmt::Format,
+{
+    fn format(&self, fmt: defmt::Formatter<'_>) {
+        defmt::write!(fmt, "({}, {})", self.x, self.y)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

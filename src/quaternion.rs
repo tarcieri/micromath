@@ -364,6 +364,14 @@ where
     }
 }
 
+#[cfg(feature = "defmt")]
+#[cfg_attr(docsrs, doc(cfg(feature = "defmt")))]
+impl defmt::Format for Quaternion {
+    fn format(&self, fmt: defmt::Formatter<'_>) {
+        defmt::write!(fmt, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::Quaternion;
