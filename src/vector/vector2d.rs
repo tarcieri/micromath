@@ -2,7 +2,7 @@
 
 use super::{Component, Vector};
 use core::{
-    iter::FromIterator,
+    iter::{FromIterator, Sum},
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
 };
 
@@ -182,6 +182,52 @@ where
 {
     fn mul_assign(&mut self, rhs: C) {
         *self = *self * rhs;
+    }
+}
+
+impl<C> Sum<Vector2d<C>> for Vector2d<C>
+where
+    C: Component,
+{
+    /// Method which takes an iterator and generates `Self` from the elements by
+    /// "summing up" the items.
+    ///
+    /// ## Example
+    /// ```
+    /// use micromath::vector::Vector2d;
+    /// let vectors = [
+    ///     Vector2d { x: 1.0, y: 0.0 },
+    ///     Vector2d { x: 0.0, y: 2.0 },
+    /// ];
+    /// let sum: Vector2d<f32> = vectors.iter().copied().sum();
+    /// assert_eq!(sum.x, 1.0);
+    /// assert_eq!(sum.y, 2.0);
+    /// ```
+    fn sum<I: Iterator<Item = Vector2d<C>>>(iter: I) -> Self {
+        iter.fold(Vector2d::default(), |prev, current| prev + current)
+    }
+}
+
+impl<'a, C> Sum<&'a Vector2d<C>> for Vector2d<C>
+where
+    C: Component + 'a,
+{
+    /// Method which takes an iterator and generates `Self` from the elements by
+    /// "summing up" the items.
+    ///
+    /// ## Example
+    /// ```
+    /// use micromath::vector::Vector2d;
+    /// let vectors = [
+    ///     Vector2d { x: 1.0, y: 0.0 },
+    ///     Vector2d { x: 0.0, y: 2.0 },
+    /// ];
+    /// let sum: Vector2d<f32> = vectors.iter().sum();
+    /// assert_eq!(sum.x, 1.0);
+    /// assert_eq!(sum.y, 2.0);
+    /// ```
+    fn sum<I: Iterator<Item = &'a Vector2d<C>>>(iter: I) -> Self {
+        iter.copied().sum()
     }
 }
 
