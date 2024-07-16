@@ -274,6 +274,18 @@ impl From<Quaternion> for (f32, f32, f32, f32) {
     }
 }
 
+impl From<[f32; 4]> for Quaternion {
+    fn from(q: [f32; 4]) -> Quaternion {
+        Self::new(q[0], q[1], q[2], q[3])
+    }
+}
+
+impl From<Quaternion> for [f32; 4] {
+    fn from(q: Quaternion) -> [f32; 4] {
+        q.to_array()
+    }
+}
+
 impl Mul for Quaternion {
     type Output = Self;
 
@@ -452,5 +464,25 @@ mod tests {
         let v1_r = q.rotate(v1);
 
         assert!((v1_r - v2).magnitude() < 1e-1);
+    }
+
+    #[test]
+    fn from_tuple() {
+        let quat: Quaternion = (1.0, 2.0, 3.0, 4.0).into();
+        let (a, b, c, d) = quat.into();
+        assert_eq!(a, 1.0);
+        assert_eq!(b, 2.0);
+        assert_eq!(c, 3.0);
+        assert_eq!(d, 4.0);
+    }
+
+    #[test]
+    fn from_array() {
+        let quat: Quaternion = [1.0, 2.0, 3.0, 4.0].into();
+        let quat: [f32; 4] = quat.into();
+        assert_eq!(quat[0], 1.0);
+        assert_eq!(quat[1], 2.0);
+        assert_eq!(quat[2], 3.0);
+        assert_eq!(quat[3], 4.0);
     }
 }

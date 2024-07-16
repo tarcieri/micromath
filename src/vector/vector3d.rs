@@ -108,6 +108,37 @@ where
     }
 }
 
+impl<C> From<Vector3d<C>> for (C, C, C)
+where
+    C: Component,
+{
+    fn from(vector: Vector3d<C>) -> (C, C, C) {
+        (vector.x, vector.y, vector.z)
+    }
+}
+
+impl<C> From<[C; 3]> for Vector3d<C>
+where
+    C: Component,
+{
+    fn from(vector: [C; 3]) -> Self {
+        Self {
+            x: vector[0],
+            y: vector[1],
+            z: vector[2],
+        }
+    }
+}
+
+impl<C> From<Vector3d<C>> for [C; 3]
+where
+    C: Component,
+{
+    fn from(vector: Vector3d<C>) -> [C; 3] {
+        vector.to_array()
+    }
+}
+
 impl<C> Index<usize> for Vector3d<C>
 where
     C: Component,
@@ -271,5 +302,36 @@ where
 {
     fn format(&self, fmt: defmt::Formatter<'_>) {
         defmt::write!(fmt, "({}, {}, {})", self.x, self.y, self.z)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn from_tuple() {
+        let vec: Vector3d<_> = (1, 2, 3).into();
+        assert_eq!(vec[0], 1);
+        assert_eq!(vec[1], 2);
+        assert_eq!(vec[2], 3);
+
+        let (x, y, z) = vec.into();
+        assert_eq!(x, 1);
+        assert_eq!(y, 2);
+        assert_eq!(z, 3);
+    }
+
+    #[test]
+    fn from_array() {
+        let vec: Vector3d<_> = [1, 2, 3].into();
+        assert_eq!(vec[0], 1);
+        assert_eq!(vec[1], 2);
+        assert_eq!(vec[2], 3);
+
+        let arr: [_; 3] = vec.into();
+        assert_eq!(arr[0], 1);
+        assert_eq!(arr[1], 2);
+        assert_eq!(arr[2], 3);
     }
 }
