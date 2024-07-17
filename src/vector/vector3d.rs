@@ -45,11 +45,6 @@ impl<C> Vector3d<C>
 where
     C: Component,
 {
-    /// Initializes a new instance of the `Vector3d` struct.
-    pub fn new(x: C, y: C, z: C) -> Self {
-        Self { x, y, z }
-    }
-
     /// Return a 3-element array containing the coordinates
     // TODO(tarcieri): move this to the `Vector` trait leveraging const generics?
     pub fn to_array(&self) -> [C; 3] {
@@ -366,8 +361,8 @@ mod tests {
 
     #[test]
     fn cross() {
-        let lhs = Vector3d::new(1, 2, 3);
-        let rhs = Vector3d::new(4, 5, 6);
+        let lhs = Vector3d { x: 1, y: 2, z: 3 };
+        let rhs = Vector3d { x: 4, y: 5, z: 6 };
         let cross = lhs.cross(rhs);
         assert_eq!(cross.x, -3);
         assert_eq!(cross.y, 6);
@@ -379,8 +374,8 @@ mod tests {
 
     #[test]
     fn dot() {
-        let lhs = Vector3d::new(1, 2, 3);
-        let rhs = Vector3d::new(4, 5, 6);
+        let lhs = Vector3d { x: 1, y: 2, z: 3 };
+        let rhs = Vector3d { x: 4, y: 5, z: 6 };
         let dot = lhs.dot(rhs);
         assert_eq!(dot, 32);
     }

@@ -41,11 +41,6 @@ impl<C> Vector2d<C>
 where
     C: Component,
 {
-    /// Initializes a new instance of the `Vector2d` struct.
-    pub fn new(x: C, y: C) -> Self {
-        Self { x, y }
-    }
-
     /// Return a 2-element array containing the coordinates
     // TODO(tarcieri): move this to the `Vector` trait leveraging const generics?
     pub fn to_array(&self) -> [C; 2] {
@@ -331,8 +326,8 @@ mod tests {
 
     #[test]
     fn cross() {
-        let lhs = Vector2d::new(1, 2);
-        let rhs = Vector2d::new(3, 4);
+        let lhs = Vector2d { x: 1, y: 2 };
+        let rhs = Vector2d { x: 3, y: 4 };
         let cross = lhs.cross(rhs);
         assert_eq!(cross.x, 0);
         assert_eq!(cross.y, 0);
@@ -347,8 +342,8 @@ mod tests {
 
     #[test]
     fn dot() {
-        let lhs = Vector2d::new(1, 2);
-        let rhs = Vector2d::new(3, 4);
+        let lhs = Vector2d { x: 1, y: 2 };
+        let rhs = Vector2d { x: 3, y: 4 };
         let dot = lhs.dot(rhs);
         assert_eq!(dot, 11);
     }
