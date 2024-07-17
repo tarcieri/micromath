@@ -1,6 +1,6 @@
 //! 2-dimensional vector
 
-use super::{Component, Vector};
+use super::{Component, Vector, Vector3d};
 use core::{
     iter::FromIterator,
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
@@ -46,6 +46,31 @@ where
     pub fn to_array(&self) -> [C; 2] {
         [self.x, self.y]
     }
+
+    /// Calculates the inner product.
+    pub fn dot(self, rhs: Self) -> C {
+        (self.x * rhs.x) + (self.y * rhs.y)
+    }
+
+    /// Calculates the perpendicular dot product.
+    ///
+    /// This value can be understood as the `z` component of the [`cross`](Self::cross) product
+    /// between two `Vector2d` instances in 3D space, or the signed area of the parallelogram
+    /// formed by the two vectors.
+    ///
+    /// This value can be used to perform side tests without having to promote the vectors
+    /// into [`Vector3d`] instances.
+    pub fn perpendicular_dot(self, rhs: Self) -> C {
+        (self.x * rhs.y) - (self.y * rhs.x)
+    }
+
+    /// Calculates the outer product.
+    ///
+    /// Note that due to tye type of operation, the result is a [`Vector3d`], not a `Vector2d`.
+    /// See also [`perpendicular_dot`](Self::perpendicular_dot) for a simplified version.
+    pub fn cross(&self, rhs: Self) -> Vector3d<C> {
+        Vector3d::from(*self) * Vector3d::from(rhs)
+    }
 }
 
 impl<C> FromIterator<C> for Vector2d<C>
@@ -85,7 +110,7 @@ where
     }
 
     fn dot(self, rhs: Self) -> C {
-        (self.x * rhs.x) + (self.y * rhs.y)
+        self.dot(rhs)
     }
 }
 
@@ -206,6 +231,17 @@ where
     }
 }
 
+impl<C> Mul<Vector2d<C>> for Vector2d<C>
+where
+    C: Component,
+{
+    type Output = Vector3d<C>;
+
+    fn mul(self, rhs: Vector2d<C>) -> Vector3d<C> {
+        self.cross(rhs)
+    }
+}
+
 impl<C> MulAssign<C> for Vector2d<C>
 where
     C: Component,
@@ -286,5 +322,29 @@ mod tests {
         let arr: [_; 2] = vec.into();
         assert_eq!(arr[0], 1);
         assert_eq!(arr[1], 2);
+    }
+
+    #[test]
+    fn cross() {
+        let lhs = Vector2d { x: 1, y: 2 };
+        let rhs = Vector2d { x: 3, y: 4 };
+        let cross = lhs.cross(rhs);
+        assert_eq!(cross.x, 0);
+        assert_eq!(cross.y, 0);
+        assert_eq!(cross.z, -2);
+
+        let mul = lhs * rhs;
+        assert_eq!(mul, cross);
+
+        let perp_dot = lhs.perpendicular_dot(rhs);
+        assert_eq!(perp_dot, cross.z);
+    }
+
+    #[test]
+    fn dot() {
+        let lhs = Vector2d { x: 1, y: 2 };
+        let rhs = Vector2d { x: 3, y: 4 };
+        let dot = lhs.dot(rhs);
+        assert_eq!(dot, 11);
     }
 }
