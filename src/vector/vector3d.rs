@@ -2,9 +2,9 @@
 
 use super::{commutative::impl_commutative, Component, Vector, Vector2d};
 use crate::F32;
-use core::iter::Sum;
+use core::ops::{Div, DivAssign};
 use core::{
-    iter::FromIterator,
+    iter::{FromIterator, Sum},
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
 };
 
@@ -278,6 +278,32 @@ where
     }
 }
 
+impl<C> Div<C> for Vector3d<C>
+where
+    C: Component,
+{
+    type Output = Self;
+
+    fn div(self, rhs: C) -> Self {
+        Self {
+            x: self.x / rhs,
+            y: self.y / rhs,
+            z: self.z / rhs,
+        }
+    }
+}
+
+impl<C> DivAssign<C> for Vector3d<C>
+where
+    C: Component,
+{
+    fn div_assign(&mut self, rhs: C) {
+        self.x = self.x / rhs;
+        self.y = self.y / rhs;
+        self.z = self.z / rhs;
+    }
+}
+
 impl<C> Sum<Vector3d<C>> for Vector3d<C>
 where
     C: Component,
@@ -436,5 +462,31 @@ mod tests {
         let rhs = Vector3d { x: 4, y: 5, z: 6 };
         let dot = lhs.dot(rhs);
         assert_eq!(dot, 32);
+    }
+
+    #[test]
+    fn div() {
+        let vec = Vector3d {
+            x: 10,
+            y: 20,
+            z: 30,
+        };
+        let result = vec / 2;
+        assert_eq!(result.x, 5);
+        assert_eq!(result.y, 10);
+        assert_eq!(result.z, 15);
+    }
+
+    #[test]
+    fn div_assign() {
+        let mut vec = Vector3d {
+            x: 10,
+            y: 20,
+            z: 30,
+        };
+        vec /= 2;
+        assert_eq!(vec.x, 5);
+        assert_eq!(vec.y, 10);
+        assert_eq!(vec.z, 15);
     }
 }
