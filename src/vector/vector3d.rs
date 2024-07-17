@@ -216,21 +216,6 @@ where
     }
 }
 
-impl<C> Add<C> for Vector3d<C>
-where
-    C: Component,
-{
-    type Output = Self;
-
-    fn add(self, rhs: C) -> Self {
-        Self {
-            x: self.x + rhs,
-            y: self.y + rhs,
-            z: self.z + rhs,
-        }
-    }
-}
-
 impl<C> Sub for Vector3d<C>
 where
     C: Component,
@@ -252,21 +237,6 @@ where
 {
     fn sub_assign(&mut self, other: Self) {
         *self = *self - other;
-    }
-}
-
-impl<C> Sub<C> for Vector3d<C>
-where
-    C: Component,
-{
-    type Output = Self;
-
-    fn sub(self, rhs: C) -> Self {
-        Self {
-            x: self.x - rhs,
-            y: self.y - rhs,
-            z: self.z - rhs,
-        }
     }
 }
 
