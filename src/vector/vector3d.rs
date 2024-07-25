@@ -1,6 +1,6 @@
 //! 3-dimensional vector
 
-use super::{Component, Vector, Vector2d};
+use super::{commutative::impl_commutative, Component, Vector, Vector2d};
 use crate::F32;
 use core::iter::Sum;
 use core::{
@@ -28,6 +28,15 @@ pub type U32x3 = Vector3d<u32>;
 
 /// 3-dimensional XYZ vector of `f32` values
 pub type F32x3 = Vector3d<f32>;
+
+impl_commutative!(Vector3d, i8);
+impl_commutative!(Vector3d, i16);
+impl_commutative!(Vector3d, i32);
+impl_commutative!(Vector3d, u8);
+impl_commutative!(Vector3d, u16);
+impl_commutative!(Vector3d, u32);
+impl_commutative!(Vector3d, f32);
+impl_commutative!(Vector3d, F32);
 
 /// 3-dimensional vector
 #[derive(Copy, Clone, Debug, Default, PartialEq)]

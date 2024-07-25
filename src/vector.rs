@@ -3,6 +3,7 @@
 //! All vectors types impl the [Vector] trait, and all vector components
 //! impl the [Component] trait.
 
+mod commutative;
 mod component;
 mod iter;
 mod vector2d;
