@@ -2,6 +2,7 @@
 
 use super::{Component, Vector, Vector2d};
 use crate::F32;
+use core::iter::Sum;
 use core::{
     iter::FromIterator,
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
@@ -265,6 +266,54 @@ where
 {
     fn mul_assign(&mut self, rhs: C) {
         *self = *self * rhs;
+    }
+}
+
+impl<C> Sum<Vector3d<C>> for Vector3d<C>
+where
+    C: Component,
+{
+    /// Method which takes an iterator and generates `Self` from the elements by
+    /// "summing up" the items.
+    ///
+    /// ## Example
+    /// ```
+    /// use micromath::vector::Vector3d;
+    /// let vectors = [
+    ///     Vector3d { x: 1.0, y: 0.0, z: -2.0 },
+    ///     Vector3d { x: 0.0, y: 2.0, z: -1.0 },
+    /// ];
+    /// let sum: Vector3d<f32> = vectors.iter().copied().sum();
+    /// assert_eq!(sum.x, 1.0);
+    /// assert_eq!(sum.y, 2.0);
+    /// assert_eq!(sum.z, -3.0);
+    /// ```
+    fn sum<I: Iterator<Item = Vector3d<C>>>(iter: I) -> Self {
+        iter.fold(Vector3d::default(), |prev, current| prev + current)
+    }
+}
+
+impl<'a, C> Sum<&'a Vector3d<C>> for Vector3d<C>
+where
+    C: Component + 'a,
+{
+    /// Method which takes an iterator and generates `Self` from the elements by
+    /// "summing up" the items.
+    ///
+    /// ## Example
+    /// ```
+    /// use micromath::vector::Vector3d;
+    /// let vectors = [
+    ///     Vector3d { x: 1.0, y: 0.0, z: -2.0 },
+    ///     Vector3d { x: 0.0, y: 2.0, z: -1.0 },
+    /// ];
+    /// let sum: Vector3d<f32> = vectors.iter().copied().sum();
+    /// assert_eq!(sum.x, 1.0);
+    /// assert_eq!(sum.y, 2.0);
+    /// assert_eq!(sum.z, -3.0);
+    /// ```
+    fn sum<I: Iterator<Item = &'a Vector3d<C>>>(iter: I) -> Self {
+        iter.copied().sum()
     }
 }
 
