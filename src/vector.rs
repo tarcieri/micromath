@@ -74,14 +74,22 @@ where
     }
 
     /// Returns a normalized version of the vector.
-    fn normalized(self) -> Self
+    fn normalized(mut self) -> Self
     where
         Self: FromIterator<C>,
         C: Into<f32> + From<f32>,
     {
         let norm = self.magnitude();
-        let normalized = self.iter().map(|n| n.into() / norm).map(C::from);
-        Self::from_iter(normalized)
+        self.map(|n| C::from(n.into() / norm))
+    }
+
+    /// Applies a function to each element of the vector
+    /// and returns a new vector of the transformed elements.
+    fn map<F>(&mut self, map: F) -> Self
+    where
+        F: FnMut(C) -> C,
+    {
+        Self::from_iter(self.iter().map(map))
     }
 }
 
