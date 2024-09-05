@@ -93,7 +93,7 @@ For more information, please see [CODE_OF_CONDUCT.md].
 
 ## License
 
-Copyright © 2019-2021 Tony Arcieri
+Copyright © 2019-2024 Tony Arcieri
 
 Dual licensed under your choice of either of:
 
