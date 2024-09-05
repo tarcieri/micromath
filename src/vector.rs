@@ -60,6 +60,14 @@ where
         differences.map(|n| n * n).sum::<f32>().sqrt()
     }
 
+    /// Compute the squared magnitude of a vector
+    fn magnitude_sq(self) -> C
+    where
+        C: core::iter::Sum,
+    {
+        self.iter().map(|n| n * n).sum()
+    }
+
     /// Compute the magnitude of a vector
     fn magnitude(self) -> f32
     where
@@ -113,5 +121,21 @@ mod tests {
         assert!((normalized.x - 0.42426407).abs() <= ERROR);
         assert!((normalized.y - 0.56568545).abs() <= ERROR);
         assert!((normalized.z - 0.70710677).abs() <= ERROR);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn magnitude_sq() {
+        let vec = Vector3d {
+            x: 3.0,
+            y: 4.0,
+            z: 5.0,
+        };
+        let mag = vec.magnitude_sq();
+        assert_eq!(mag, 3.0 * 3.0 + 4.0 * 4.0 + 5.0 * 5.0);
     }
 }
