@@ -1,6 +1,8 @@
 //! 2-dimensional vector
 
 use super::{Component, Vector, Vector3d};
+use crate::vector::commutative::impl_commutative;
+use crate::F32;
 use core::{
     iter::{FromIterator, Sum},
     ops::{Add, AddAssign, Index, Mul, MulAssign, Sub, SubAssign},
@@ -26,6 +28,15 @@ pub type U32x2 = Vector2d<u32>;
 
 /// 2-dimensional XY vector of `f32` values
 pub type F32x2 = Vector2d<f32>;
+
+impl_commutative!(Vector2d, i8);
+impl_commutative!(Vector2d, i16);
+impl_commutative!(Vector2d, i32);
+impl_commutative!(Vector2d, u8);
+impl_commutative!(Vector2d, u16);
+impl_commutative!(Vector2d, u32);
+impl_commutative!(Vector2d, f32);
+impl_commutative!(Vector2d, F32);
 
 /// 2-dimensional vector
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
