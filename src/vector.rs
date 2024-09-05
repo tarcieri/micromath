@@ -72,4 +72,45 @@ where
             .sum::<f32>()
             .sqrt()
     }
+
+    /// Returns a normalized version of the vector.
+    fn normalized(mut self) -> Self
+    where
+        Self: FromIterator<C>,
+        C: Into<f32> + From<f32>,
+    {
+        let norm = self.magnitude();
+        self.map(|n| C::from(n.into() / norm))
+    }
+
+    /// Applies a function to each element of the vector
+    /// and returns a new vector of the transformed elements.
+    fn map<F>(&mut self, map: F) -> Self
+    where
+        F: FnMut(C) -> C,
+    {
+        Self::from_iter(self.iter().map(map))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalized() {
+        const ERROR: f32 = 1e-6;
+        let vec = Vector3d {
+            x: 3.0,
+            y: 4.0,
+            z: 5.0,
+        };
+        let norm = vec.magnitude();
+        assert!((norm - 7.071068).abs() <= ERROR);
+
+        let normalized = vec.normalized();
+        assert!((normalized.x - 0.42426407).abs() <= ERROR);
+        assert!((normalized.y - 0.56568545).abs() <= ERROR);
+        assert!((normalized.z - 0.70710677).abs() <= ERROR);
+    }
 }
