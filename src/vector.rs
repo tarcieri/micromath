@@ -107,6 +107,17 @@ mod tests {
     use super::*;
 
     #[test]
+    fn magnitude_sq() {
+        let vec = Vector3d {
+            x: 3.0,
+            y: 4.0,
+            z: 5.0,
+        };
+        let mag = vec.magnitude_sq();
+        assert_eq!(mag, 3.0 * 3.0 + 4.0 * 4.0 + 5.0 * 5.0);
+    }
+
+    #[test]
     fn normalized() {
         const ERROR: f32 = 1e-6;
         let vec = Vector3d {
@@ -121,21 +132,5 @@ mod tests {
         assert!((normalized.x - 0.42426407).abs() <= ERROR);
         assert!((normalized.y - 0.56568545).abs() <= ERROR);
         assert!((normalized.z - 0.70710677).abs() <= ERROR);
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn magnitude_sq() {
-        let vec = Vector3d {
-            x: 3.0,
-            y: 4.0,
-            z: 5.0,
-        };
-        let mag = vec.magnitude_sq();
-        assert_eq!(mag, 3.0 * 3.0 + 4.0 * 4.0 + 5.0 * 5.0);
     }
 }
