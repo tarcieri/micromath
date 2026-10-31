@@ -24,6 +24,27 @@ impl F32 {
 mod tests {
     use super::F32;
 
+    #[test]
+    fn zero_base() {
+        assert_eq!(F32(0.0).powf(F32(1.0)), F32::ZERO);
+        assert_eq!(F32(0.0).powf(F32(1.3)), F32::ZERO);
+        assert_eq!(F32(0.0).powf(F32(0.0)), F32::ONE);
+    }
+
+    #[test]
+    fn base_below_one() {
+        for &(x, n, expected) in &[(0.5, 1.0, 0.5), (0.75, 1.0, 0.75), (0.75, 1.3, 0.687_986)] {
+            let powf = F32(x).powf(F32(n));
+            assert!(
+                (powf.0 - expected).abs() <= MAX_ERROR * expected,
+                "{} ^ {} reads {}",
+                x,
+                n,
+                powf.0
+            );
+        }
+    }
+
     /// error builds up from both exp and ln approximation, so we double the error allowed.
     pub(crate) const MAX_ERROR: f32 = 0.002;
 

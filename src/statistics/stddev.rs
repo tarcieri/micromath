@@ -29,7 +29,7 @@ mod tests {
 
     #[test]
     fn stddev_test() {
-        assert_eq!([1.0, 3.0, 5.0].as_ref().stddev(), 2.0);
-        assert_eq!([1.0, 3.0, 5.0].as_ref().stddev(), 2.0);
+        assert_eq!([1.0_f32, 3.0, 5.0].as_ref().stddev(), 2.0);
+        assert_eq!([1.0_f32, 3.0, 5.0].as_ref().stddev(), 2.0);
     }
 }

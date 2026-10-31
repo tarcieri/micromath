@@ -24,7 +24,19 @@ impl F32 {
 
         // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
         // the precision of such an approximation is assumed not good enough.
-        let x_working = if x_less_than_1 { self.inv() } else { self };
+        let x_working = if x_less_than_1 {
+            let inverse = Self::ONE / self;
+
+            // Zero and small subnormals overflow, and the steps below turn infinity into
+            // NaN. `inv` stays finite for them, which is what keeps `powf(0.0, n)` right.
+            if inverse.is_finite() {
+                inverse
+            } else {
+                self.abs().inv()
+            }
+        } else {
+            self
+        };
 
         // according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
         // get exponent value
@@ -81,6 +93,9 @@ mod tests {
         (0.001, -6.9077554),
         (0.01, -4.6051702),
         (0.1, -2.3025851),
+        (0.5, -0.6931472),
+        (0.75, -0.2876821),
+        (0.9, -0.1053605),
         (10.0, 2.3025851),
         (100.0, 4.6051702),
         (1000.0, 6.9077554),
@@ -103,11 +118,18 @@ mod tests {
     ];
 
     #[test]
+    fn stays_finite_where_the_inverse_overflows() {
+        assert!(F32(0.0).ln().is_finite());
+        assert!(F32(-0.0).ln().is_finite());
+        assert!(F32(1e-40).ln().is_finite());
+    }
+
+    #[test]
     fn sanity_check() {
         assert_eq!(F32::ONE.ln(), F32::ZERO);
         for &(x, expected) in TEST_VECTORS {
             let ln_x = F32(x).ln();
-            let relative_error = (ln_x - expected).abs() / expected;
+            let relative_error = (ln_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,
