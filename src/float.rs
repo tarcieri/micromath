@@ -197,7 +197,7 @@ impl F32 {
 
     /// Set the exponent to the given value.
     pub(crate) fn set_exponent(self, exponent: i32) -> Self {
-        debug_assert!(exponent <= 127 && exponent >= -128);
+        debug_assert!((-128..=127).contains(&exponent));
         let without_exponent: u32 = self.to_bits() & !EXPONENT_MASK;
         let only_exponent: u32 = ((exponent + EXPONENT_BIAS as i32) as u32)
             .overflowing_shl(MANTISSA_BITS)
