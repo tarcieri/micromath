@@ -65,7 +65,7 @@ mod tests {
 
         for &(x, expected) in TEST_VECTORS {
             let ln_x = F32(x).log2().0;
-            let relative_error = (ln_x - expected).abs() / expected;
+            let relative_error = (ln_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,

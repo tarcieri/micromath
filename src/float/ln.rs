@@ -24,7 +24,11 @@ impl F32 {
 
         // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
         // the precision of such an approximation is assumed not good enough.
-        let x_working = if x_less_than_1 { self.inv() } else { self };
+        let x_working = if x_less_than_1 {
+            Self::ONE / self
+        } else {
+            self
+        };
 
         // according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
         // get exponent value
@@ -81,6 +85,9 @@ mod tests {
         (0.001, -6.9077554),
         (0.01, -4.6051702),
         (0.1, -2.3025851),
+        (0.5, -0.6931472),
+        (0.75, -0.2876821),
+        (0.9, -0.1053605),
         (10.0, 2.3025851),
         (100.0, 4.6051702),
         (1000.0, 6.9077554),
@@ -107,7 +114,7 @@ mod tests {
         assert_eq!(F32::ONE.ln(), F32::ZERO);
         for &(x, expected) in TEST_VECTORS {
             let ln_x = F32(x).ln();
-            let relative_error = (ln_x - expected).abs() / expected;
+            let relative_error = (ln_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,
