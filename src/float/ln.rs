@@ -25,7 +25,15 @@ impl F32 {
         // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
         // the precision of such an approximation is assumed not good enough.
         let x_working = if x_less_than_1 {
-            Self::ONE / self
+            let inverse = Self::ONE / self;
+
+            // Zero and small subnormals overflow, and the steps below turn infinity into
+            // NaN. `inv` stays finite for them, which is what keeps `powf(0.0, n)` right.
+            if inverse.is_finite() {
+                inverse
+            } else {
+                self.abs().inv()
+            }
         } else {
             self
         };
@@ -108,6 +116,13 @@ mod tests {
         (1e+18, 41.446533),
         (1e+19, 43.749115),
     ];
+
+    #[test]
+    fn stays_finite_where_the_inverse_overflows() {
+        assert!(F32(0.0).ln().is_finite());
+        assert!(F32(-0.0).ln().is_finite());
+        assert!(F32(1e-40).ln().is_finite());
+    }
 
     #[test]
     fn sanity_check() {
