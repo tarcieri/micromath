@@ -1,12 +1,42 @@
 //! log base 2 approximation for a single-precision float.
 
-use super::F32;
-use core::f32::consts::LOG2_E;
+use super::{F32, MANTISSA_MASK};
+use core::f32::consts::{LOG2_E, SQRT_2};
 
 impl F32 {
     /// Approximates the base 2 logarithm of the number.
+    #[inline]
     pub fn log2(self) -> Self {
-        self.ln() * LOG2_E
+        let x = self.0;
+        if x <= 0.0 {
+            return if x == 0.0 {
+                Self::NEG_INFINITY
+            } else {
+                Self::NAN
+            };
+        }
+        if !x.is_finite() {
+            return self;
+        }
+        let bits = self.to_bits();
+        let (normal, adjustment) = if bits < f32::MIN_POSITIVE.to_bits() {
+            // A positive subnormal is its integer fraction times 2^-149.
+            (Self(bits as f32), -149)
+        } else {
+            (self, 0)
+        };
+        let mut e = normal.extract_exponent_value() + adjustment;
+        let mut m = f32::from_bits((normal.to_bits() & MANTISSA_MASK) | 0x3f80_0000);
+        if m > SQRT_2 {
+            m *= 0.5;
+            e += 1;
+        }
+        // ln(m) = 2 atanh((m - 1)/(m + 1)); |s| <= 0.172. Adding the
+        // binary exponent last also gives exact results for powers of two.
+        let s = (m - 1.0) / (m + 1.0);
+        let z = s * s;
+        let p = 1.0 + z * (1.0 / 3.0 + z * (1.0 / 5.0 + z * (1.0 / 7.0 + z / 9.0)));
+        Self(e as f32 + (2.0 * LOG2_E) * s * p)
     }
 }
 
@@ -74,6 +104,29 @@ mod tests {
                 ln_x,
                 expected
             );
+        }
+    }
+
+    #[test]
+    fn binary_exponents_and_centered_mantissas() {
+        assert_eq!(F32(-0.0).log2(), F32::NEG_INFINITY);
+        assert_eq!(F32::INFINITY.log2(), F32::INFINITY);
+        assert!(F32(-1.0).log2().is_nan() && F32::NAN.log2().is_nan());
+        for k in -149..=127 {
+            let power = if k < -126 {
+                1 << (k + 149)
+            } else {
+                ((k + 127) as u32) << 23
+            };
+            assert_eq!(F32::from_bits(power).log2(), F32(k as f32));
+        }
+        for k in 0..255_u32 {
+            for frac in [1, 0x233333, 0x3504f3, 0x400000, 0x7fffff] {
+                let x = f32::from_bits((k << 23) | frac);
+                let reference = f64::from(x).log2() as f32;
+                let actual = F32(x).log2().0;
+                assert!((actual - reference).abs() <= 4.0 * f32::EPSILON * reference.abs());
+            }
         }
     }
 }

@@ -7,8 +7,18 @@ impl F32 {
     pub fn powf(self, n: Self) -> Self {
         if n == Self::ZERO {
             // x^0 = 1 for any x. Checked first since `0 * ln(0)` is `0 * -inf = NaN`.
-            Self::ONE
-        } else if self >= Self::ZERO {
+            return Self::ONE;
+        }
+
+        // A rounded n * ln(x) can move an exact half-subnormal across the
+        // underflow boundary (for example 0.5^150). Use the integer path
+        // when the exponent round-trips. i32::MAX as f32 rounds up to 2^31.
+        let integer = n.0 as i32;
+        if n.0 < 2_147_483_648.0 && integer as f32 == n.0 {
+            return self.powi(integer);
+        }
+
+        if self >= Self::ZERO {
             // using x^n = exp(ln(x^n)) = exp(n*ln(x))
             (n * self.ln()).exp()
         } else if !n.is_integer() {
@@ -50,6 +60,14 @@ mod tests {
                 powf.0
             );
         }
+    }
+
+    #[test]
+    fn integer_exponents_at_underflow() {
+        assert_eq!(F32(0.5).powf(F32(149.0)), F32::from_bits(1));
+        assert_eq!(F32(0.5).powf(F32(150.0)), F32::ZERO);
+        assert_eq!(F32(2.0).powf(F32(-150.0)), F32::ZERO);
+        assert_eq!(F32(-2.0).powf(F32(-149.0)).to_bits(), 0x8000_0001);
     }
 
     /// error builds up from both exp and ln approximation, so we double the error allowed.
