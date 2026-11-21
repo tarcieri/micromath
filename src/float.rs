@@ -11,6 +11,7 @@ pub(crate) mod cos;
 pub(crate) mod cosh;
 pub(crate) mod div_euclid;
 pub(crate) mod exp;
+pub(crate) mod exp2;
 pub(crate) mod floor;
 pub(crate) mod fract;
 pub(crate) mod hypot;
@@ -196,6 +197,7 @@ impl F32 {
     }
 
     /// Set the exponent to the given value.
+    #[inline]
     pub(crate) fn set_exponent(self, exponent: i32) -> Self {
         debug_assert!((-128..=127).contains(&exponent));
         let without_exponent: u32 = self.to_bits() & !EXPONENT_MASK;

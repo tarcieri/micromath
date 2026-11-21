@@ -8,6 +8,27 @@ impl F32 {
     pub fn sin(self) -> Self {
         (self - PI / 2.0).cos()
     }
+
+    /// Approximates sin(2π × turns), with maximum absolute error below 0.002.
+    /// One full rotation is one turn. Quarter-turns have exact values.
+    #[inline]
+    pub fn sin_turns(self) -> Self {
+        let a = self.abs();
+        let phase = a.0 - a.floor().0;
+        let t = if phase < 0.5 {
+            2.0 * phase
+        } else {
+            2.0 * phase - 2.0
+        };
+        let y = 4.0 * t * (1.0 - Self(t).abs().0);
+        // Parabolic sine with the same correction used by the cosine.
+        let value = y + 0.225 * (y * Self(y).abs().0 - y);
+        Self(if self.is_sign_negative() {
+            -value
+        } else {
+            value
+        })
+    }
 }
 
 #[cfg(test)]
@@ -78,6 +99,27 @@ mod tests {
                 sin_x,
                 expected
             );
+        }
+    }
+
+    #[test]
+    fn turns_and_quadrants() {
+        use crate::F32Ext;
+        for (x, y) in [
+            (0.0_f32, 0.0_f32),
+            (0.25, 1.0),
+            (0.5, 0.0),
+            (0.75, -1.0),
+            (1.0, 0.0),
+        ] {
+            assert_eq!(F32Ext::sin_turns(x), y);
+        }
+        assert_eq!(F32(-0.0).sin_turns().to_bits(), (-0.0_f32).to_bits());
+        assert!(F32::INFINITY.sin_turns().is_nan() && F32::NAN.sin_turns().is_nan());
+        for i in -2048..=2048 {
+            let turns = i as f32 / 1024.0;
+            let expected = (f64::from(turns) * core::f64::consts::TAU).sin();
+            assert!((f64::from(F32(turns).sin_turns().0) - expected).abs() < 0.002);
         }
     }
 }

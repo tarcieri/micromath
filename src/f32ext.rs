@@ -45,7 +45,16 @@ pub trait F32Ext: Sized {
     /// Approximates `e^x`.
     fn exp(self) -> f32;
 
-    /// Approximates floating point floor.
+    /// Approximates 2 raised to this power.
+    #[inline]
+    fn exp2(self) -> f32
+    where
+        Self: Into<f32>,
+    {
+        F32(self.into()).exp2().0
+    }
+
+    /// Returns the largest integer less than or equal to this value.
     fn floor(self) -> f32;
 
     /// Retrieve the fractional part of floating point with sign.
@@ -96,6 +105,15 @@ pub trait F32Ext: Sized {
 
     /// Approximates sine in radians with a maximum error of `0.002`.
     fn sin(self) -> f32;
+
+    /// Approximates the sine of an angle measured in turns.
+    #[inline]
+    fn sin_turns(self) -> f32
+    where
+        Self: Into<f32>,
+    {
+        F32(self.into()).sin_turns().0
+    }
 
     /// Simultaneously computes the sine and cosine of the number, `x`.
     /// Returns `(sin(x), cos(x))`.

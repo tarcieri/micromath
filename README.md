@@ -45,7 +45,9 @@ version bump *only*:
         - [log10]
         - [powf]
         - [exp]
+        - [exp2]
         - [sin]
+        - [sin_turns]
         - [sqrt]
         - [tan]
     - `std` polyfills:
@@ -162,7 +164,11 @@ Apache 2.0 and MIT licenses.
 
 [exp]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.exp
 
+[exp2]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#method.exp2
+
 [sin]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sin
+
+[sin_turns]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#method.sin_turns
 
 [sqrt]: https://docs.rs/micromath/latest/micromath/trait.F32Ext.html#tymethod.sqrt
 

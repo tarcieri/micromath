@@ -1,73 +1,30 @@
-//! Exp approximation for a single-precision float.
-//!
-//! Method described at: <https://stackoverflow.com/a/6985769/2036035>
+//! Exponential approximation for a single-precision float.
 
-use super::{EXPONENT_BIAS, F32};
-use core::f32::consts;
+use super::{exp2::scale, F32};
+use core::f32::consts::LOG2_E;
 
 impl F32 {
-    /// Returns `e^(self)`, (the exponential function).
+    /// Approximates e raised to this power.
     #[inline]
     pub fn exp(self) -> Self {
-        self.exp_ln2_approx(4)
-    }
-
-    /// Exp approximation for `f32`.
-    pub(crate) fn exp_ln2_approx(self, partial_iter: u32) -> Self {
-        if self == Self::ZERO {
-            return Self::ONE;
-        }
-
-        if (self - Self::ONE).abs() < f32::EPSILON {
-            return consts::E.into();
-        }
-
-        if (self - (-Self::ONE)).abs() < f32::EPSILON {
-            return Self::ONE / consts::E;
-        }
-
-        // log base 2(E) == 1/ln(2)
-        // x_fract + x_whole = x/ln2_recip
-        // ln2*(x_fract + x_whole) = x
-        let x_ln2recip = self * consts::LOG2_E;
-        let x_fract = x_ln2recip.fract();
-        let x_trunc = x_ln2recip.trunc();
-
-        //guaranteed to be 0 < x < 1.0
-        let x_fract = x_fract * consts::LN_2;
-        let fract_exp = x_fract.exp_smallx(partial_iter);
-
-        //need the 2^n portion, we can just extract that from the whole number exp portion
-        let fract_exponent: i32 = fract_exp
-            .extract_exponent_value()
-            .saturating_add(x_trunc.0 as i32);
-
-        if fract_exponent < -(EXPONENT_BIAS as i32) {
-            return Self::ZERO;
-        }
-
-        if fract_exponent > ((EXPONENT_BIAS + 1) as i32) {
+        let x = self.0;
+        if x >= 89.0 {
             return Self::INFINITY;
         }
-
-        fract_exp.set_exponent(fract_exponent)
-    }
-
-    /// if x is between 0.0 and 1.0, we can approximate it with the a series
-    ///
-    /// Series from here:
-    /// <https://stackoverflow.com/a/6984495>
-    ///
-    /// e^x ~= 1 + x(1 + x/2(1 + (x?
-    #[inline]
-    pub(crate) fn exp_smallx(self, iter: u32) -> Self {
-        let mut total = 1.0;
-
-        for i in (1..=iter).rev() {
-            total = 1.0 + ((self.0 / (i as f32)) * total);
+        if x <= -104.0 {
+            return Self::ZERO;
         }
-
-        Self(total)
+        if x.is_nan() {
+            return self;
+        }
+        // Reduce to |r| <= ln(2)/2. The high part has enough trailing
+        // zero bits for the product with any exponent here to be exact.
+        let n = x * LOG2_E;
+        let k = (n + if n < 0.0 { -0.5 } else { 0.5 }) as i32;
+        let r = (x - k as f32 * 0.693_145_75) - k as f32 * 1.428_606_8e-6;
+        let tail = 1.0 / 120.0 + r * (1.0 / 720.0 + r / 5040.0);
+        let p = 1.0 + r * (1.0 + r * (0.5 + r * (1.0 / 6.0 + r * (1.0 / 24.0 + r * tail))));
+        Self(scale(p, k))
     }
 }
 
@@ -116,6 +73,32 @@ mod tests {
                 exp_x,
                 expected
             );
+        }
+    }
+
+    #[test]
+    fn reduction_and_scaling() {
+        assert_eq!(F32::NEG_INFINITY.exp(), F32::ZERO);
+        assert_eq!(F32::INFINITY.exp(), F32::INFINITY);
+        assert!(F32::NAN.exp().is_nan());
+        let check = |x: f32| {
+            let expected = (f64::from(x).exp() as f32).to_bits();
+            let actual = F32(x).exp().to_bits();
+            assert!(
+                expected.abs_diff(actual) <= 2,
+                "exp({}) expected bits {:x}, got {:x}",
+                x,
+                expected,
+                actual
+            );
+        };
+        for i in -26_880..=23_040 {
+            check(i as f32 / 256.0);
+        }
+        for center in [-103.972_08_f32, -87.336_55, 88.722_84] {
+            for bits in center.to_bits() - 3..=center.to_bits() + 3 {
+                check(f32::from_bits(bits));
+            }
         }
     }
 }
