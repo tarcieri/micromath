@@ -104,7 +104,7 @@ pub trait F32Ext: Sized {
     /// Approximates square root with an average deviation of ~5%.
     fn sqrt(self) -> f32;
 
-    /// Approximates `tan(x)` in radians with a maximum error of `0.6`.
+    /// Approximates the tangent of an angle in radians.
     fn tan(self) -> f32;
 
     /// Retrieve whole number part of floating point with sign.
