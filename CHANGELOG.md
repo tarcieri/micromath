@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2.0 (2026-11-21)
+### Added
+- `exp2` and `sin_turns` on `F32` and `F32Ext` for octave-based pitch and gain calculations and oscillators with phase measured in turns ([#128])
+- `F32::cosh` for the hyperbolic cosine ([#113])
+- `Vector::map`, `Vector::normalized`, and `Vector::magnitude_sq` ([#114], [#118])
+- Dot and cross products, `Iterator::sum`, scalar-left multiplication, and scalar division for `Vector2d` and `Vector3d` ([#112], [#115], [#116], [#117])
+- Array and tuple conversions for vectors and conversions between `Quaternion` and `[f32; 4]` ([#111])
+- Optional `defmt` formatting for `F32`, vectors, and quaternions ([#108])
+
+### Changed
+- Raise the minimum supported Rust version from 1.47 to 1.62 ([#108])
+- Improve `tan` accuracy near zero and near its poles, and improve range reduction for large angles ([#127])
+- Improve `exp` accuracy near overflow and underflow. `log2` now returns exact results for every representable power of two ([#128])
+
+### Fixed
+- Correct `ln` for inputs between zero and one, including subnormals. Both signed zeros now produce negative infinity ([#125])
+- Handle the full `i32` exponent range in `powi`, including `i32::MIN`, and avoid spurious overflow for finite results ([#126])
+- Use `powi` for integer-valued `powf` exponents that fit in `i32`, fixing rounding at the subnormal boundary ([#128])
+- Preserve signed zero, large integral values, infinities, and NaNs in `floor` ([#128])
+- Avoid integer underflow in `F32::inv` when overflow checks are enabled. This change has a known release-mode regression for negative inputs, where `F32(-2.0).inv()` now returns `+0.0` ([#110])
+
+[#108]: https://github.com/tarcieri/micromath/pull/108
+[#110]: https://github.com/tarcieri/micromath/pull/110
+[#111]: https://github.com/tarcieri/micromath/pull/111
+[#112]: https://github.com/tarcieri/micromath/pull/112
+[#113]: https://github.com/tarcieri/micromath/pull/113
+[#114]: https://github.com/tarcieri/micromath/pull/114
+[#115]: https://github.com/tarcieri/micromath/pull/115
+[#116]: https://github.com/tarcieri/micromath/pull/116
+[#117]: https://github.com/tarcieri/micromath/pull/117
+[#118]: https://github.com/tarcieri/micromath/pull/118
+[#125]: https://github.com/tarcieri/micromath/pull/125
+[#126]: https://github.com/tarcieri/micromath/pull/126
+[#127]: https://github.com/tarcieri/micromath/pull/127
+[#128]: https://github.com/tarcieri/micromath/pull/128
+
 ## 2.1.0 (2023-10-31)
 ### Added
 - Accessors to quaternion elements ([#89])
