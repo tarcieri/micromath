@@ -35,6 +35,6 @@ mod tests {
 
     #[test]
     fn variance_test() {
-        assert_eq!([1.0, 3.0, 5.0].as_ref().variance(), 4.0);
+        assert_eq!([1.0_f32, 3.0, 5.0].as_ref().variance(), 4.0);
     }
 }
