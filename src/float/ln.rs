@@ -3,10 +3,17 @@
 //! Method described at: <https://stackoverflow.com/a/44232045/>
 //!
 //! Modified to not be restricted to int range and only values of x above 1.0.
-//! Also got rid of most of the slow conversions. Should work for all positive values of x.
+//! Also got rid of most of the slow conversions. Handles all inputs: NaN for negative numbers,
+//! -inf for zero.
 
 use super::{EXPONENT_MASK, F32};
 use core::f32::consts::LN_2;
+
+/// 2^24, enough to lift any subnormal into the normal range.
+const SUBNORMAL_SCALE: f32 = 16_777_216.0;
+
+/// Base 2 exponent of [`SUBNORMAL_SCALE`].
+const SUBNORMAL_SCALE_EXPONENT: i32 = 24;
 
 impl F32 {
     /// Approximates the natural logarithm of the number.
@@ -14,6 +21,20 @@ impl F32 {
     // ln(1.0->2.0) polynomial
     #[allow(clippy::excessive_precision)]
     pub fn ln(self) -> Self {
+        // Negative numbers and NaN
+        if self.is_nan() || self < Self::ZERO {
+            return Self::NAN;
+        }
+
+        // Matches both +0.0 and -0.0
+        if self == Self::ZERO {
+            return Self::NEG_INFINITY;
+        }
+
+        if self == Self::INFINITY {
+            return Self::INFINITY;
+        }
+
         // x may essentially be 1.0 but, as clippy notes, these kinds of
         // floating point comparisons can fail when the bit pattern is not the sames
         if (self - Self::ONE).abs() < f32::EPSILON {
@@ -22,13 +43,25 @@ impl F32 {
 
         let x_less_than_1 = self < 1.0;
 
-        // Note: we could use the fast inverse approximation here found in super::inv::inv_approx, but
-        // the precision of such an approximation is assumed not good enough.
-        let x_working = if x_less_than_1 { self.inv() } else { self };
+        // For x < 1 we compute ln(1/x) and negate it. This is a true division: the fast `inv`
+        // approximation is too imprecise here.
+        //
+        // `1/x` overflows below 2^-128, so lift subnormals by 2^24 first (exact for subnormals)
+        // and fold that back into the exponent: ln(1/x) = ln(1/(x * 2^24)) + 24 * ln(2).
+        let (x_working, scale_exponent) = if !x_less_than_1 {
+            (self, 0)
+        } else if self < Self::MIN_POSITIVE {
+            (
+                Self::ONE / (self * SUBNORMAL_SCALE),
+                SUBNORMAL_SCALE_EXPONENT,
+            )
+        } else {
+            (Self::ONE / self, 0)
+        };
 
         // according to the SO post ln(x) = ln((2^n)*y)= ln(2^n) + ln(y) = ln(2) * n + ln(y)
         // get exponent value
-        let base2_exponent = x_working.extract_exponent_value() as u32;
+        let base2_exponent = (x_working.extract_exponent_value() + scale_exponent) as u32;
         let divisor = f32::from_bits(x_working.to_bits() & EXPONENT_MASK);
 
         // supposedly normalizing between 1.0 and 2.0
@@ -81,6 +114,9 @@ mod tests {
         (0.001, -6.9077554),
         (0.01, -4.6051702),
         (0.1, -2.3025851),
+        (0.5, -0.6931472),
+        (0.75, -0.2876821),
+        (0.9, -0.1053605),
         (10.0, 2.3025851),
         (100.0, 4.6051702),
         (1000.0, 6.9077554),
@@ -103,11 +139,49 @@ mod tests {
     ];
 
     #[test]
+    fn special_values() {
+        assert!(F32(-1.0).ln().is_nan());
+        assert!(F32(-1e-40).ln().is_nan());
+        assert!(F32(f32::NEG_INFINITY).ln().is_nan());
+        assert!(F32::NAN.ln().is_nan());
+        assert_eq!(F32(0.0).ln(), F32::NEG_INFINITY);
+        assert_eq!(F32(-0.0).ln(), F32::NEG_INFINITY);
+        assert_eq!(F32::INFINITY.ln(), F32::INFINITY);
+    }
+
+    #[test]
+    fn subnormals() {
+        // 2^-128, where `1/x` first overflows, its neighbours, and the smallest and largest
+        // subnormals
+        for &bits in &[
+            0x0020_0000_u32,
+            0x001f_ffff,
+            0x0020_0001,
+            0x0000_0001,
+            0x007f_ffff,
+        ] {
+            let x = f32::from_bits(bits);
+            let expected = (bits as f32).ln() - 149.0 * core::f32::consts::LN_2;
+            let ln_x = F32(x).ln().0;
+            let relative_error = (ln_x - expected).abs() / expected.abs();
+
+            assert!(
+                relative_error <= MAX_ERROR,
+                "relative_error {} too large: ln({:e}) reads {} vs {}",
+                relative_error,
+                x,
+                ln_x,
+                expected
+            );
+        }
+    }
+
+    #[test]
     fn sanity_check() {
         assert_eq!(F32::ONE.ln(), F32::ZERO);
         for &(x, expected) in TEST_VECTORS {
             let ln_x = F32(x).ln();
-            let relative_error = (ln_x - expected).abs() / expected;
+            let relative_error = (ln_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,

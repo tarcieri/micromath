@@ -152,7 +152,7 @@ mod tests {
 
         for &(x, expected) in TEST_VECTORS_BASE3 {
             let log_x = F32(x).log(F32(3.0));
-            let relative_error = (log_x - expected).abs() / expected;
+            let relative_error = (log_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,
@@ -165,7 +165,7 @@ mod tests {
 
         for &(x, expected) in TEST_VECTORS_BASE5_5 {
             let log_x = F32(x).log(F32(5.5));
-            let relative_error = (log_x - expected).abs() / expected;
+            let relative_error = (log_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,
@@ -178,7 +178,7 @@ mod tests {
 
         for &(x, expected) in TEST_VECTORS_BASE12_7 {
             let log_x = F32(x).log(F32(12.7));
-            let relative_error = (log_x - expected).abs() / expected;
+            let relative_error = (log_x - expected).abs() / expected.abs();
 
             assert!(
                 relative_error <= MAX_ERROR,
