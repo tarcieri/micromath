@@ -39,8 +39,8 @@ mod tests {
 
     #[test]
     fn sanity_check() {
-        assert_eq!(F32(0.0).recip(), F32(core::f32::INFINITY));
-        assert_eq!(F32(-0.0).recip(), F32(core::f32::NEG_INFINITY));
+        assert_eq!(F32(0.0).recip(), F32(f32::INFINITY));
+        assert_eq!(F32(-0.0).recip(), F32(f32::NEG_INFINITY));
 
         for &(x, expected) in TEST_VECTORS {
             let recip_x = F32(x).recip();

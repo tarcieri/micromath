@@ -1,68 +1,37 @@
-//! x^n where n is an integer.
+//! Integer powers by exponentiation by squaring.
 //!
-//! Method described at: <https://stackoverflow.com/a/101613>
-//!
-//! Note: not optimal for all powers, is NP complete
-//! <https://en.wikipedia.org/wiki/Addition-chain_exponentiation>
-//! will result in an addition multiplication for x^15 for example
+//! Method described at <https://stackoverflow.com/a/101613>.
 
-use super::{F32, MANTISSA_BITS};
+use super::F32;
 
 impl F32 {
-    /// Approximates a number raised to an integer power.
+    /// Raises a number to an integer power by repeated squaring.
+    ///
+    /// A zero exponent returns one, even for a zero or NaN base.
+    ///
+    /// ```
+    /// use micromath::F32;
+    ///
+    /// assert_eq!(F32(-1.0).powi(i32::MIN), F32::ONE);
+    /// assert!((F32(0.4).powi(-64).0 / 2.938_733e25 - 1.0).abs() < 2e-6);
+    /// ```
     pub fn powi(self, n: i32) -> Self {
-        let mut base = self;
-        let mut abs_n = i32::abs(n);
-        let mut result = 1.0;
-
-        if n < 0 {
-            base = 1.0 / self;
-        }
-
         if n == 0 {
             return Self::ONE;
         }
 
-        // 0.0 == 0.0 and -0.0 according to IEEE standards.
-        if self == Self::ZERO && n > 0 {
-            return self;
-        }
-
-        // For values less than 2.0, but greater than 0.5 (1.0/2.0), you can multiply longer without
-        // going over exponent, i.e. 1.1 multiplied against itself will grow slowly.
-        if !(0.5..2.0).contains(&self.abs().0) {
-            // Approximation if we end up outside of the range of floating point values,
-            // then we end early
-            let approx_final_exponent = self.extract_exponent_value() * n;
-            let max_representable_exponent = 127;
-            let min_representable_exponent = -126 - (MANTISSA_BITS as i32);
-            if approx_final_exponent > max_representable_exponent
-                || (self == Self::ZERO && approx_final_exponent < 0)
-            {
-                if self.is_sign_positive() || n & 1 == 0 {
-                    return Self::INFINITY;
-                } else {
-                    return Self::NEG_INFINITY;
-                }
-            } else if approx_final_exponent < min_representable_exponent {
-                // We may want to copy the sign and do the same thing as above,
-                // but that seems like an awful amount of work when 99.99999% of people only care
-                // about bare zero
-                return Self::ZERO;
-            }
-        }
+        let mut base = if n < 0 { Self::ONE / self } else { self };
+        let mut exponent = n.unsigned_abs();
+        let mut result = Self::ONE;
 
         loop {
-            if (abs_n & 1) == 1 {
+            if exponent & 1 == 1 {
                 result *= base;
             }
-
-            abs_n >>= 1;
-
-            if abs_n == 0 {
-                return Self(result);
+            exponent >>= 1;
+            if exponent == 0 {
+                return result;
             }
-
             base *= base;
         }
     }
@@ -72,7 +41,7 @@ impl F32 {
 mod tests {
     use super::F32;
 
-    /// Error builds up from both exp and ln approximation, so we double the error allowed.
+    /// Relative error allowed for the test vectors.
     pub(crate) const MAX_ERROR: f32 = 0.002;
 
     /// `powi(3,x)` test vectors - `(input_base, input_power, output)`
@@ -2648,7 +2617,7 @@ mod tests {
         (10.0, 128.0, f32::INFINITY),
         (100000.0, 128.0, f32::INFINITY),
         (0.0, 3.0, 0.0),
-        (-0.0, 3.0, 0.0),
+        (-0.0, 3.0, -0.0),
         (0.0, -3.0, f32::INFINITY),
         (-0.0, -3.0, -f32::INFINITY),
         (-0.0, -2.0, f32::INFINITY),
@@ -2662,9 +2631,27 @@ mod tests {
         if experimental.is_nan() && expected.is_nan() || experimental.0 == expected {
             F32::ZERO
         } else if expected != 0.0 {
-            (experimental - expected).abs() / expected
+            (experimental - expected).abs() / expected.abs()
         } else {
             (experimental - expected).abs() / (expected + 1.0e-20)
+        }
+    }
+
+    #[test]
+    fn exponent_limits_and_signed_zero() {
+        assert_eq!(F32::ONE.powi(i32::MIN), F32::ONE);
+        assert_eq!(F32(-1.0).powi(i32::MAX), F32(-1.0));
+        assert_eq!(F32(2.0).powi(i32::MIN), F32::ZERO);
+        assert_eq!(F32(0.5).powi(i32::MIN), F32::INFINITY);
+        assert_eq!(F32::NAN.powi(0), F32::ONE);
+
+        for &(exponent, expected) in &[
+            (2, 0.0_f32),
+            (3, -0.0),
+            (-2, f32::INFINITY),
+            (-3, f32::NEG_INFINITY),
+        ] {
+            assert_eq!(F32(-0.0).powi(exponent).to_bits(), expected.to_bits());
         }
     }
 
